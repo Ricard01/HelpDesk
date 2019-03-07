@@ -44,7 +44,10 @@ export class PagesComponent implements OnInit {
   ngOnInit() {
     // page settings
     this.pageSettings = pageSettings;
+
   }
+
+
   @HostListener('window:scroll', ['$event'])
   onWindowScroll($event) {
     const doc = document.documentElement;
@@ -72,8 +75,6 @@ onToggleSidebarMinified(val: boolean): void {
       this.pageSettings.pageSidebarRightCollapsed = true;
     }
   }
-
-
 
   // hide mobile sidebar
   onHideMobileSidebar(val: boolean): void {

@@ -18,8 +18,8 @@
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="info">
-                        <b></b> Ricardo Chavez
-                        <small>Sistemas</small>
+                        <b></b> {{ user.username }}
+                        <small>{{ user.puesto }}</small>
                     </div>
                 </a>
             </li>
@@ -46,20 +46,23 @@
             <ng-template #sidebarSubMenu let-menu="menu">
                 <b class="caret pull-right" *ngIf="menu.caret"></b> {{ menu.title }}
                 <i class="fa fa-paper-plane text-theme m-l-5" *ngIf="menu.highlight"></i>
+
+
             </ng-template>
 
             <!-- sidebar menu -->
-            <ng-container *ngFor="let menu of menus">
+            <!-- <ng-container *ngFor="let menu of menus">
                 <li routerLinkActive="active" #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" [ngClass]="{ 'expand': (menu.state == 'expand') }">
                     <a *ngIf="!menu.url" (click)="(menu.submenu) ? expandCollapseSubmenu(menu, menus, rla1) : ''">
                         <ng-container *ngTemplateOutlet="sidebarMenu; context: {menu: menu}"></ng-container>
                     </a>
                     <a *ngIf="menu.url" [routerLink]="menu.url">
                         <ng-container *ngTemplateOutlet="sidebarMenu; context: {menu: menu}"></ng-container>
-                    </a>
+                    </a> -->
 
-                    <!-- sidebar submenu lvl-1 -->
-                    <div [@expandCollapse]="(menu.state) ? menu.state : ((rla1.isActive && !menu.state) ? 'active' : 'collapse')" *ngIf="menu.submenu">
+            <!-- sidebar submenu lvl-1 -->
+            <!-- <div [@expandCollapse]="(menu.state) ? menu.state : ((rla1.isActive && !menu.state) ? 'active' : 'collapse')" *ngIf="menu.submenu"> -->
+            <!-- <div *ngIf="menu.submenu">
                         <ul class="sub-menu" [ngStyle]="{'margin-top.px': (this.pageSettings.pageSidebarMinified) ? - (scrollTop) : 0 }">
                             <ng-container *ngFor="let sub1 of menu.submenu">
                                 <li routerLinkActive="active" #rla2="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" [ngClass]="{ 'expand': (sub1.state == 'expand') }">
@@ -68,10 +71,10 @@
                                     </a>
                                     <a *ngIf="sub1.url" [routerLink]="sub1.url">
                                         <ng-container *ngTemplateOutlet="sidebarSubMenu; context: {menu: sub1}"></ng-container>
-                                    </a>
+                                    </a> -->
 
-                                    <!-- sidebar submenu lvl-2 -->
-                                    <div [@expandCollapse]="(sub1.state) ? sub1.state : ((rla2.isActive && !sub1.state) ? 'active' : 'collapse')" *ngIf="sub1.submenu">
+            <!-- sidebar submenu lvl-2 -->
+            <!-- <div [@expandCollapse]="(sub1.state) ? sub1.state : ((rla2.isActive && !sub1.state) ? 'active' : 'collapse')" *ngIf="sub1.submenu">
                                         <ul class="sub-menu">
                                             <ng-container *ngFor="let sub2 of sub1.submenu">
                                                 <li routerLinkActive="active" #rla3="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" [ngClass]="{ 'expand': (sub2.state == 'expand') }">
@@ -80,10 +83,10 @@
                                                     </a>
                                                     <a *ngIf="sub2.url" [routerLink]="sub2.url" (click)="(sub2.submenu) ? expandCollapseSubmenu(sub2, sub1.submenu, rla3) : ''">
                                                         <ng-container *ngTemplateOutlet="sidebarSubMenu; context: {menu: sub2}"></ng-container>
-                                                    </a>
+                                                    </a> -->
 
-                                                    <!-- sidebar submenu lvl-3 -->
-                                                    <div [@expandCollapse]="(sub2.state) ? sub2.state : ((rla3.isActive && !sub2.state) ? 'active' : 'collapse')" *ngIf="sub2.submenu">
+            <!-- sidebar submenu lvl-3 -->
+            <!-- <div [@expandCollapse]="(sub2.state) ? sub2.state : ((rla3.isActive && !sub2.state) ? 'active' : 'collapse')" *ngIf="sub2.submenu">
                                                         <ul class="sub-menu">
                                                             <ng-container *ngFor="let sub3 of sub2.submenu">
                                                                 <li routerLinkActive="active" #rla4="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" [ngClass]="{ 'expand': (sub3.state == 'expand') }">
@@ -96,8 +99,8 @@
                                                                 </li>
                                                             </ng-container>
                                                         </ul>
-                                                    </div>
-                                                </li>
+                                                    </div> -->
+            <!-- </li>
                                             </ng-container>
                                         </ul>
                                     </div>
@@ -106,7 +109,7 @@
                         </ul>
                     </div>
                 </li>
-            </ng-container>
+            </ng-container> -->
 
             <!-- begin sidebar minify button -->
             <li><a href="javascript:;" class="sidebar-minify-btn" (click)="toggleMinified()"><i class="fa fa-angle-double-left"></i></a></li>

@@ -12,8 +12,8 @@ const pageSettings = {
   // pageSidebarTransparent: false,
   // pageSidebarLight: false,
   pageTopMenu: false,
-  pageEmpty: false,
-  pageBodyWhite: false,
+  pageEmpty: false,     // true
+  pageBodyWhite: false,  // true
   // pageMegaMenu: true,
   // pageLanguageBar: true,
   pageMobileSidebarToggled: false,

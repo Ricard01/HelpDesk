@@ -41,13 +41,13 @@
                 <div class="image image-icon bg-black text-grey-darker">
                     <i class="fa fa-user"></i>
                 </div>
-                <span class="d-none d-md-inline">Ricardo Chavez</span> <b class="caret"></b>
+                <span class="d-none d-md-inline">{{ user.username | titlecase}} </span> <b class="caret"></b>
             </a>
             <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-                <a href="javascript:;" class="dropdown-item">Editar Perfil</a>
+                <a [routerLink]="['/editar-user']" class="dropdown-item">Editar Perfil</a>
 
                 <div class="dropdown-divider"></div>
-                <a href="javascript:;" class="dropdown-item">Salir</a>
+                <a class="dropdown-item" (click)="authService.logout()">Salir</a>
             </div>
         </li>
 

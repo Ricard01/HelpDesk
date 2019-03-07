@@ -1,1 +1,70 @@
+<!-- begin login -->
+<div class="login login-with-news-feed ">
+    <!-- begin news-feed -->
+    <div class="news-feed">
+        <div class="news-image" style="background-image: url(assets/img/login/login-bg.jpg)"></div>
+        <div class="news-caption">
+            <h4 class="caption-title"><b>Admin</b> AnySolution</h4>
+            <p>
+                Download the Color Admin app for iPhone®, iPad®, and Android™. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </p>
+        </div>
+    </div>
+    <!-- end news-feed -->
+    <!-- begin right-content -->
+    <div class="right-content">
+        <!-- begin login-header -->
+        <div class="login-header">
+            <div class="brand">
+                <span class="logo"></span> <b>Admin</b> AnySolution
+                <small>Helpdesk EbsaMotors / CSC</small>
+            </div>
+            <div class="icon">
+                <i class="fa fa-sign-in"></i>
+            </div>
+        </div>
+        <!-- end login-header -->
+        <!-- begin login-content -->
+        <div class="login-content">
 
+
+            <!-- <form #f="ngForm" (ngSubmit)="formSubmit(f)" class="margin-bottom-0"> 
+                
+            
+    <form *ngIf="!loggedIn()" #loginForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="login()">
+      <input class="form-control mr-sm-2" type="text" name="username" placeholder="Username" required [(ngModel)]="model.username">
+      <input class="form-control mr-sm-2" type="password" name="password" placeholder="Password" required [(ngModel)]="model.password">
+      <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+    </form>
+            
+            -->
+            <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" class="margin-bottom-0">
+                <div class="form-group m-b-15">
+                    <input type="text" class="form-control form-control-lg" placeholder="Nombre de Usuario" name="username" required [(ngModel)]="model.username" />
+                </div>
+                <div class="form-group m-b-15">
+                    <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" required [(ngModel)]="model.password" />
+                </div>
+                <div class="checkbox checkbox-css m-b-30">
+                    <input [(ngModel)]="recordar" name="recordar" id="remember_me_checkbox" type="checkbox" />
+                    <label for="remember_me_checkbox">
+                    Recordar
+                  </label>
+                </div>
+                <div class="login-buttons">
+                    <button type="submit" [disabled]="!loginForm.valid" type="submit" class="btn btn-success btn-block btn-lg">Entrar</button>
+                </div>
+                <!-- <div class="m-t-20 m-b-40 p-b-40 text-inverse">
+                    Not a member yet? Click <a routerLink="/register/v3" class="text-success">here</a> to register.
+                </div> -->
+                <hr />
+                <p class="text-center text-grey-darker">
+                    &copy; Anysolution All Right Reserved 2019
+                </p>
+            </form>
+        </div>
+        <!-- end login-content -->
+    </div>
+    <!-- end right-container -->
+</div>
+<!-- end login -->

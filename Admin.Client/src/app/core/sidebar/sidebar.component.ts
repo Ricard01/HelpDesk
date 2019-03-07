@@ -9,37 +9,82 @@ import {
   Input,
   HostListener
 } from '@angular/core';
-import { group, animate, query, style, trigger, transition, state } from '@angular/animations';
+import {
+  group,
+  animate,
+  query,
+  style,
+  trigger,
+  transition,
+  state
+} from '@angular/animations';
 import pageMenus from '../../config/page-menus';
 import pageSettings from '../../config/page-settings';
+import { AuthService } from '../_services/auth.service';
+import { User } from '../../pages/user/user.model';
+
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   animations: [
     trigger('expandCollapse', [
-      state('expand', style({ height: '*', overflow: 'hidden', display: 'block' })),
-      state('collapse', style({ height: '0px', overflow: 'hidden', display: 'block' })),
-      state('active', style({ height: '*', overflow: 'hidden', display: 'block' })),
+      state(
+        'expand',
+        style({ height: '*', overflow: 'hidden', display: 'block' })
+      ),
+      state(
+        'collapse',
+        style({ height: '0px', overflow: 'hidden', display: 'block' })
+      ),
+      state(
+        'active',
+        style({ height: '*', overflow: 'hidden', display: 'block' })
+      ),
       transition('expand <=> collapse', animate(100)),
       transition('active => collapse', animate(100))
     ])
   ]
 })
-export class SidebarComponent implements AfterViewChecked {
+export class SidebarComponent implements OnInit , AfterViewChecked {
   navProfileState = 'collapse';
   @ViewChild('sidebarScrollbar') private sidebarScrollbar: ElementRef;
   @Output() toggleSidebarMinified = new EventEmitter<boolean>();
   @Output() hideMobileSidebar = new EventEmitter<boolean>();
-  @Input() pageSidebarTransparent;
   @Input() pageSidebarMinified;
 
+  user: User;
   menus = pageMenus;
   pageSettings = pageSettings;
 
   mobileMode;
   desktopMode;
   scrollTop;
+
+  constructor(private eRef: ElementRef, public authService: AuthService) {
+    if (window.innerWidth <= 767) {
+      this.mobileMode = true;
+      this.desktopMode = false;
+    } else {
+      this.mobileMode = false;
+      this.desktopMode = true;
+    }
+  }
+
+  ngOnInit() {
+    this.user = this.authService.user;
+    // this.sidebarService.cargarMenu();
+
+  }
+
+  ngAfterViewChecked() {
+    if (typeof Storage !== 'undefined' && localStorage.sidebarScroll) {
+      if (this.sidebarScrollbar && this.sidebarScrollbar.nativeElement) {
+        this.sidebarScrollbar.nativeElement.scrollTop =
+          localStorage.sidebarScroll;
+      }
+    }
+  }
 
   toggleNavProfile() {
     if (this.navProfileState === 'collapse') {
@@ -89,25 +134,6 @@ export class SidebarComponent implements AfterViewChecked {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    if (window.innerWidth <= 767) {
-      this.mobileMode = true;
-      this.desktopMode = false;
-    } else {
-      this.mobileMode = false;
-      this.desktopMode = true;
-    }
-  }
-
-  ngAfterViewChecked() {
-    if (typeof Storage !== 'undefined' && localStorage.sidebarScroll) {
-      if (this.sidebarScrollbar && this.sidebarScrollbar.nativeElement) {
-        this.sidebarScrollbar.nativeElement.scrollTop =
-          localStorage.sidebarScroll;
-      }
-    }
-  }
-
-  constructor(private eRef: ElementRef) {
     if (window.innerWidth <= 767) {
       this.mobileMode = true;
       this.desktopMode = false;

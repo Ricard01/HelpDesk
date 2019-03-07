@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ImagenPipe } from './_pipes/imagen.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [ ImagenPipe],
   imports: [
-    CommonModule
-  ]
+
+  ],
+  exports: [ ImagenPipe]
 })
 export class SharedModule { }
