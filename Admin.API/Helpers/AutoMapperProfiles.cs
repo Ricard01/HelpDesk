@@ -9,12 +9,13 @@ namespace Admin.API.Helpers
     {
         public AutoMapperProfiles()
         {
-         
+
             CreateMap<User, UserForDetailedDto>();
             CreateMap<User, UserForReturnDto>();
             CreateMap<UserForUpdateDto, User>();
             CreateMap<UserForRegisterDto, User>();
-        
+            CreateMap<FileUploadDto, User>();
+
         }
     }
 }

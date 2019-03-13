@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Admin.API.Data
 {
-    public class AdminRepository : IAdminRepository 
+    public class AdminRepository : IAdminRepository
     {
         private readonly DataContext _context;
         public AdminRepository(DataContext context)
@@ -28,13 +28,13 @@ namespace Admin.API.Data
 
 
         public async Task<User> GetUser(int id, bool isCurrentUser)
-        {  
+        {
             var query = _context.Users.AsQueryable();
 
             if (isCurrentUser)
                 query = query.IgnoreQueryFilters();
 
-            var user = await query.FirstOrDefaultAsync(u =>  u.Id == id);
+            var user = await query.FirstOrDefaultAsync(u => u.Id == id);
 
             return user;
 
@@ -85,7 +85,7 @@ namespace Admin.API.Data
 
         //     return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         // }
-    public async Task<PagedList<User>> GetUsers(UserParams userParams)
+        public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
             var users = _context.Users.AsQueryable();
 
@@ -94,7 +94,13 @@ namespace Admin.API.Data
 
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
+        public async Task<User> GetPhoto(int id)
+        {
+            var photo = await _context.Users
+                .FirstOrDefaultAsync(p => p.Id == id);
 
+            return photo;
+        }
 
         public async Task<bool> SaveAll()
         {

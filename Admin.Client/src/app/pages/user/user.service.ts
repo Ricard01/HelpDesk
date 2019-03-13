@@ -3,7 +3,7 @@ import { User } from './user.model';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators/';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +19,27 @@ export class UserService {
    return this.http.get<User>(this.baseUrl + id);
 
   }
-  // pipe (  map(  (resp: any ) => console.log(resp) ))
 
+  updatePhoto( ) {
+
+  }
+
+
+  // cambiarImagen( archivo: File, id: string ) {
+
+  //   this._subirArchivoService.subirArchivo( archivo, 'usuarios', id )
+  //         .then( (resp: any) => {
+
+  //           this.usuario.img = resp.usuario.img;
+  //           swal( 'Imagen Actualizada', this.usuario.nombre, 'success' );
+  //           this.guardarStorage( id, this.token, this.usuario, this.menu );
+
+  //         })
+  //         .catch( resp => {
+  //           console.log( resp );
+  //         }) ;
+
+  // }
 
 
 }

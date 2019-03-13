@@ -95,7 +95,7 @@ namespace Admin.API
              });
 
             services.AddCors();
-            // services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             // este se puede eliminar o mejorar ya add automaper se ejecuta 2 veces entonces hay que validar si esta en dev mode
             // Mapper.Reset();
             services.AddAutoMapper();

@@ -14,6 +14,8 @@ namespace Admin.API.Dtos
         public DateTime FechaAlta { get; set; }
         public Boolean Activo { get; set; }
 
+        public string FotoUrl { get; set; }
+
 
     }
 }

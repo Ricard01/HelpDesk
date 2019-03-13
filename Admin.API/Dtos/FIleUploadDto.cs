@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Admin.API.Dtos
 {
-    public class FIleUploadDto
+    public class FileUploadDto
     {
-        public string Url { get; set; }
+        public string FotoUrl { get; set; }
         public IFormFile File { get; set; }
         // public string Descripcion { get; set; }
         // public DateTime FechaAlta { get; set; }
