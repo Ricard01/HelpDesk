@@ -8,8 +8,10 @@
         <div class="profile-header-content">
             <!-- BEGIN profile-header-img -->
             <div class="profile-header-img">
-                <img src="{{ user.fotoUrl || '../../../assets/img/user/user.png'}}" alt="">
+                <img *ngIf="!imagenTemp" src="{{ user.fotoUrl || '../../../assets/img/user/user.png'}}" alt="">
+                <img *ngIf="imagenTemp" src="{{ imagenTemp || '../../../assets/img/user/user.png'}}" alt="">
             </div>
+
             <!-- END profile-header-img -->
             <!-- BEGIN profile-header-info -->
             <div class="profile-header-info">

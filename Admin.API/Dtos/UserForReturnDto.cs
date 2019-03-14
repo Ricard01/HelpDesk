@@ -9,5 +9,7 @@ namespace Admin.API.Dtos
         public string Puesto { get; set; }
         public Boolean Activo { get; set; }
 
+        public string FotoUrl { get; set; }
+
     }
 }

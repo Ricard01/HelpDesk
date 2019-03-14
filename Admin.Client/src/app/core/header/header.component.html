@@ -39,7 +39,8 @@
         <li class="dropdown navbar-user" ngbDropdown>
             <a href="javascript:;" class="dropdown-toggle" ngbDropdownToggle>
                 <div class="image image-icon bg-black text-grey-darker">
-                    <i class="fa fa-user"></i>
+
+                    <img src="{{ authService.user.fotoUrl }}" alt="">
                 </div>
                 <span class="d-none d-md-inline">{{ user.username | titlecase}} </span> <b class="caret"></b>
             </a>

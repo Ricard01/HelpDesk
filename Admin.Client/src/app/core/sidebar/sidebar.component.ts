@@ -47,6 +47,7 @@ import { User } from '../../pages/user/user.model';
   ]
 })
 export class SidebarComponent implements OnInit , AfterViewChecked {
+  photoUrl: string;
   navProfileState = 'collapse';
   @ViewChild('sidebarScrollbar') private sidebarScrollbar: ElementRef;
   @Output() toggleSidebarMinified = new EventEmitter<boolean>();
@@ -73,7 +74,6 @@ export class SidebarComponent implements OnInit , AfterViewChecked {
 
   ngOnInit() {
     this.user = this.authService.user;
-    // this.sidebarService.cargarMenu();
 
   }
 

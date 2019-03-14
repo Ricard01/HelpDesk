@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import pageSettings from '../../../config/page-settings';
 import { User } from '../user.model';
 import { ActivatedRoute } from '@angular/router';
@@ -8,19 +8,18 @@ import { AuthService } from 'src/app/core/_services/auth.service';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
   selector: 'app-user-edit',
   templateUrl: './user-edit.component.html',
   styles: []
 })
 export class UserEditComponent implements OnInit, OnDestroy {
-
   constructor(
     private route: ActivatedRoute,
     private alert: SweetalertService,
     private authService: AuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private uploadService: UploadService
   ) {
     this.pageSettings.pageContentFullWidth = true;
   }
@@ -31,8 +30,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
   user: User;
   lat = 40.7143528;
   lng = -74.0059731;
-
-  imagenSubir: File;
   imagenTemp: string;
 
   tabs = {
@@ -57,21 +54,22 @@ export class UserEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  imgToUpload( event) {
-
+  imgToUpload(event) {
     const file = event.target.files[0];
     const uploadData = new FormData();
-    uploadData.append('File', file );
+    uploadData.append('File', file);
+    this.uploadService.uploadImg(uploadData).subscribe( (res: User) => {
 
-    const url = this.baseUrl + this.authService.user.id + '/photos';
 
-    this.http.post(url, uploadData, {
-      reportProgress: true,
-      observe: 'events'
-    })
-      .subscribe( events => {
-        console.log(events); // handle event here
-      });
+          this.authService.user.fotoUrl = res.fotoUrl;
+          this.imagenTemp = res.fotoUrl;
+          localStorage.setItem('user', JSON.stringify(this.authService.user));
+
+
+    }, error => {
+      console.log(error);
+    });
+
   }
 
   ngOnDestroy() {
