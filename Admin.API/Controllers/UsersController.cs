@@ -69,7 +69,10 @@ namespace Admin.API.Controllers
 
             var userFromRepo = await _repo.GetUser(id, true);
 
+
             _mapper.Map(userForUpdateDto, userFromRepo);
+            
+            _repo.Update(userFromRepo);
 
             if (await _repo.SaveAll())
                 return NoContent();

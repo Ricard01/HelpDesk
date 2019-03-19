@@ -1,12 +1,13 @@
-import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import pageSettings from '../../../config/page-settings';
 import { User } from '../user.model';
 import { ActivatedRoute } from '@angular/router';
-import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
 import { UploadService } from 'src/app/shared/_services/upload.service';
 import { AuthService } from 'src/app/core/_services/auth.service';
-import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { UserService } from '../user.service';
+import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-edit',
@@ -16,10 +17,10 @@ import { environment } from 'src/environments/environment';
 export class UserEditComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
-    private alert: SweetalertService,
     private authService: AuthService,
-    private http: HttpClient,
-    private uploadService: UploadService
+    private userService: UserService,
+    private uploadService: UploadService,
+    private sweetAlert: SweetalertService
   ) {
     this.pageSettings.pageContentFullWidth = true;
   }
@@ -31,6 +32,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   lat = 40.7143528;
   lng = -74.0059731;
   imagenTemp: string;
+  formUpdate: FormGroup;
 
   tabs = {
     editPerfil: true,
@@ -52,6 +54,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
+
+    // this.formUpdate = new FormGroup({
+    //   phoneNumber:  new FormControl('', [ Validators.pattern('^[0-9]*$'),   Validators.minLength(8),  ])
+
+    // } );
+
   }
 
   imgToUpload(event) {
@@ -70,6 +78,16 @@ export class UserEditComponent implements OnInit, OnDestroy {
       console.log(error);
     });
 
+  }
+
+  updateUser() {
+    this.userService.updateUser(this.authService.decodedToken.nameid, this.user).subscribe(next => {
+      this.sweetAlert.success('Perfil actualizado correctamente');
+      // this.editForm.reset(this.user);
+    }, error => {
+      console.log(error);
+      this.sweetAlert.error(error);
+    });
   }
 
   ngOnDestroy() {

@@ -10,7 +10,7 @@ import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 import { PagesComponent } from './pages/pages.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './core/auth/auth.component';
 import { RegisterComponent } from './core/auth/register.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,6 +31,7 @@ export function getToken() {
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     APP_ROUTES,
     CoreModule,

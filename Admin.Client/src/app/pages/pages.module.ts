@@ -5,7 +5,7 @@ import { PAGES_ROUTES } from './pages.routes';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // NG
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -27,6 +27,7 @@ import { TicketsComponent } from './tickets/tickets.component';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     CoreModule,
     SharedModule,
     PAGES_ROUTES],

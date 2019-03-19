@@ -6,12 +6,15 @@ using Admin.API.Dtos;
 using Admin.API.Helpers;
 using Admin.API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Admin.API.Data
 {
     public class AdminRepository : IAdminRepository
     {
         private readonly DataContext _context;
+
         public AdminRepository(DataContext context)
         {
             _context = context;
@@ -19,6 +22,11 @@ namespace Admin.API.Data
         public void Add<T>(T entity) where T : class
         {
             _context.Add(entity);
+        }
+
+         public void Update<T>(T entity) where T : class
+        {
+            _context.Update(entity);
         }
 
         public void Delete<T>(T entity) where T : class
@@ -104,7 +112,7 @@ namespace Admin.API.Data
 
         public async Task<bool> SaveAll()
         {
-            return await _context.SaveChangesAsync() > 0;
+            return await _context.SaveChangesAsync() >0;
         }
 
     }

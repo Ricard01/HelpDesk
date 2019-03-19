@@ -46,7 +46,8 @@ export class AuthComponent implements OnInit, OnDestroy {
         console.log('Inicio de sesion');
       },
       error => {
-        this.alert.error('El nombre de usuario o password no es valido');
+        console.log(error);
+        this.alert.error( 'El nombre de usuario o password no es valido');
       },
       () => {
         this.router.navigate(['/dashboard']);

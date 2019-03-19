@@ -44,51 +44,56 @@
         <!-- begin #perfil -->
         <div class="tab-pane fade" [ngClass]="{ 'active show': tabs.editPerfil }">
             <!-- begin table -->
-            <div class="table-responsive">
-                <table class="table table-profile">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>
-                                <h4>{{ user.puesto | titlecase}}<small></small></h4>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="highlight">
-                            <td class="field">Email</td>
-                            <td><a href="javascript:;"> {{ user.email}}</a></td>
-                        </tr>
-                        <tr class="divider">
-                            <td colspan="2"></td>
-                        </tr>
-                        <tr>
-                            <td class="field">Cel</td>
-                            <td><i class="fa fa-mobile fa-lg m-r-5"></i> {{ user.phoneNumber }} <a href="javascript:;" class="m-l-5">Edit</a></td>
-                        </tr>
-                        <tr>
-                            <td class="field">Oficina</td>
-                            <td><a href="javascript:;">Add Number</a></td>
-                        </tr>
+            <form #formUpdate="ngForm" (ngSubmit)="updateUser()">
+                <div class="table-responsive">
+                    <table class="table table-profile">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>
+                                    <h4>{{ user.puesto | titlecase}}<small></small></h4>
+                                </th>
+                                <th width="60%"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="highlight">
+                                <td class="field">Email</td>
+                                <td><a href="javascript:;"> {{ user.email}} </a></td>
+                                <td></td>
+                            </tr>
+                            <tr class="divider">
+                                <td colspan="2"></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="field">Cel</td>
+                                <td><input type="text" class="form-control form-control-sm" name="phoneNumber" [(ngModel)]="user.phoneNumber"></td>
+                                <td></td>
+                            </tr>
 
-                        <tr class="divider">
-                            <td colspan="2"></td>
-                        </tr>
-                        <tr class="highlight">
-                            <td class="field">&nbsp;</td>
-                            <td class="p-t-10 p-b-10">
-                                <button type="submit" class="btn btn-primary width-150">Update</button>
-                                <button type="submit" class="btn btn-white btn-white-without-border width-150 m-l-5">Cancel</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+
+                            <tr class="divider">
+                                <td colspan="3"></td>
+                            </tr>
+                            <tr class="highlight">
+                                <td class="field">&nbsp;</td>
+                                <td class="p-t-10 p-b-10" colspan="2">
+                                    <button type="submit" [disabled]="!formUpdate.dirty" class="btn btn-primary width-150">Actualizar</button>
+                                    <a class="btn btn-white btn-white-without-border width-150 m-l-5" routerLink="/dashboard">Cancelar</a>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+
             <!-- end table -->
         </div>
         <!-- end #perfil -->
 
-
+        <!-- TODO Pendiente modificar  -->
         <!-- begin #equipo-->
         <div class="tab-pane fade" [ngClass]="{ 'active show': tabs.equipo }">
             <!-- begin table -->
@@ -112,7 +117,9 @@
                         </tr>
                         <tr>
                             <td class="field">Cel</td>
-                            <td><i class="fa fa-mobile fa-lg m-r-5"></i> +1-(847)- 367-8924 <a href="javascript:;" class="m-l-5">Edit</a></td>
+                            <td><i class="fa fa-mobile fa-lg m-r-5"></i>
+                                <div> +1-(847)- 367-8924</div>
+                                <div> Ricardo</div><a (click)="editarCel = true" class="m-l-5">Edit</a></td>
                         </tr>
                         <tr>
                             <td class="field">Oficina</td>
