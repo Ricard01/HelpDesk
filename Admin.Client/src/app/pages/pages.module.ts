@@ -13,6 +13,7 @@ import { UserComponent } from './user/user.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { UserEditResolver } from '../shared/_resolvers/user-edit.resolver';
 import { TicketsComponent } from './tickets/tickets.component';
+import { ConfiguracionComponent } from './configuracion/configuracion.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { TicketsComponent } from './tickets/tickets.component';
     UserComponent,
     UserEditComponent,
     TicketsComponent,
+    ConfiguracionComponent,
   ],
   exports: [
     DashboardComponent

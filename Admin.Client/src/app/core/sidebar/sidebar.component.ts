@@ -10,9 +10,7 @@ import {
   HostListener
 } from '@angular/core';
 import {
-  group,
   animate,
-  query,
   style,
   trigger,
   transition,
