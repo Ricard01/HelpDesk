@@ -11,6 +11,9 @@ namespace Admin.API.Data
         void Update<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         Task<bool> SaveAll();
+
+        Task<List<User>> GetAllUsers();
+
         Task<PagedList<User>> GetUsers(UserParams userParams);
         Task<User> GetUser(int id, bool isCurrentUser);
         

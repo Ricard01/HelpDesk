@@ -6,25 +6,36 @@ import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSortModule, MatPaginatorModule, MatTableModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 
 // NG
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
-import { UserEditResolver } from '../shared/_resolvers/user-edit.resolver';
-import { TicketsComponent } from './tickets/tickets.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
+import { UserListResolver } from '../shared/_resolvers/user-list.resolver';
+import { UserEditResolver } from '../shared/_resolvers/user-edit.resolver';
+import { UserListComponent } from './user/user-list/user-list.component';
+import { NgbdSortableHeader } from '../config/sortable.directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @NgModule({
   declarations: [
     DashboardComponent,
     UserComponent,
     UserEditComponent,
-    TicketsComponent,
     ConfiguracionComponent,
+    UserListComponent
   ],
   exports: [
-    DashboardComponent
+    DashboardComponent,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
   ],
   imports: [
     CommonModule,
@@ -32,9 +43,17 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
     ReactiveFormsModule,
     CoreModule,
     SharedModule,
-    PAGES_ROUTES],
+    NgbModule.forRoot(),
+    PAGES_ROUTES,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule
+  ],
     providers: [
-      UserEditResolver
+      UserEditResolver,
+      UserListResolver
     ]
 })
 export class PagesModule {}

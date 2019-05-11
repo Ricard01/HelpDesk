@@ -26,6 +26,27 @@ namespace Admin.API.Controllers
             _repo = repo;
         }
 
+        [HttpGet  ("All")]
+        public async Task<IActionResult> GetAllUsers([FromQuery]UserParams userParams)
+        {
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var userFromRepo = await _repo.GetUser(currentUserId, true);
+
+            userParams.UserId = currentUserId;
+
+          
+
+            var users = await _repo.GetAllUsers();
+
+            var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(users);
+
+           
+
+            return Ok(usersToReturn);
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
@@ -41,8 +62,8 @@ namespace Admin.API.Controllers
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(users);
 
-            Response.AddPagination(users.CurrentPage, users.PageSize,
-                users.TotalCount, users.TotalPages);
+            Response.AddPagination(users.PaginaActual, users.PageSize,
+                users.TotalCount, users.TotalPaginas);
 
             return Ok(usersToReturn);
         }

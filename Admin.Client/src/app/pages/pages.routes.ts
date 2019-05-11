@@ -3,12 +3,17 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { UserEditResolver } from '../shared/_resolvers/user-edit.resolver';
 import { UserComponent } from './user/user.component';
+import { UserListResolver } from '../shared/_resolvers/user-list.resolver';
+import { UserListComponent } from './user/user-list/user-list.component';
+
 
 
 const pagesRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'editar-user',  component: UserEditComponent, resolve: { user: UserEditResolver}},
-  { path: 'usuarios', component: UserComponent},
+  { path: 'user-editar',  component: UserEditComponent, resolve: { user: UserEditResolver}},
+  { path: 'user-nuevo', component: UserComponent},
+  { path: 'user', component: UserComponent, resolve: { users: UserListResolver}},
+  { path: 'usuarios', component: UserListComponent, resolve: { users: UserListResolver}},
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 

@@ -12,10 +12,15 @@ import { AppComponent } from './app.component';
 import { PagesComponent } from './pages/pages.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './core/auth/auth.component';
-import { RegisterComponent } from './core/auth/register.component';
 import { HttpClientModule } from '@angular/common/http';
-import {  ErrorInterceptorProvider } from './shared/_interceptor/error.interceptor';
+import { ErrorInterceptorProvider } from './shared/_interceptor/error.interceptor';
 import { AuthGuard } from './shared/_guards/auth.guard';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedModule } from './shared/shared.module';
+import { NgbdSortableHeader } from './config/sortable.directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 export function getToken() {
   return localStorage.getItem('token');
@@ -25,23 +30,31 @@ export function getToken() {
   declarations: [
     AppComponent,
     AuthComponent,
-    RegisterComponent,
-    PagesComponent
+    PagesComponent,
+    NgbdSortableHeader
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     APP_ROUTES,
+    NgbModule,
     CoreModule,
+    SharedModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: getToken,
         whitelistedDomains: ['localhost:5000'],
         blacklistedRoutes: ['localhost:5000/api/auth']
       }
-     })// este seria ShareModule
+     }),
+    // este seria ShareModule
+  ],
+  exports: [
+    BrowserAnimationsModule,
+    NgbdSortableHeader
   ],
   providers: [
     ErrorInterceptorProvider,

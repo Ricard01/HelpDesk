@@ -5,8 +5,9 @@
 @import 'https://use.fontawesome.com/releases/v5.7.0/css/all.css';
 @import 'assets/css/default/style.min.css';
 @import 'assets/css/default/style-responsive.min.css';
-@import 'assets/css/default/theme/default.css';
+@import 'assets/css/default/theme/blue.css';
 @import 'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.1/fullcalendar.min.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 .overflow-scroll {
     overflow: scroll;
     overflow-y: scroll;

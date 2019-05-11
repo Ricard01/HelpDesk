@@ -39,7 +39,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     equipo: false,
     perfiles: false
   };
-  baseUrl = environment.apiUrl + 'users/';
+  // baseUrl = environment.apiUrl + 'users/';
 
   showTab(e) {
     for (const key in this.tabs) {

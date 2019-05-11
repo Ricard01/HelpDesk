@@ -2,13 +2,13 @@ namespace Admin.API.Helpers
 {
     public class UserParams
     {
-        private const int MaxPageSize = 50;
-        public int PageNumber { get; set; } = 1;
-        private int pageSize = 10;
-        public int PageSize
+        private const int MaxItemsPagina = 50;
+        public int NumPagina { get; set; } = 1;
+        private int itemsxPagina = 10;
+        public int ItemsxPagina
         {
-            get { return pageSize;}
-            set { pageSize = (value > MaxPageSize) ? MaxPageSize : value;}
+            get { return itemsxPagina;}
+            set { itemsxPagina = (value > MaxItemsPagina) ? MaxItemsPagina : value;}
         }
 
         public int UserId { get; set; }

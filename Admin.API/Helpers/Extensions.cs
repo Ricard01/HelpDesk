@@ -20,9 +20,9 @@ namespace Admin.API.Helpers
             var paginationHeader = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
             var camelCaseFormatter = new JsonSerializerSettings();
             camelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            response.Headers.Add("Pagination", 
+            response.Headers.Add("Paginacion", 
                 JsonConvert.SerializeObject(paginationHeader, camelCaseFormatter));
-            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
+            response.Headers.Add("Access-Control-Expose-Headers", "Paginacion");
         }
 
         public static int CalculateAge(this DateTime theDateTime)

@@ -2,17 +2,17 @@ namespace Admin.API.Helpers
 {
     public class PaginationHeader
     {
-        public int CurrentPage { get; set; }
-        public int ItemsPerPage { get; set; }
+        public int PaginaActual { get; set; }
+        public int ItemsxPagina { get; set; }
         public int TotalItems { get; set; }
-        public int TotalPages { get; set; }
+        public int TotalPaginas { get; set; }
 
-        public PaginationHeader(int currentPage, int itemsPerPage, int totalItems, int totalPages)
+        public PaginationHeader(int paginaActual, int itemsxPagina, int totalItems, int totalPaginas)
         {
-            this.CurrentPage = currentPage;
-            this.ItemsPerPage = itemsPerPage;
+            this.PaginaActual = paginaActual;
+            this.ItemsxPagina = itemsxPagina;
             this.TotalItems = totalItems;
-            this.TotalPages = totalPages;
+            this.TotalPaginas = totalPaginas;
         }
     }
 }

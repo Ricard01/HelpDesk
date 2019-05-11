@@ -29,37 +29,26 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
             <li class="nav-header">Navigation</li>
-            <ng-template #sidebarMenu let-menu="menu">
-                <span class="badge pull-right" *ngIf="menu.badge">{{ menu.badge }}</span>
-                <b class="caret" *ngIf="menu.caret"></b>
-                <div class="icon-img" *ngIf="menu.img"><img src="{{ menu.img }}" /></div>
-                <i class="{{ menu.icon }}" *ngIf="menu.icon"></i>
-                <span *ngIf="menu.title">
-                  {{ menu.title }}
-                  <span class="label label-theme m-l-5" *ngIf="menu.label">{{ menu.label }}</span>
-                </span>
-            </ng-template>
 
-            <!-- render submenu item -->
-            <ng-template #sidebarSubMenu let-menu="menu">
-                <b class="caret pull-right" *ngIf="menu.caret"></b> {{ menu.title }}
-                <i class="fa fa-paper-plane text-theme m-l-5" *ngIf="menu.highlight"></i>
-            </ng-template>
 
-            <!-- sidebar menu -->
-            <ng-container *ngFor="let menu of menus">
-                <li routerLinkActive="active" #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" [ngClass]="{ 'expand': (menu.state == 'expand') }">
-                    <a *ngIf="!menu.url" (click)="(menu.submenu) ? expandCollapseSubmenu(menu, menus, rla1) : ''">
-                        <ng-container *ngTemplateOutlet="sidebarMenu; context: {menu: menu}"></ng-container>
-                    </a>
-                    <a *ngIf="menu.url" [routerLink]="menu.url">
-                        <ng-container *ngTemplateOutlet="sidebarMenu; context: {menu: menu}"></ng-container>
-                    </a>
 
-                    <!-- sidebar submenu lvl-1 -->
 
-                </li>
-            </ng-container>
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" [routerLink]="['/usuarios']"> <i class="fas fa-user"></i><span> Usuarios</span> </a>
+            </li>
+
+            <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/user-editar']"> <i class="fas fa-desktop"></i><span> Catalogos Equipos</span> </a>
+            </li>
+
+            <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/tickets']"> <i class="fas fa-check-square"></i><span> Tickets</span> </a>
+            </li>
+
+
+
+
+
 
 
 

@@ -11,7 +11,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Admin.API.Data
 {
-    public class AdminRepository : IAdminRepository
+    public class AdminRepository : IAdminRepository 
     {
         private readonly DataContext _context;
 
@@ -24,7 +24,7 @@ namespace Admin.API.Data
             _context.Add(entity);
         }
 
-         public void Update<T>(T entity) where T : class
+        public void Update<T>(T entity) where T : class
         {
             _context.Update(entity);
         }
@@ -33,7 +33,6 @@ namespace Admin.API.Data
         {
             _context.Remove(entity);
         }
-
 
         public async Task<User> GetUser(int id, bool isCurrentUser)
         {
@@ -48,60 +47,20 @@ namespace Admin.API.Data
 
         }
 
+        public async Task<List<User>> GetAllUsers()
+        {
+          var users = await _context.Users.ToListAsync();
+          return users;
 
-
-        // public async Task<PagedList<User>> GetUsers(UserParams userParams)
-        // {
-        //     var users = _context.Users.OrderByDescending(u => u.LastActive).AsQueryable();
-
-        //     users = users.Where(u => u.Id != userParams.UserId);
-
-        //     users = users.Where(u => u.Gender == userParams.Gender);
-
-        //     if (userParams.Likers)
-        //     {
-        //         var userLikers = await GetUserLikes(userParams.UserId, userParams.Likers);
-        //         users = users.Where(u => userLikers.Contains(u.Id));
-        //     }
-
-        //     if (userParams.Likees)
-        //     {
-        //         var userLikees = await GetUserLikes(userParams.UserId, userParams.Likers);
-        //         users = users.Where(u => userLikees.Contains(u.Id));
-        //     }
-
-        //     if (userParams.MinAge != 18 || userParams.MaxAge != 99)
-        //     {
-        //         var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
-        //         var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
-
-        //         users = users.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
-        //     }
-
-        //     if (!string.IsNullOrEmpty(userParams.OrderBy))
-        //     {
-        //         switch (userParams.OrderBy)
-        //         {
-        //             case "created":
-        //                 users = users.OrderByDescending(u => u.Created);
-        //                 break;
-        //             default:
-        //                 users = users.OrderByDescending(u => u.LastActive);
-        //                 break;
-        //         }
-        //     }
-
-        //     return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
-        // }
+        }
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
+            // 
             var users = _context.Users.AsQueryable();
 
-            users = users.Where(u => u.Id != userParams.UserId);
-
-
-            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+            return await PagedList<User>.CreateAsync(users, userParams.NumPagina, userParams.ItemsxPagina);
         }
+
         public async Task<User> GetPhoto(int id)
         {
             var photo = await _context.Users
@@ -112,7 +71,7 @@ namespace Admin.API.Data
 
         public async Task<bool> SaveAll()
         {
-            return await _context.SaveChangesAsync() >0;
+            return await _context.SaveChangesAsync() > 0;
         }
 
     }

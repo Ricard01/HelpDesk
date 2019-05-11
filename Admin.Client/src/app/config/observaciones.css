@@ -6,4 +6,52 @@ ng2-slim-loading-bar => ngx spiner se cambio
 npm install --save rxjs-compat  => se desinstalo
  npm install ngx-trend  -- graficas https://www.npmjs.com/package/ngx-trend
 
+///////////////////////// ********** START T A B L E ********** /////////////////////////  
+ @Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styles: [
+    `
+      table {
+        width: 100%;
+      }
+
+      .mat-form-field {
+        font-size: 14px;
+        width: 100%;
+      }
+    `
+  ]
+})
+export class UserComponent implements OnInit, OnDestroy {
+  users: User[];
+  pageSettings = pageSettings;
+  displayedColumns: string[] = ['id', 'username', 'email', 'puesto'];
+  // dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  dataApi = new MatTableDataSource();
+
+  applyFilter(filterValue: string) {
+    this.dataApi = new MatTableDataSource();
+  }
+  constructor(private route: ActivatedRoute, private userService: UserService) {
+    this.pageSettings.pageContentFullWidth = true;
+  }
+
+  ngOnInit() {
+
+   this.route.data.subscribe(data => {
+      this.users = data['users'].result;
+
+    });
+    this.dataApi = new MatTableDataSource(this.users);
+     console.log( this.dataApi);
+
+  }
+
+  ngOnDestroy() {
+    this.pageSettings.pageContentFullWidth = false;
+  }
+}
+///////////////////////// ********** END T A B L E ********** /////////////////////////  
 */
