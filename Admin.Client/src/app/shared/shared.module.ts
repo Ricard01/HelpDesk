@@ -4,6 +4,7 @@ import { TableComponent } from './_components/table/table.component';
 import { TableRowComponent } from './_components/table/table-row/table-row.component';
 import { PaginationModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
+import { HasRoleDirective } from './_directives/has-role.directive';
 
 @NgModule({
   declarations: [ ImagenPipe, TableComponent, TableRowComponent],
@@ -12,7 +13,6 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
   exports: [
-
     PaginationModule,
     ImagenPipe,
     TableComponent

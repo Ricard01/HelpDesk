@@ -11,9 +11,8 @@ import { UserListComponent } from './user/user-list/user-list.component';
 const pagesRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'user-editar',  component: UserEditComponent, resolve: { user: UserEditResolver}},
-  { path: 'user-nuevo', component: UserComponent},
-  { path: 'user', component: UserComponent, resolve: { users: UserListResolver}},
-  { path: 'usuarios', component: UserListComponent, resolve: { users: UserListResolver}},
+  { path: 'user-nuevo', component: UserComponent, data: {roles: ['Admin']}},
+  { path: 'usuarios', component: UserListComponent, resolve: { users: UserListResolver}, data: {roles: ['Admin']}},
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 ];
 

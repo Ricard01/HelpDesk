@@ -26,9 +26,9 @@ namespace Admin.API.Data
 
                 var roles = new List<Role>
                 {
-                    new Role{Name = "Member"},
                     new Role{Name = "Admin"},
-                    new Role{Name = "Moderator"},
+                    new Role{Name = "User"},                 
+                    new Role{Name = "Otro"},
                     new Role{Name = "VIP"},
                 };
 
@@ -42,12 +42,13 @@ namespace Admin.API.Data
                     // user.Photos.SingleOrDefault().IsApproved = true;
                     // creamos los usuarios con password**
                     _userManager.CreateAsync(user, "nolose").Wait();
-                    _userManager.AddToRoleAsync(user, "Member").Wait();
+                    _userManager.AddToRoleAsync(user, "user").Wait();
                 }
 
                 var adminUser = new User
                 {
-                    UserName = "Admin"
+                    UserName = "Admin",
+                    Activo = true
                 };
 
                 IdentityResult result = _userManager.CreateAsync(adminUser, "nolose").Result;
@@ -55,7 +56,8 @@ namespace Admin.API.Data
                 if (result.Succeeded)
                 {
                     var admin = _userManager.FindByNameAsync("Admin").Result;
-                    _userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
+                    // _userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
+                     _userManager.AddToRolesAsync(admin, new[] { "Admin" }).Wait();
                 }
             }
         }

@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class UserService {
   baseUrl = environment.apiUrl + 'users/';
+  baseUrl2 = environment.apiUrl + 'auth/';
   user: User;
   user2: User[] = [];
 
@@ -53,21 +54,9 @@ export class UserService {
     return ['id', 'username', 'email', 'puesto'];
   }
 
-  register(user: User) {
-    return this.http.post(this.baseUrl + 'register', user);
+  registrar(user: User) {
+    return this.http.post(this.baseUrl2 + 'registrar', user);
   }
 
-
-  roleMatch(allowedRoles): boolean {
-    let isMatch = false;
-    const userRoles = null; // this.decodedToken.role as Array<string>;
-    allowedRoles.forEach(element => {
-      if (userRoles.includes(element)) {
-        isMatch = true;
-        return;
-      }
-    });
-    return isMatch;
-  }
 
 }

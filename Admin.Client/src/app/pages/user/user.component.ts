@@ -17,19 +17,7 @@ import { SweetalertService } from '../../shared/_services/sweetalert.service';
 
 @Component({
   selector: 'app-user',
-  templateUrl: './user.component.html',
-  styles: [
-    `
-      table {
-        width: 100%;
-      }
-
-      .mat-form-field {
-        font-size: 14px;
-        width: 100%;
-      }
-    `
-  ]
+  templateUrl: './user.component.html'
 })
 export class UserComponent implements OnInit {
   users: User[] = [];
@@ -44,31 +32,28 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.bsConfig = {
-      containerClass: 'theme-red'
-    };
     this.createRegisterForm();
   }
 
   createRegisterForm() {
     this.nuevoUser = this.fb.group({
-      nusername: ['', Validators.required],
-      nemail: ['', [Validators.required, Validators.email ]],
+      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email ]],
       // dateOfBirth: [null, Validators.required],
       puesto: ['', Validators.required],
-      npassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
       confirmPassword: ['', Validators.required]
     }, {validator: this.passwordMatchValidator});
   }
 
   passwordMatchValidator(g: FormGroup) {
-    return g.get('npassword').value === g.get('confirmPassword').value ? null : {'mismatch': true};
+    return g.get('password').value === g.get('confirmPassword').value ? null : {'mismatch': true};
   }
 
   crearUsuario() {
     if (this.nuevoUser.valid) {
       this.user = Object.assign({}, this.nuevoUser.value);
-      this.userService.register(this.user).subscribe(() => {
+      this.userService.registrar(this.user).subscribe(() => {
         this.alertify.success('Registration successful');
       }, error => {
         this.alertify.error(error);

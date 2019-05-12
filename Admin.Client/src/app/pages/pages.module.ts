@@ -16,7 +16,6 @@ import { ConfiguracionComponent } from './configuracion/configuracion.component'
 import { UserListResolver } from '../shared/_resolvers/user-list.resolver';
 import { UserEditResolver } from '../shared/_resolvers/user-edit.resolver';
 import { UserListComponent } from './user/user-list/user-list.component';
-import { NgbdSortableHeader } from '../config/sortable.directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 

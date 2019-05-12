@@ -79,6 +79,8 @@ namespace Admin.API.Controllers
 
             return Ok(userToReturn);
         }
+        
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)

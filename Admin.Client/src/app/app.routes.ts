@@ -10,7 +10,8 @@ const appRoutes: Routes = [
   {
     path: '',
     component: PagesComponent,
-    canActivate: [ AuthGuard ],
+    runGuardsAndResolvers: 'always',
+        canActivate: [AuthGuard],
     loadChildren: './pages/pages.module#PagesModule'
   },
   { path: '**', component: PagenotfoundComponent }

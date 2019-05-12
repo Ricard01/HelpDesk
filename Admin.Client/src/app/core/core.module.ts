@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { HasRoleDirective } from '../shared/_directives/has-role.directive';
 
 // TODO revisar los imports PROYECTO HOSPITAL SOLO TIENE  RouterModule,    CommonModule,    PipesModule
 @NgModule({
@@ -16,10 +17,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxSpinnerModule,
   ],
   declarations: [
+    HasRoleDirective,
     HeaderComponent,
     SidebarComponent,
     PagenotfoundComponent,
-
   ],
   // Para mandar las paginas fuera de este scope
   exports: [

@@ -33,7 +33,7 @@
 
 
 
-            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *appHasRole="['Admin']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" [routerLink]="['/usuarios']"> <i class="fas fa-user"></i><span> Usuarios</span> </a>
             </li>
 
