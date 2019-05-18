@@ -9,8 +9,21 @@ const Swal2 = Swal.mixin({
 });
 
 
-async function getImage () {
-  const {value: file} = await Swal.fire({
+const Swal3 = Swal.mixin({
+  title: 'Eliminar',
+  text: 'Estas seguro deseas continuar?',
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Si, Eliminar'
+});
+
+
+
+
+async function getImage() {
+  const { value: file } = await Swal.fire({
     title: 'Actualizar Imagen de Usuario',
     input: 'file',
     inputAttributes: {
@@ -18,7 +31,7 @@ async function getImage () {
       'aria-label': 'Imagen Actualizada'
     }
   });
-   if (file) {
+  if (file) {
     const reader = new FileReader;
     reader.onload = (e) => {
       Swal.fire({
@@ -31,6 +44,7 @@ async function getImage () {
   }
 }
 
+
 @Injectable({
   providedIn: 'root'
 
@@ -38,29 +52,32 @@ async function getImage () {
 
 export class SweetalertService {
 
-constructor() {
+  constructor() {
 
-}
-upload() {
-  getImage();
-}
+  }
+  upload() {
+    getImage();
+  }
 
-error( mensaje: string ) {
-  Swal2.fire({ type: 'error', title: mensaje });
-}
+  error(mensaje: string) {
+    Swal2.fire({ type: 'error', title: mensaje });
+  }
 
-success( mensaje: string ) {
-  Swal2.fire({ type: 'success', title: mensaje });
-}
+  success(mensaje: string) {
+    Swal2.fire({ type: 'success', title: mensaje });
+  }
 
-warning( mensaje: string ) {
-  Swal2.fire({ type: 'warning', title: mensaje });
-}
+  warning(mensaje: string) {
+    Swal2.fire({ type: 'warning', title: mensaje });
+  }
 
-info( mensaje: string ) {
-  Swal2.fire({ type: 'info', title: mensaje });
-}
+  info(mensaje: string) {
+    Swal2.fire({ type: 'info', title: mensaje });
+  }
 
+  delete() {
+    Swal3.fire({});
+  }
 
 
 }

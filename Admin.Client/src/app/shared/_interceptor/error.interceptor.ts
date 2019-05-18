@@ -17,7 +17,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                         console.error(applicationError);
                         return throwError(applicationError);
                     }
+
                     const serverError = error.error.errors;
+
                     let modalStateErrors = '';
                     if (serverError && typeof serverError === 'object') {
                         for (const key in serverError) {
@@ -26,7 +28,21 @@ export class ErrorInterceptor implements HttpInterceptor {
                             }
                         }
                     }
-                    return throwError(modalStateErrors || serverError || 'Server Error');
+
+                    const serverError2 = error.error;
+
+                    let modalStateErrors2 = '';
+                    if (serverError2 && typeof serverError2 === 'object') {
+                        for (const key in serverError2) {
+                            if (serverError2[key]) {
+                                modalStateErrors2 += serverError2[key].code + '\n';
+                            }
+                        }
+                    }
+
+
+
+                    return throwError(modalStateErrors || serverError || modalStateErrors2 || 'Server Error');
                 }
             })
         );

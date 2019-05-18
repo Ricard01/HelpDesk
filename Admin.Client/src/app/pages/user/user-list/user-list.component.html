@@ -1,5 +1,4 @@
-
-<a [routerLink]="['/user-nuevo']"  class="col-2 btn btn-block btn-primary  btn-circle"> 
+<a [routerLink]="['/user-nuevo']" class="col-2 btn btn-block btn-primary  btn-circle"> 
     Nuevo    &nbsp; <i class="fa fa-plus"></i>
 </a>
 
@@ -14,7 +13,8 @@
 
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+            <mat-cell *matCellDef="let row">
+                <a [routerLink]="['/users/', row.id]">  {{row.id}} </a> </mat-cell>
         </ng-container>
 
 
@@ -35,6 +35,25 @@
             <mat-cell *matCellDef="let row"> {{row.puesto}} </mat-cell>
         </ng-container>
 
+        <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <!-- <button [routerLink]="['/users/', row.id]" class="btn btn-default btn-icon btn-circle btn-sm">
+                    <i class="fa fa-user"></i> 
+                </button> -->
+
+                <button title="Editar" [routerLink]="['/user-perfil/:row.id']" routerLinkActive="router-link-active" class="ml-4 btn btn-info btn-icon btn-circle btn-sm">
+                    <i class="fa fa-edit"></i>
+                </button>
+
+                <button title="Permisos" (click)="getUserWithRoles(row.id)" class="ml-4 btn btn-indigo btn-icon btn-circle btn-sm">
+                        <i class="fa fa-unlock-alt"></i>
+                    </button>
+                <button title="Eliminar" (click)="eliminar(row.id, row.username )" class="ml-4 btn btn-danger btn-icon btn-circle btn-sm">
+                    <i class="fa fa-trash-alt"></i>
+                </button>
+            </mat-cell>
+        </ng-container>
 
 
         <mat-header-row *matHeaderRowDef="displayedColumns" class="encabezado"></mat-header-row>
@@ -42,6 +61,6 @@
         </mat-row>
     </mat-table>
 
-    
-    <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
+
+    <mat-paginator [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons></mat-paginator>
 </div>

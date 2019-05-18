@@ -28,7 +28,7 @@ export class AuthService {
 
   login(user: User, recordar: boolean = false) {
     if ( recordar ) {
-      localStorage.setItem('username', user.username );
+      localStorage.setItem('username', user.userName );
     } else {
       localStorage.removeItem('username');
     }

@@ -1,20 +1,20 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import pageSettings from '../../../config/page-settings';
-import { User } from '../user.model';
 import { ActivatedRoute } from '@angular/router';
-import { UploadService } from 'src/app/shared/_services/upload.service';
 import { AuthService } from 'src/app/core/_services/auth.service';
 import { UserService } from '../user.service';
+import { UploadService } from 'src/app/shared/_services/upload.service';
 import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Equipo } from '../../equipo/equipo.model';
+import pageSettings from 'src/app/config/page-settings';
+import { User } from '../user.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-user-edit',
-  templateUrl: './user-edit.component.html',
-  styles: []
+  selector: 'app-user-read',
+  templateUrl: './user-read.component.html',
+  styleUrls: ['./user-read.component.css']
 })
-export class UserEditComponent implements OnInit, OnDestroy {
+export class UserReadComponent implements OnInit, OnDestroy {
+
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
@@ -28,7 +28,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
   selectedFile: File;
   pageSettings = pageSettings;
   id: number;
-  equipo: Equipo;
   user: User;
   lat = 40.7143528;
   lng = -74.0059731;
@@ -55,11 +54,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
-
-    // this.formUpdate = new FormGroup({
-    //   phoneNumber:  new FormControl('', [ Validators.pattern('^[0-9]*$'),   Validators.minLength(8),  ])
-
-    // } );
 
   }
 

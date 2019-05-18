@@ -22,10 +22,13 @@
         </div>
 
         <div class="form-group">
-            <label>Departamento</label>
-            <input type="text" [ngClass]="{'is-invalid': nuevoUser.get('puesto').errors && nuevoUser.get('puesto').touched}" class="form-control" formControlName="puesto" placeholder="Departamento">
+            <label>Puesto</label>
+            <input type="text" [ngClass]="{'is-invalid': nuevoUser.get('puesto').errors && nuevoUser.get('puesto').touched}" class="form-control" formControlName="puesto" placeholder="Puesto o Departamento">
             <div class="invalid-feedback" *ngIf="nuevoUser.get('puesto').touched && nuevoUser.get('puesto').hasError('required')">
-                Departamento es obligatorio
+                Puesto es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('puesto').hasError('maxlength') && nuevoUser.get('puesto').touched">
+                Maximo 30 Caracteres
             </div>
 
         </div>
@@ -63,7 +66,7 @@
             </div>
         </div>
 
-        <div class="form-group row m-b-10">
+        <!-- <div class="form-group row m-b-10">
             <label class="col-md-3 col-form-label">Perfil</label>
             <div class="col-md-9">
                 <div class="radio radio-css radio-inline">
@@ -75,7 +78,7 @@
                     <label for="inlineCssRadio2">Administrador</label>
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
         <div class="form-group text-center">

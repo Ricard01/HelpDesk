@@ -27,7 +27,7 @@ export class UserComponent implements OnInit {
   bsConfig: Partial<BsDatepickerConfig>;
 
   constructor(private userService: UserService,
-    private alertify: SweetalertService, private route: ActivatedRoute,  private fb: FormBuilder) {
+    private alertify: SweetalertService, private route: ActivatedRoute, private fb: FormBuilder) {
 
   }
 
@@ -38,24 +38,26 @@ export class UserComponent implements OnInit {
   createRegisterForm() {
     this.nuevoUser = this.fb.group({
       username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email ]],
+      email: ['', [Validators.required, Validators.email]],
       // dateOfBirth: [null, Validators.required],
-      puesto: ['', Validators.required],
+      puesto: ['', [Validators.required, Validators.maxLength(30)]],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
       confirmPassword: ['', Validators.required]
-    }, {validator: this.passwordMatchValidator});
+    }, { validator: this.passwordMatchValidator });
   }
 
   passwordMatchValidator(g: FormGroup) {
-    return g.get('password').value === g.get('confirmPassword').value ? null : {'mismatch': true};
+    return g.get('password').value === g.get('confirmPassword').value ? null : { 'mismatch': true };
   }
 
   crearUsuario() {
     if (this.nuevoUser.valid) {
       this.user = Object.assign({}, this.nuevoUser.value);
       this.userService.registrar(this.user).subscribe(() => {
-        this.alertify.success('Registration successful');
+        this.alertify.success(this.user.username + ' Registrado con exito');
+        this.nuevoUser.reset();
       }, error => {
+        console.log('Error ' + error);
         this.alertify.error(error);
       });
     }

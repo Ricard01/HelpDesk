@@ -47,6 +47,12 @@ namespace Admin.API.Data
 
         }
 
+        public async Task<User> GetUser(int id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
+        }
+
+
         public async Task<List<User>> GetAllUsers()
         {
           var users = await _context.Users.ToListAsync();

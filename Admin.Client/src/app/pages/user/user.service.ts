@@ -11,7 +11,9 @@ import { map } from 'rxjs/operators';
 })
 export class UserService {
   baseUrl = environment.apiUrl + 'users/';
-  baseUrl2 = environment.apiUrl + 'auth/';
+  baseUrlAuth = environment.apiUrl + 'auth/';
+  baseUrlAdmin = environment.apiUrl + 'admin/';
+
   user: User;
   user2: User[] = [];
 
@@ -50,13 +52,23 @@ export class UserService {
     return this.http.put(this.baseUrl + id, user);
   }
 
-  getColumns(): string[] {
-    return ['id', 'username', 'email', 'puesto'];
-  }
-
   registrar(user: User) {
-    return this.http.post(this.baseUrl2 + 'registrar', user);
+    return this.http.post(this.baseUrlAuth + 'registrar', user);
   }
 
+  deleteUser(id: number ) {
+      return this.http.post(this.baseUrl + 'delete/' + id , {});
+  }
+  deleteMessage(id: number, userId: number) {
+    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + id, {});
+  }
+
+  getUserWithRoles(id: number) {
+    return this.http.get(this.baseUrlAdmin + 'userwithroles/' + id);
+  }
+
+  updateUserRoles(user: User, roles: {}) {
+    return this.http.post(this.baseUrlAdmin + 'editRoles/' + user.userName, roles);
+  }
 
 }

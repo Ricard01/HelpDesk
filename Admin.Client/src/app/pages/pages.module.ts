@@ -17,6 +17,11 @@ import { UserListResolver } from '../shared/_resolvers/user-list.resolver';
 import { UserEditResolver } from '../shared/_resolvers/user-edit.resolver';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UserReadComponent } from './user/user-read/user-read.component';
+import { UserReadResolver } from '../shared/_resolvers/user-read.resolver';
+import { UserPerfilComponent } from './user/user-perfil/user-perfil.component';
+import { UserRolesComponent } from './user/user-roles/user-roles.component';
+import { EquipoComponent } from './equipo/equipo/equipo.component';
 
 
 
@@ -26,7 +31,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UserComponent,
     UserEditComponent,
     ConfiguracionComponent,
-    UserListComponent
+    UserListComponent,
+    UserReadComponent,
+    UserPerfilComponent,
+    EquipoComponent,
+    UserRolesComponent
   ],
   exports: [
     DashboardComponent,
@@ -50,9 +59,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSortModule,
     MatProgressSpinnerModule
   ],
+  entryComponents: [
+    UserRolesComponent
+  ],
     providers: [
       UserEditResolver,
-      UserListResolver
+      UserListResolver,
+      UserReadResolver
     ]
 })
 export class PagesModule {}

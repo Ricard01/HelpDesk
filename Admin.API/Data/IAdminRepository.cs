@@ -16,7 +16,7 @@ namespace Admin.API.Data
 
         Task<PagedList<User>> GetUsers(UserParams userParams);
         Task<User> GetUser(int id, bool isCurrentUser);
-        
+         Task<User> GetUser(int id);
          Task<User> GetPhoto(int id);
         // Task<File> GetFile(int id);
         // Task<File> GetMainPhotoForUser(int userId);

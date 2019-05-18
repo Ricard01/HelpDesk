@@ -26,7 +26,7 @@ namespace Admin.API.Controllers
             _repo = repo;
         }
 
-        [HttpGet  ("All")]
+        [HttpGet("All")]
         public async Task<IActionResult> GetAllUsers([FromQuery]UserParams userParams)
         {
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -35,13 +35,13 @@ namespace Admin.API.Controllers
 
             userParams.UserId = currentUserId;
 
-          
+
 
             var users = await _repo.GetAllUsers();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(users);
 
-           
+
 
             return Ok(usersToReturn);
         }
@@ -56,7 +56,7 @@ namespace Admin.API.Controllers
 
             userParams.UserId = currentUserId;
 
-          
+
 
             var users = await _repo.GetUsers(userParams);
 
@@ -72,14 +72,14 @@ namespace Admin.API.Controllers
         public async Task<IActionResult> GetUser(int id)
         {
             var isCurrentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) == id;
-            
+
             var user = await _repo.GetUser(id, isCurrentUser);
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(user);
 
             return Ok(userToReturn);
         }
-        
+
 
 
         [HttpPut("{id}")]
@@ -94,7 +94,7 @@ namespace Admin.API.Controllers
 
 
             _mapper.Map(userForUpdateDto, userFromRepo);
-            
+
             _repo.Update(userFromRepo);
 
             if (await _repo.SaveAll())
@@ -103,6 +103,28 @@ namespace Admin.API.Controllers
             throw new Exception($"Updating user {id} failed on save");
         }
 
-      
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPost("delete/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id == currentUserId)
+                return Unauthorized();
+
+            var userFromRepo = await _repo.GetUser(id);
+
+
+            _repo.Delete(userFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception("Ocurrio un error al intentar eliminar el usuario");
+        }
+
+
+
     }
 }

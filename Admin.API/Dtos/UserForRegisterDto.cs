@@ -9,6 +9,10 @@ namespace Admin.API.Dtos
 
         [Required]
         public string Password { get; set; }
+
+        public string Email { get; set; }
+
+        [StringLength( 30, ErrorMessage = "El campo PUESTO acepta maximo 30 Caracteres" )]  
         public string Puesto { get; set; }
         public DateTime FechaAlta { get; set; }
         public Boolean Activo { get; set; }
