@@ -68,7 +68,11 @@ export class UserService {
   }
 
   updateUserRoles(user: User, roles: {}) {
-    return this.http.post(this.baseUrlAdmin + 'editRoles/' + user.userName, roles);
+    return this.http.post(this.baseUrlAdmin + 'editRoles/' + user.username, roles);
+  }
+
+  changePassword(npassword: string ) {
+    return this.http.put(this.baseUrl, npassword);
   }
 
 }

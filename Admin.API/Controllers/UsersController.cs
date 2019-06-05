@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using Admin.API.Data;
 using Admin.API.Dtos;
 using Admin.API.Helpers;
+using Admin.API.Models;
 using AutoMapper;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Admin.API.Controllers
@@ -19,9 +21,11 @@ namespace Admin.API.Controllers
     {
         private readonly IAdminRepository _repo;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
-        public UsersController(IAdminRepository repo, IMapper mapper)
+        public UsersController(IAdminRepository repo, IMapper mapper, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _mapper = mapper;
             _repo = repo;
         }
@@ -68,6 +72,7 @@ namespace Admin.API.Controllers
             return Ok(usersToReturn);
         }
 
+
         [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -81,27 +86,51 @@ namespace Admin.API.Controllers
         }
 
 
+        // [HttpPut("{id}")]
+        // public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
+        // {
+        //     // TODO validar que solo los usuarios administradores puedan actualizar la informacion de los usuarios
+        //     var hola = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //     if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+        //         return Unauthorized();
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
+        //     var userFromRepo = await _repo.GetUser(id, true);
+
+
+        //     _mapper.Map(userForUpdateDto, userFromRepo);
+
+        //     _repo.Update(userFromRepo);
+
+        //     if (await _repo.SaveAll())
+        //         return NoContent();
+
+        //     throw new Exception($"Updating user {id} failed on save");
+        // }
+
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPut("update/{idUser}")]
+        public async Task<IActionResult> UpdateUserProfile(int idUser, UserUpdateProfile userUpdateProfile)
         {
             // TODO validar que solo los usuarios administradores puedan actualizar la informacion de los usuarios
-            var hola = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            var idAdmin = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (idUser != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(id, true);
+            var userFromRepo = await _repo.GetUser(idUser, true);
 
 
-            _mapper.Map(userForUpdateDto, userFromRepo);
+            _mapper.Map(userUpdateProfile, userFromRepo);
 
             _repo.Update(userFromRepo);
 
             if (await _repo.SaveAll())
                 return NoContent();
 
-            throw new Exception($"Updating user {id} failed on save");
+            throw new Exception($"Actualizando usuario {idUser} fallo");
         }
+
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("delete/{id}")]
@@ -111,7 +140,7 @@ namespace Admin.API.Controllers
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             if (id == currentUserId)
-                return Unauthorized();
+                throw new Exception($"Eliminando usuario  fallo");
 
             var userFromRepo = await _repo.GetUser(id);
 
@@ -124,7 +153,30 @@ namespace Admin.API.Controllers
             throw new Exception("Ocurrio un error al intentar eliminar el usuario");
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPut("cambiarPassword")]
+        public async Task<IActionResult> CambiarPassword(int id, UserUpdatePasswordDto user)
+        {
+            // User.IsInRole("rolename");
 
+            var userFromRepo = await _repo.GetUser(user.Id);
+
+            var userToChangePassword = _mapper.Map<User>(userFromRepo);
+
+            var newPassword = _userManager.PasswordHasher.HashPassword(userToChangePassword, user.Password);
+
+            userToChangePassword.PasswordHash = newPassword;
+
+            var result = await _userManager.UpdateAsync(userToChangePassword);
+
+            if (result.Succeeded)
+            {
+                return NoContent();
+            }
+            return BadRequest(result.Errors);
+
+
+        }
 
     }
 }

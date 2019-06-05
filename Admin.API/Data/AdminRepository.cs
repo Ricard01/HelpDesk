@@ -74,7 +74,7 @@ namespace Admin.API.Data
 
             return photo;
         }
-
+ 
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;

@@ -13,8 +13,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SweetalertService } from '../../shared/_services/sweetalert.service';
 
 
-
-
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html'

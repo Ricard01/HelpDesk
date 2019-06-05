@@ -15,7 +15,7 @@
             <!-- END profile-header-img -->
             <!-- BEGIN profile-header-info -->
             <div class="profile-header-info">
-                <h4 class="m-t-10 m-b-5">{{ user.userName | titlecase }}</h4>
+                <h4 class="m-t-10 m-b-5">{{ user.username | titlecase }}</h4>
                 <label class="image-upload-container btn btn-xs btn-yellow">
                     <span> Actualizar Img</span>
                     <input #imagetoUpload type="file" accept="image/*" (change)="imgToUpload($event)"
@@ -104,7 +104,7 @@
                         <tr>
                             <th></th>
                             <th>
-                                <h4>Computadora <small>{{ user.userName }}</small></h4>
+                                <h4>Computadora <small>{{ user.username }}</small></h4>
                             </th>
                         </tr>
                     </thead>

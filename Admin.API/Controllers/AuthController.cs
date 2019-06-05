@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Admin.API.Data;
 using Admin.API.Dtos;
 using Admin.API.Models;
 using AutoMapper;
@@ -16,27 +17,34 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Admin.API.Controllers
 {
-    [AllowAnonymous]
+
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
+
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+
+        private readonly IAdminRepository _repo;
 
         public AuthController(IConfiguration config,
             IMapper mapper,
             UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager,
+            IAdminRepository repo
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _mapper = mapper;
             _config = config;
+            _repo = repo;
         }
-
+        
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("registrar")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
@@ -55,11 +63,12 @@ namespace Admin.API.Controllers
             return BadRequest(result.Errors);
         }
 
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var user = await _userManager.FindByNameAsync(userForLoginDto.Username);
-            if (user == null || user.Activo == false )
+            if (user == null || user.Activo == false)
             {
                 return Unauthorized();
             }
@@ -71,7 +80,7 @@ namespace Admin.API.Controllers
                 var appUser = await _userManager.Users
                     .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.Username.ToUpper());
 
-                // Se cambio para que solo traiga los valores especificos. 
+                // Se cambio para que solo traiga los valores especificos.
                 var userToReturn = _mapper.Map<UserForReturnDto>(appUser);
 
                 return Ok(new
@@ -99,7 +108,7 @@ namespace Admin.API.Controllers
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            // Encripta             
+            // Encripta
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
@@ -117,5 +126,8 @@ namespace Admin.API.Controllers
 
             return tokenHandler.WriteToken(token);
         }
+
+      
+
     }
 }

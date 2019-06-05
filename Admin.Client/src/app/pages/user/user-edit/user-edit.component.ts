@@ -68,13 +68,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
     const uploadData = new FormData();
     uploadData.append('File', file);
     this.uploadService.uploadImg(uploadData).subscribe( (res: User) => {
-
-
           this.authService.user.fotoUrl = res.fotoUrl;
           this.imagenTemp = res.fotoUrl;
           localStorage.setItem('user', JSON.stringify(this.authService.user));
-
-
     }, error => {
       console.log(error);
     });

@@ -5,6 +5,19 @@
 ng2-slim-loading-bar => ngx spiner se cambio
 npm install --save rxjs-compat  => se desinstalo
  npm install ngx-trend  -- graficas https://www.npmjs.com/package/ngx-trend
+///////////////////////// ********** START STATUS CODE ********** /////////////////////////  
+Success:
+
+return Ok() ← Http status code 200
+return Created() ← Http status code 201
+return NoContent(); ← Http status code 204
+
+Client Error:
+
+return BadRequest(); ← Http status code 400
+return Unauthorized(); ← Http status code 401
+return NotFound(); ← Http status code 404
+///////////////////////// ********** END STATUS CODE ********** /////////////////////////  
 
 ///////////////////////// ********** START T A B L E ********** /////////////////////////  
  @Component({

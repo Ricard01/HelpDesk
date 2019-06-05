@@ -62,7 +62,7 @@ namespace Admin.API.Controllers
                                   select new
                                   {
                                       Id = user.Id,
-                                      UserName = user.UserName,
+                                      Username = user.UserName,
                                       Roles = (from userRole in user.UserRoles
                                                join role in _context.Roles
                                                on userRole.RoleId
