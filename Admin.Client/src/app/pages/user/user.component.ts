@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       // dateOfBirth: [null, Validators.required],
       puesto: ['', [Validators.required, Validators.maxLength(30)]],
-      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]],
       confirmPassword: ['', Validators.required]
     }, { validator: this.passwordMatchValidator });
   }

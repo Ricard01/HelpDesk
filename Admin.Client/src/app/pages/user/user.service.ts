@@ -59,9 +59,6 @@ export class UserService {
   deleteUser(id: number ) {
       return this.http.post(this.baseUrl + 'delete/' + id , {});
   }
-  deleteMessage(id: number, userId: number) {
-    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + id, {});
-  }
 
   getUserWithRoles(id: number) {
     return this.http.get(this.baseUrlAdmin + 'userwithroles/' + id);
@@ -71,8 +68,19 @@ export class UserService {
     return this.http.post(this.baseUrlAdmin + 'editRoles/' + user.username, roles);
   }
 
-  changePassword(npassword: string ) {
-    return this.http.put(this.baseUrl, npassword);
+  changePassword(id: number, password: string ) {
+
+    const user = new UserToChangePassword();
+    user.id = id;
+    user.password = password;
+    return this.http.put(this.baseUrl + 'cambiarPassword', user);
+
   }
 
+}
+
+
+ class UserToChangePassword {
+  id: number;
+  password: string;
 }
