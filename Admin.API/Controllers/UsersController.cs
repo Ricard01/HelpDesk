@@ -85,32 +85,29 @@ namespace Admin.API.Controllers
             return Ok(userToReturn);
         }
 
-
-        // [HttpPut("{id}")]
-        // public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
-        // {
-        //     // TODO validar que solo los usuarios administradores puedan actualizar la informacion de los usuarios
-        //     var hola = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        //     if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-        //         return Unauthorized();
-
-        //     var userFromRepo = await _repo.GetUser(id, true);
-
-
-        //     _mapper.Map(userForUpdateDto, userFromRepo);
-
-        //     _repo.Update(userFromRepo);
-
-        //     if (await _repo.SaveAll())
-        //         return NoContent();
-
-        //     throw new Exception($"Updating user {id} failed on save");
-        // }
-
-
         [Authorize(Policy = "RequireAdminRole")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
+        {
+            // TODO TIP valida que solo el usuario actualmente logeado edite/continue
+            // var hola = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            // if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();
+
+            var userFromRepo = await _repo.GetUser(id, true);
+
+            _mapper.Map(userForUpdateDto, userFromRepo);
+
+            _repo.Update(userFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception($"Ocurrio un error al actualizar el usuario con  {id} ");
+        }
+
         [HttpPut("update/{idUser}")]
-        public async Task<IActionResult> UpdateUserProfile(int idUser, UserUpdateProfile userUpdateProfile)
+        public async Task<IActionResult> UpdateUserProfile(int idUser, UserUpdateProfileDto userUpdateProfileDto)
         {
             // TODO validar que solo los usuarios administradores puedan actualizar la informacion de los usuarios
             var idAdmin = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
@@ -120,8 +117,7 @@ namespace Admin.API.Controllers
 
             var userFromRepo = await _repo.GetUser(idUser, true);
 
-
-            _mapper.Map(userUpdateProfile, userFromRepo);
+            _mapper.Map(userUpdateProfileDto, userFromRepo);
 
             _repo.Update(userFromRepo);
 
@@ -131,27 +127,6 @@ namespace Admin.API.Controllers
             throw new Exception($"Actualizando usuario {idUser} fallo");
         }
 
-
-        [Authorize(Policy = "RequireAdminRole")]
-        [HttpPost("delete/{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
-        {
-
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            if (id == currentUserId)
-                throw new Exception($"Eliminando usuario  fallo");
-
-            var userFromRepo = await _repo.GetUser(id);
-
-
-            _repo.Delete(userFromRepo);
-
-            if (await _repo.SaveAll())
-                return NoContent();
-
-            throw new Exception("Ocurrio un error al intentar eliminar el usuario");
-        }
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("cambiarPassword")]
@@ -176,6 +151,27 @@ namespace Admin.API.Controllers
             return BadRequest(result.Errors);
 
 
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPost("delete/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            if (id == currentUserId)
+                throw new Exception($"Eliminando usuario  fallo");
+
+            var userFromRepo = await _repo.GetUser(id);
+
+
+            _repo.Delete(userFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception("Ocurrio un error al intentar eliminar el usuario");
         }
 
     }

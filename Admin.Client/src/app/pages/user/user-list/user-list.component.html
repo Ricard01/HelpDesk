@@ -14,7 +14,8 @@
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
             <mat-cell *matCellDef="let row">
-                <a [routerLink]="['/users/', row.id]">  {{row.id}} </a> </mat-cell>
+                <a [routerLink]="['/user/', row.id]">  {{row.id}} </a> </mat-cell>
+
         </ng-container>
 
 
@@ -42,7 +43,7 @@
                     <i class="fa fa-user"></i> 
                 </button> -->
 
-                <button title="Editar" [routerLink]="['/user-perfil/',row.id]" routerLinkActive="router-link-active" class="ml-4 btn btn-info btn-icon btn-circle btn-sm">
+                <button title="Editar" [routerLink]="['/user-editar/',row.id]" routerLinkActive="router-link-active" class="ml-4 btn btn-info btn-icon btn-circle btn-sm">
                     <i class="fa fa-edit"></i>
                 </button>
 

@@ -2,12 +2,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import pageSettings from '../../../config/page-settings';
 import { User } from '../user.model';
 import { ActivatedRoute } from '@angular/router';
-import { UploadService } from 'src/app/shared/_services/upload.service';
-import { AuthService } from 'src/app/core/_services/auth.service';
 import { UserService } from '../user.service';
 import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Equipo } from '../../equipo/equipo.model';
+import { FormGroup,  Validators, FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-user-edit',
@@ -16,31 +14,39 @@ import { Equipo } from '../../equipo/equipo.model';
 })
 export class UserEditComponent implements OnInit, OnDestroy {
   constructor(
-    private route: ActivatedRoute,
-    private authService: AuthService,
+    route: ActivatedRoute,
     private userService: UserService,
-    private uploadService: UploadService,
-    private sweetAlert: SweetalertService
+    private sweetAlert: SweetalertService,
+    private fb: FormBuilder
   ) {
     this.pageSettings.pageContentFullWidth = true;
+    route.params.subscribe(params => {
+
+      const id = params['id'];
+      this.getUser(id);
+      // if ( id !== 'nuevo' ) {
+      // }
+
+    });
   }
 
-  selectedFile: File;
+  // selectedFile: File;
   pageSettings = pageSettings;
   id: number;
-  equipo: Equipo;
   user: User;
-  lat = 40.7143528;
-  lng = -74.0059731;
+
+  // lat = 40.7143528;
+  // lng = -74.0059731;
   imagenTemp: string;
-  formUpdate: FormGroup;
+  updatePassword: false;
+  formCambiarPassword: FormGroup;
+
 
   tabs = {
     editPerfil: true,
     equipo: false,
     perfiles: false
   };
-  // baseUrl = environment.apiUrl + 'users/';
 
   showTab(e) {
     for (const key in this.tabs) {
@@ -51,36 +57,21 @@ export class UserEditComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  createRegisterForm() {
+    this.formCambiarPassword = this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]],
+
+    });
+  }
+
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.user = data['user'];
-    });
-
-    // this.formUpdate = new FormGroup({
-    //   phoneNumber:  new FormControl('', [ Validators.pattern('^[0-9]*$'),   Validators.minLength(8),  ])
-
-    // } );
-
+    this.createRegisterForm();
   }
 
-  imgToUpload(event) {
-    const file = event.target.files[0];
-    const uploadData = new FormData();
-    uploadData.append('File', file);
-    this.uploadService.uploadImg(uploadData).subscribe( (res: User) => {
-          this.authService.user.fotoUrl = res.fotoUrl;
-          this.imagenTemp = res.fotoUrl;
-          localStorage.setItem('user', JSON.stringify(this.authService.user));
-    }, error => {
-      console.log(error);
-    });
-
-  }
-
-  updateUser() {
-    this.userService.updateUser(this.authService.decodedToken.nameid, this.user).subscribe(next => {
+  updateUser(id: number) {
+    this.userService.updateUser(id, this.user).subscribe(() => {
       this.sweetAlert.success('Perfil actualizado correctamente');
-      // this.editForm.reset(this.user);
     }, error => {
       console.log(error);
       this.sweetAlert.error(error);
@@ -90,4 +81,24 @@ export class UserEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.pageSettings.pageContentFullWidth = false;
   }
+
+  getUser(id: number) {
+    this.userService.getUser(id)
+      .subscribe(user => {
+        this.user = user;
+      });
+  }
+
+  cambiarPassword(id: number, password: string) {
+
+    this.userService.changePassword(id, password).subscribe(() => {
+      this.sweetAlert.success('Se cambio la contraseña correctamente');
+      this.updatePassword = false;
+      this.formCambiarPassword.reset();
+    }, error => {
+      console.log('Erro cambio contraseña' + error);
+      this.sweetAlert.error(error);
+    });
+  }
+
 }

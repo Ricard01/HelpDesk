@@ -52,6 +52,10 @@ export class UserService {
     return this.http.put(this.baseUrl + id, user);
   }
 
+  updateProfile(id: number, user: User ) {
+    return this.http.put( this.baseUrl + 'update/' + id , user );
+  }
+
   registrar(user: User) {
     return this.http.post(this.baseUrlAuth + 'registrar', user);
   }

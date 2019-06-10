@@ -7,6 +7,8 @@ namespace Admin.API.Dtos
     {
         [Required]
         public string Puesto { get; set; }
+
+        public string Email { get; set; }
         public string FotoUrl { get; set; }
         [Required]
         public Boolean Activo { get; set; }

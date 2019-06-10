@@ -1,0 +1,94 @@
+<div class="tab-content">
+
+    <form class="col-md-6 " [formGroup]="nuevoUser" (ngSubmit)="crearUsuario()">
+        <h2 class="text-center text-primary">Crear usuario</h2>
+        <hr>
+
+        <div class="form-group">
+            <label>Nombre de usuario</label>
+            <input type="text" [ngClass]="{'is-invalid': nuevoUser.get('username').errors && nuevoUser.get('username').touched}" class="form-control" formControlName="username" placeholder="Nombre de Usuario">
+            <div class="invalid-feedback">Nombre de usuario obligatorio </div>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" [ngClass]="{'is-invalid': nuevoUser.get('email').errors && nuevoUser.get('email').touched}" class="form-control" formControlName="email" placeholder="Email">
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('email').touched && nuevoUser.get('email').hasError('required')">
+                Email es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('email').hasError('email')  && nuevoUser.get('email').touched">
+                El Email no tiene la estructura correcta.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Puesto</label>
+            <input type="text" [ngClass]="{'is-invalid': nuevoUser.get('puesto').errors && nuevoUser.get('puesto').touched}" class="form-control" formControlName="puesto" placeholder="Puesto o Departamento">
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('puesto').touched && nuevoUser.get('puesto').hasError('required')">
+                Puesto es obligatorio
+            </div>
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('puesto').hasError('maxlength') && nuevoUser.get('puesto').touched">
+                Maximo 30 Caracteres
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" [ngClass]="{'is-invalid': nuevoUser.get('password').errors 
+            && nuevoUser.get('password').touched}" class="form-control" formControlName="password" placeholder="Contraseña">
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('password').hasError('required') && nuevoUser.get('password').touched">
+                La Contraseña es obligatoria
+            </div>
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('password').hasError('minlength') && nuevoUser.get('password').touched">
+                La Contraseña debe contener minimo 6 caracteres
+            </div>
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('password').hasError('maxlength') && nuevoUser.get('password').touched">
+                La Contraseña debe contener maximo 12 caracteres
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Confirmacion contraseña</label>
+            <input type="password" [ngClass]="{'is-invalid': nuevoUser.get('confirmPassword').errors 
+              && nuevoUser.get('confirmPassword').touched
+              || nuevoUser.get('confirmPassword').touched
+              && nuevoUser.hasError('mismatch')}" class="form-control" formControlName="confirmPassword" placeholder="Confirmar Contraseña">
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('confirmPassword').hasError('required') 
+              && nuevoUser.get('confirmPassword').touched">
+                Confirmar contraseña
+            </div>
+            <div class="invalid-feedback" *ngIf="nuevoUser.hasError('mismatch') 
+            && nuevoUser.get('confirmPassword').touched">
+                Las Contraseñas no coinciden
+            </div>
+        </div>
+
+        <!-- <div class="form-group row m-b-10">
+          <label class="col-md-3 col-form-label">Perfil</label>
+          <div class="col-md-9">
+              <div class="radio radio-css radio-inline">
+                  <input type="radio" name="radio_css_inline" id="inlineCssRadio1" value="option1" checked />
+                  <label for="inlineCssRadio1">Usuario </label>
+              </div>
+              <div class="radio radio-css radio-inline">
+                  <input type="radio" name="radio_css_inline" id="inlineCssRadio2" value="option2" />
+                  <label for="inlineCssRadio2">Administrador</label>
+              </div>
+          </div>
+      </div> -->
+
+
+        <div class="form-group text-center">
+            <button class="btn btn-primary " [disabled]="!nuevoUser.valid" type="submit">Guardar</button>
+            <button class="ml-2 btn btn-default" type="button" [routerLink]="['/usuarios']" routerLinkActive="router-link-active" (click)="Cancelar()">Cancelar</button>
+        </div>
+        <span></span>
+
+
+    </form>
+
+
+</div>

@@ -1,94 +1,126 @@
-<div class="tab-content">
-
-    <form class="col-md-6 " [formGroup]="nuevoUser" (ngSubmit)="crearUsuario()">
-        <h2 class="text-center text-primary">Crear usuario</h2>
-        <hr>
-
-        <div class="form-group">
-            <label>Nombre de usuario</label>
-            <input type="text" [ngClass]="{'is-invalid': nuevoUser.get('username').errors && nuevoUser.get('username').touched}" class="form-control" formControlName="username" placeholder="Nombre de Usuario">
-            <div class="invalid-feedback">Nombre de usuario obligatorio </div>
-        </div>
-
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" [ngClass]="{'is-invalid': nuevoUser.get('email').errors && nuevoUser.get('email').touched}" class="form-control" formControlName="email" placeholder="Email">
-            <div class="invalid-feedback" *ngIf="nuevoUser.get('email').touched && nuevoUser.get('email').hasError('required')">
-                Email es obligatorio
-            </div>
-            <div class="invalid-feedback" *ngIf="nuevoUser.get('email').hasError('email')  && nuevoUser.get('email').touched">
-                El Email no tiene la estructura correcta.
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Puesto</label>
-            <input type="text" [ngClass]="{'is-invalid': nuevoUser.get('puesto').errors && nuevoUser.get('puesto').touched}" class="form-control" formControlName="puesto" placeholder="Puesto o Departamento">
-            <div class="invalid-feedback" *ngIf="nuevoUser.get('puesto').touched && nuevoUser.get('puesto').hasError('required')">
-                Puesto es obligatorio
-            </div>
-            <div class="invalid-feedback" *ngIf="nuevoUser.get('puesto').hasError('maxlength') && nuevoUser.get('puesto').touched">
-                Maximo 30 Caracteres
-            </div>
-
-        </div>
-
-
-
-        <div class="form-group">
-            <label>Contraseña</label>
-            <input type="password" [ngClass]="{'is-invalid': nuevoUser.get('password').errors 
-              && nuevoUser.get('password').touched}" class="form-control" formControlName="password" placeholder="Contraseña">
-            <div class="invalid-feedback" *ngIf="nuevoUser.get('password').hasError('required') && nuevoUser.get('password').touched">
-                La Contraseña es obligatoria
-            </div>
-            <div class="invalid-feedback" *ngIf="nuevoUser.get('password').hasError('minlength') && nuevoUser.get('password').touched">
-                La Contraseña debe contener minimo 6 caracteres
-            </div>
-            <div class="invalid-feedback" *ngIf="nuevoUser.get('password').hasError('maxlength') && nuevoUser.get('password').touched">
-                La Contraseña debe contener maximo 12 caracteres
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Confirmacion contraseña</label>
-            <input type="password" [ngClass]="{'is-invalid': nuevoUser.get('confirmPassword').errors 
-                && nuevoUser.get('confirmPassword').touched
-                || nuevoUser.get('confirmPassword').touched
-                && nuevoUser.hasError('mismatch')}" class="form-control" formControlName="confirmPassword" placeholder="Confirmar Contraseña">
-            <div class="invalid-feedback" *ngIf="nuevoUser.get('confirmPassword').hasError('required') 
-                && nuevoUser.get('confirmPassword').touched">
-                Confirmar contraseña
-            </div>
-            <div class="invalid-feedback" *ngIf="nuevoUser.hasError('mismatch') 
-              && nuevoUser.get('confirmPassword').touched">
-                Las Contraseñas no coinciden
-            </div>
-        </div>
-
-        <!-- <div class="form-group row m-b-10">
-            <label class="col-md-3 col-form-label">Perfil</label>
-            <div class="col-md-9">
-                <div class="radio radio-css radio-inline">
-                    <input type="radio" name="radio_css_inline" id="inlineCssRadio1" value="option1" checked />
-                    <label for="inlineCssRadio1">Usuario </label>
+<!-- begin profile -->
+<div *ngIf="user">
+    <div class="profile">
+        <div class="profile-header">
+            <!-- BEGIN profile-header-cover -->
+            <div class="profile-header-cover"></div>
+            <!-- END profile-header-cover -->
+            <!-- BEGIN profile-header-content -->
+            <div class="profile-header-content">
+                <!-- BEGIN profile-header-img -->
+                <div class="profile-header-img">
+                    <img *ngIf="!imagenTemp" src="{{ user.fotoUrl || '../../../assets/img/user/user.png'}}" alt="">
+                    <img *ngIf="imagenTemp" src="{{ imagenTemp || '../../../assets/img/user/user.png'}}" alt="">
                 </div>
-                <div class="radio radio-css radio-inline">
-                    <input type="radio" name="radio_css_inline" id="inlineCssRadio2" value="option2" />
-                    <label for="inlineCssRadio2">Administrador</label>
+
+                <!-- END profile-header-img -->
+                <!-- BEGIN profile-header-info -->
+                <div class="profile-header-info">
+                    <h4 class="m-t-10 m-b-5">{{ user.username | titlecase }}</h4>
+                    <label class="image-upload-container btn btn-xs btn-grey">
+                        <span> Actualizar Img</span>
+                        <input type="file" disabled class="d-none">
+                    </label>
+
                 </div>
+                <!-- END profile-header-info -->
             </div>
-        </div> -->
+            <!-- END profile-header-content -->
+            <!-- BEGIN profile-header-tab -->
+            <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a href="javascript:;" (click)="showTab('editPerfil')" [ngClass]="{ 'active': tabs.editPerfil }" class="nav-link">Editar Perfil</a></li>
+                <li class="nav-item"><a href="javascript:;" (click)="showTab('equipo')" [ngClass]="{ 'active': tabs.equipo }" class="nav-link">Equipo </a></li>
+                <li class="nav-item"><a href="javascript:;" (click)="showTab('perfiles')" [ngClass]="{ 'active': tabs.perfiles }" class="nav-link">Perfiles</a></li>
 
-
-        <div class="form-group text-center">
-            <button class="btn btn-primary " [disabled]="!nuevoUser.valid" type="submit">Guardar</button>
-            <button class="ml-2 btn btn-default" type="button" [routerLink]="['/usuarios']" routerLinkActive="router-link-active" (click)="Cancelar()">Cancelar</button>
+            </ul>
+            <!-- END profile-header-tab -->
         </div>
-        <span></span>
+    </div>
+    <!-- end profile -->
+    <!-- begin profile-content -->
+    <div class="profile-content">
+        <!-- begin tab-content -->
+        <div class="tab-content p-0">
+
+            <!-- begin #perfil -->
+            <div class="tab-pane fade" [ngClass]="{ 'active show': tabs.editPerfil }">
+                <!-- begin table -->
+                <form #formUpdate="ngForm">
+                    <div class="table-responsive">
+                        <table class="table table-profile">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
 
 
-    </form>
+                                        <form class="form-inline col-md-8 ">
+                                            <h4 class="mr-2 ">
+                                                {{ user.username | titlecase}}<small>{{ user.puesto | titlecase}}</small>
+                                            </h4>
+                                            <!-- TODO -->
+                                            <!-- Password forms should have (optionally hidden) username fields for accessibility -->
 
+                                            <a class="ml-2 btn btn-warning  btn-circle" (click)="updatePassword = !updatePassword" disabled="formRead">
+                                                <i class="fa fa-unlock-alt pull-left m-r-10 text-black"></i> <small *ngIf="formRead">Cambiar contraseña</small>
+                                            </a>
+
+
+                                        </form>
+
+                                    </th>
+                                    <th>
+
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight">
+                                    <td class="field">Email</td>
+                                    <td> <input [disabled]="formRead" type="email" class="col-md-4 form-control form-control-sm" name="email" [(ngModel)]="user.email"> </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="divider">
+                                    <td colspan="2"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="field">Cel</td>
+                                    <td><input [disabled]="formRead" type="text" class="col-md-4 form-control form-control-sm" name="phoneNumber" [(ngModel)]="user.phoneNumber"></td>
+                                    <td></td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td class="field">Puesto</td>
+                                    <td><input [disabled]="formRead" type="text" class="col-md-4 form-control form-control-sm" name="puesto" [(ngModel)]="user.puesto"></td>
+                                    <td></td>
+                                </tr>
+
+
+                                <tr class="divider">
+                                    <td colspan="3"></td>
+                                </tr>
+                                <tr class="highlight" *ngIf="!formRead">
+                                    <td class="field">&nbsp;</td>
+                                    <td class="p-t-10 p-b-10" colspan="2">
+                                        <button type="submit" [disabled]="!formUpdate.dirty" class=" col-md-2 col-sm-3 btn btn-primary width-150">Actualizar</button>
+                                        <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5" routerLink="/usuarios">Cancelar</a>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+
+                <!-- end table -->
+            </div>
+            <!-- end #perfil -->
+
+
+        </div>
+        <!-- end tab-content -->
+    </div>
+    <!-- end profile-content -->
 
 </div>

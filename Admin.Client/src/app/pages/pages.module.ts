@@ -13,15 +13,17 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserComponent } from './user/user.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
-import { UserListResolver } from '../shared/_resolvers/user-list.resolver';
-import { UserEditResolver } from '../shared/_resolvers/user-edit.resolver';
+
 import { UserListComponent } from './user/user-list/user-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UserReadComponent } from './user/user-read/user-read.component';
-import { UserReadResolver } from '../shared/_resolvers/user-read.resolver';
 import { UserPerfilComponent } from './user/user-perfil/user-perfil.component';
 import { UserRolesComponent } from './user/user-roles/user-roles.component';
 import { EquipoComponent } from './equipo/equipo/equipo.component';
+
+import { UserNuevoComponent } from './user/user-nuevo/user-nuevo.component';
+import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
+import { UserListResolver } from './user/user-list/user-list.resolver';
+
 
 
 
@@ -32,10 +34,10 @@ import { EquipoComponent } from './equipo/equipo/equipo.component';
     UserEditComponent,
     ConfiguracionComponent,
     UserListComponent,
-    UserReadComponent,
     UserPerfilComponent,
     EquipoComponent,
-    UserRolesComponent
+    UserRolesComponent,
+    UserNuevoComponent
   ],
   exports: [
     DashboardComponent,
@@ -63,9 +65,8 @@ import { EquipoComponent } from './equipo/equipo/equipo.component';
     UserRolesComponent
   ],
     providers: [
-      UserEditResolver,
-      UserListResolver,
-      UserReadResolver
+      UserPerfilResolver,
+      UserListResolver
     ]
 })
 export class PagesModule {}
