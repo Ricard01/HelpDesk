@@ -5,13 +5,16 @@ import { UserComponent } from './user/user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserPerfilComponent } from './user/user-perfil/user-perfil.component';
 import { UserNuevoComponent } from './user/user-nuevo/user-nuevo.component';
-import { UserListResolver } from './user/user-list/user-list.resolver';
 import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
+import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component';
+import { EquipoComponent } from './equipo/equipo/equipo.component';
 
 
 
 const pagesRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'allequipos', component: EquipoComponent, data: {roles: ['Admin']}},
+  { path: 'equipos', component: EquipoComponent, data: {roles: ['Admin']}},
   { path: 'user/:id', component: UserComponent},
   { path: 'user-perfil',  component: UserPerfilComponent, resolve: { user: UserPerfilResolver } },
   { path: 'user-editar/:id', component: UserEditComponent, data: {roles: ['Admin']} },

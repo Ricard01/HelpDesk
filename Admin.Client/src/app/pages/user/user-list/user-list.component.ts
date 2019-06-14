@@ -8,9 +8,6 @@ import Swal from 'sweetalert2';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { UserRolesComponent } from '../user-roles/user-roles.component';
 
-
-
-
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -21,17 +18,8 @@ export class UserListComponent implements OnInit {
   userRoles: User;
   users: User[];
   bsModalRef: BsModalRef;
-  // paginacion: Paginacion;
-  // pagination = Pagination;
-  // length = 100;
-  // pageSize = 10;
-
   pageSizeOptions: number[] = [5, 10, 25, 100];
-
-  // MatPaginator Output
   pageEvent: PageEvent;
-
-
   displayedColumns: string[] = ['id', 'username', 'email', 'puesto', 'actions'];
   dataSource: any;
 
@@ -47,9 +35,7 @@ export class UserListComponent implements OnInit {
   }
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
-
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-    console.log('que popo va aqui ' + this.pageSizeOptions);
   }
 
   RenderDataTable() {

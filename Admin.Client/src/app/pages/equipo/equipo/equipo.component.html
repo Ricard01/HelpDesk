@@ -1,3 +1,53 @@
-<p>
-  equipo works!
-</p>
+<div class="table-responsive">
+    <form [formGroup]="fEquipo">
+        <table class="table table-profile">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        <h4>Equipo de Computo</h4>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight">
+                    <td class="field">&nbsp;</td>
+                    <td>
+
+
+
+                        <select formControlName="equipo" class="col-md-4 custom-select" required>
+                            <!-- (change)="changeCity($event)"  -->
+                            <option [ngValue]="null"> Ninguno </option>
+                            <option *ngFor="let equipo of equipos" [ngValue]="equipo">
+                                {{ equipo.nombreEquipo }}
+                            </option>
+                        </select>
+
+                        <p>Form value: {{ fEquipo.value | json }}</p>
+                    </td>
+                </tr>
+                <tr class="divider">
+                    <td colspan="2"></td>
+                </tr>
+
+                <tr class="highlight">
+                    <td class="field">&nbsp;</td>
+                    <td class="p-t-10 p-b-10">
+                        <button  (click)="updateEquipo(idUser, this.fEquipo.get('equipo').value)" [disabled]="fEquipo.invalid"
+                            class=" col-md-2 col-sm-3 btn btn-primary width-150">Guardar</button>
+                        <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5"
+                            routerLink="/usuarios">Cancelar</a>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+
+        <table *ngIf="false">
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>

@@ -21,8 +21,8 @@ namespace Admin.API.Data
         {
             if (!_userManager.Users.Any())
             {
-                var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
-                var users = JsonConvert.DeserializeObject<List<User>>(userData);
+                // var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
+                // var users = JsonConvert.DeserializeObject<List<User>>(userData);
 
                 var roles = new List<Role>
                 {
@@ -37,13 +37,13 @@ namespace Admin.API.Data
                     _roleManager.CreateAsync(role).Wait();
                 }
 
-                foreach (var user in users)
-                {
+                // foreach (var user in users)
+                // {
                     // user.Photos.SingleOrDefault().IsApproved = true;
                     // creamos los usuarios con password**
-                    _userManager.CreateAsync(user, "nolose").Wait();
-                    _userManager.AddToRoleAsync(user, "user").Wait();
-                }
+                    // _userManager.CreateAsync(user, "nolose").Wait();
+                    // _userManager.AddToRoleAsync(user, "User").Wait();
+                // }
 
                 var adminUser = new User
                 {

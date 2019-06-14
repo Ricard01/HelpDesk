@@ -28,9 +28,12 @@
             <!-- END profile-header-content -->
             <!-- BEGIN profile-header-tab -->
             <ul class="profile-header-tab nav nav-tabs">
-                <li class="nav-item"><a href="javascript:;" (click)="showTab('editPerfil')" [ngClass]="{ 'active': tabs.editPerfil }" class="nav-link">Editar Perfil</a></li>
-                <li class="nav-item"><a href="javascript:;" (click)="showTab('equipo')" [ngClass]="{ 'active': tabs.equipo }" class="nav-link">Equipo </a></li>
-                <li class="nav-item"><a href="javascript:;" (click)="showTab('perfiles')" [ngClass]="{ 'active': tabs.perfiles }" class="nav-link">Perfiles</a></li>
+                <li class="nav-item"><a href="javascript:;" (click)="showTab('editPerfil')"
+                        [ngClass]="{ 'active': tabs.editPerfil }" class="nav-link">Editar Perfil</a></li>
+                <li class="nav-item"><a href="javascript:;" (click)="showTab('equipo')"
+                        [ngClass]="{ 'active': tabs.equipo }" class="nav-link">Equipo </a></li>
+                <li class="nav-item"><a href="javascript:;" (click)="showTab('perfiles')"
+                        [ngClass]="{ 'active': tabs.perfiles }" class="nav-link">Perfiles</a></li>
 
             </ul>
             <!-- END profile-header-tab -->
@@ -45,8 +48,8 @@
             <!-- begin #perfil -->
             <div class="tab-pane fade" [ngClass]="{ 'active show': tabs.editPerfil }">
                 <!-- begin table -->
-                <form #formUpdate="ngForm" (ngSubmit)="updateUser(user.id)">
-                    <div class="table-responsive">
+                <div class="table-responsive">
+                    <form #formUpdate="ngForm" (ngSubmit)="updateUser(user.id)">
                         <table class="table table-profile">
                             <thead>
                                 <tr>
@@ -61,19 +64,27 @@
                                             <!-- TODO -->
                                             <!-- Password forms should have (optionally hidden) username fields for accessibility -->
 
-                                            <a class="ml-2 btn btn-warning  btn-circle" (click)="updatePassword = !updatePassword" disabled="!updatePassword">
-                                                <i class="fa fa-unlock-alt pull-left m-r-10 text-black"></i> <small *ngIf="!updatePassword">Cambiar contraseña</small>
+                                            <a class="ml-2 btn btn-warning  btn-circle"
+                                                (click)="updatePassword = !updatePassword" disabled="!updatePassword">
+                                                <i class="fa fa-unlock-alt pull-left m-r-10 text-black"></i> <small
+                                                    *ngIf="!updatePassword">Cambiar contraseña</small>
                                             </a>
 
-                                            <input class="ml-2 col-md-5 form-control" type="password" *ngIf="updatePassword" [ngClass]="{'is-invalid': formCambiarPassword.get('password').errors 
-                                                        && formCambiarPassword.get('password').touched}" formControlName="password">
-                                            <button class="ml-2 btn btn-warning btn-circle" [disabled]="!formCambiarPassword.valid" *ngIf="updatePassword" (click)="cambiarPassword( user.id, formCambiarPassword.get('password').value )">Cambiar
-                                                </button>
+                                            <input class="ml-2 col-md-5 form-control" type="password"
+                                                *ngIf="updatePassword" [ngClass]="{'is-invalid': formCambiarPassword.get('password').errors 
+                                                        && formCambiarPassword.get('password').touched}"
+                                                formControlName="password">
+                                            <button class="ml-2 btn btn-warning btn-circle"
+                                                [disabled]="!formCambiarPassword.valid" *ngIf="updatePassword"
+                                                (click)="cambiarPassword( user.id, formCambiarPassword.get('password').value )">Cambiar
+                                            </button>
 
-                                            <div class="invalid-feedback" *ngIf="formCambiarPassword.get('password').hasError('minlength') && formCambiarPassword.get('password').touched">
+                                            <div class="invalid-feedback"
+                                                *ngIf="formCambiarPassword.get('password').hasError('minlength') && formCambiarPassword.get('password').touched">
                                                 La Contraseña debe contener minimo 6 caracteres
                                             </div>
-                                            <div class="invalid-feedback" *ngIf="formCambiarPassword.get('password').hasError('maxlength') && formCambiarPassword.get('password').touched">
+                                            <div class="invalid-feedback"
+                                                *ngIf="formCambiarPassword.get('password').hasError('maxlength') && formCambiarPassword.get('password').touched">
                                                 La Contraseña debe contener maximo 12 caracteres
                                             </div>
 
@@ -91,7 +102,8 @@
                             <tbody>
                                 <tr class="highlight">
                                     <td class="field">Email</td>
-                                    <td> <input type="email" class="col-md-4 form-control form-control-sm" name="email" [(ngModel)]="user.email"> </td>
+                                    <td> <input type="email" class="col-md-4 form-control form-control-sm" name="email"
+                                            [(ngModel)]="user.email"> </td>
                                     <td></td>
                                 </tr>
                                 <tr class="divider">
@@ -100,12 +112,14 @@
                                 </tr>
                                 <tr>
                                     <td class="field">Cel</td>
-                                    <td><input type="text" class="col-md-4 form-control form-control-sm" name="phoneNumber" [(ngModel)]="user.phoneNumber"></td>
+                                    <td><input type="text" class="col-md-4 form-control form-control-sm"
+                                            name="phoneNumber" [(ngModel)]="user.phoneNumber"></td>
                                     <td></td>
                                 </tr>
                                 <tr class="highlight">
                                     <td class="field">Puesto</td>
-                                    <td><input type="text" class="col-md-4 form-control form-control-sm" name="puesto" [(ngModel)]="user.puesto"></td>
+                                    <td><input type="text" class="col-md-4 form-control form-control-sm" name="puesto"
+                                            [(ngModel)]="user.puesto"></td>
                                     <td></td>
                                 </tr>
 
@@ -116,24 +130,38 @@
                                 <tr class="highlight">
                                     <td class="field">&nbsp;</td>
                                     <td class="p-t-10 p-b-10" colspan="2">
-                                        <button type="submit" [disabled]="!formUpdate.dirty" class=" col-md-2 col-sm-3 btn btn-primary width-150">Actualizar</button>
-                                        <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5" routerLink="/usuarios">Cancelar</a>
+                                        <button type="submit" [disabled]="!formUpdate.dirty"
+                                            class=" col-md-2 col-sm-3 btn btn-primary width-150">Actualizar</button>
+                                        <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5"
+                                            routerLink="/usuarios">Cancelar</a>
                                     </td>
 
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </form>
+                    </form>
+                </div>
 
                 <!-- end table -->
             </div>
             <!-- end #perfil -->
+
+            <!-- begin #equipo-->
+            <div class="tab-pane fade" [ngClass]="{ 'active show': tabs.equipo }">
+                
+                <app-equipo [idUser]="user.id" ></app-equipo>
+            </div>
+            <!-- end #equipo -->
 
 
         </div>
         <!-- end tab-content -->
     </div>
     <!-- end profile-content -->
+
+
+
+
+
 
 </div>

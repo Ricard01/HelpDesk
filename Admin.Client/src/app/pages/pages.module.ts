@@ -22,7 +22,8 @@ import { EquipoComponent } from './equipo/equipo/equipo.component';
 
 import { UserNuevoComponent } from './user/user-nuevo/user-nuevo.component';
 import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
-import { UserListResolver } from './user/user-list/user-list.resolver';
+// import { UserListResolver } from './user/user-list/user-list.resolver';
+import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component';
 
 
 
@@ -37,7 +38,8 @@ import { UserListResolver } from './user/user-list/user-list.resolver';
     UserPerfilComponent,
     EquipoComponent,
     UserRolesComponent,
-    UserNuevoComponent
+    UserNuevoComponent,
+    EquipoListComponent
   ],
   exports: [
     DashboardComponent,
@@ -66,7 +68,7 @@ import { UserListResolver } from './user/user-list/user-list.resolver';
   ],
     providers: [
       UserPerfilResolver,
-      UserListResolver
+      // UserListResolver
     ]
 })
 export class PagesModule {}

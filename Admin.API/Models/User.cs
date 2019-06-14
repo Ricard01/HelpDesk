@@ -19,7 +19,7 @@ namespace Admin.API.Models
 
          public string PublicId { get; set; }
 
-        // public ICollection<Foto> Fotos { get; set; }
+        // public Equipo Equipo { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
 
     }

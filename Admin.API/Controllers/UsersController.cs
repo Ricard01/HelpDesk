@@ -7,13 +7,17 @@ using Admin.API.Dtos;
 using Admin.API.Helpers;
 using Admin.API.Models;
 using AutoMapper;
-
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Options;
 
 namespace Admin.API.Controllers
 {
+
     [ServiceFilter(typeof(LogUserActivity))]
     [Route("api/[controller]")]
     [ApiController]
@@ -23,33 +27,36 @@ namespace Admin.API.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
 
-        public UsersController(IAdminRepository repo, IMapper mapper, UserManager<User> userManager)
+        private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
+
+        private Cloudinary _cloudinary;
+
+        public UsersController(IAdminRepository repo, IMapper mapper, UserManager<User> userManager, IOptions<CloudinarySettings> cloudinaryConfig)
         {
+            _cloudinaryConfig = cloudinaryConfig;
             _userManager = userManager;
             _mapper = mapper;
             _repo = repo;
+
+            Account acc = new Account(
+               _cloudinaryConfig.Value.CloudName,
+               _cloudinaryConfig.Value.ApiKey,
+               _cloudinaryConfig.Value.ApiSecret
+           );
+
+            _cloudinary = new Cloudinary(acc);
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("All")]
-        public async Task<IActionResult> GetAllUsers([FromQuery]UserParams userParams)
+        public async Task<IActionResult> GetAllUsers()
         {
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            var userFromRepo = await _repo.GetUser(currentUserId, true);
-
-            userParams.UserId = currentUserId;
-
-
-
             var users = await _repo.GetAllUsers();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(users);
 
-
-
             return Ok(usersToReturn);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
@@ -76,6 +83,7 @@ namespace Admin.API.Controllers
         [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(int id)
         {
+
             var isCurrentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) == id;
 
             var user = await _repo.GetUser(id, isCurrentUser);
@@ -85,14 +93,13 @@ namespace Admin.API.Controllers
             return Ok(userToReturn);
         }
 
-        [Authorize(Policy = "RequireAdminRole")]
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserForUpdateDto userForUpdateDto)
+        public async Task<IActionResult> UpdateUserProfile(int id, UserUpdateProfileDto userForUpdateDto)
         {
-            // TODO TIP valida que solo el usuario actualmente logeado edite/continue
-            // var hola = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            // if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //     return Unauthorized();
+
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
 
             var userFromRepo = await _repo.GetUser(id, true);
 
@@ -106,14 +113,15 @@ namespace Admin.API.Controllers
             throw new Exception($"Ocurrio un error al actualizar el usuario con  {id} ");
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("update/{idUser}")]
-        public async Task<IActionResult> UpdateUserProfile(int idUser, UserUpdateProfileDto userUpdateProfileDto)
+        public async Task<IActionResult> UpdateUser(int idUser, UserForUpdateDto userUpdateProfileDto)
         {
             // TODO validar que solo los usuarios administradores puedan actualizar la informacion de los usuarios
-            var idAdmin = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            // var idAdmin = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            if (idUser != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-                return Unauthorized();
+            // if (idUser != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();
 
             var userFromRepo = await _repo.GetUser(idUser, true);
 
@@ -126,7 +134,6 @@ namespace Admin.API.Controllers
 
             throw new Exception($"Actualizando usuario {idUser} fallo");
         }
-
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("cambiarPassword")]
@@ -165,14 +172,43 @@ namespace Admin.API.Controllers
 
             var userFromRepo = await _repo.GetUser(id);
 
+            var publicIdRepo = userFromRepo.PublicId;
 
             _repo.Delete(userFromRepo);
 
             if (await _repo.SaveAll())
-                return NoContent();
+            {
+                // Sobre el mismo controller Funciona
+                //    return RedirectToRoute(new
+                // {
+                //     controller = "Users",
+                //     action = "Get",
+                //     id = publicIdRepo+1
+                // });
+                DeletePhotoProfile(userFromRepo.PublicId);
+                return Ok();
+
+
+            }
 
             throw new Exception("Ocurrio un error al intentar eliminar el usuario");
         }
 
+        public void DeletePhotoProfile(string publicId)
+        {
+            if (publicId != null)
+            {
+                var deleteParams = new DeletionParams(publicId);
+
+
+                var result = _cloudinary.Destroy(deleteParams);
+
+                if (result.Result == "ok")
+                {
+                    publicId = "";
+                }
+            }
+
+        }
     }
 }

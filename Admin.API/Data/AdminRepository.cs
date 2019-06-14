@@ -11,7 +11,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Admin.API.Data
 {
-    public class AdminRepository : IAdminRepository 
+    public class AdminRepository : IAdminRepository
     {
         private readonly DataContext _context;
 
@@ -55,10 +55,11 @@ namespace Admin.API.Data
 
         public async Task<List<User>> GetAllUsers()
         {
-          var users = await _context.Users.ToListAsync();
-          return users;
+            var users = await _context.Users.ToListAsync();
+            return users;
 
         }
+
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
             // 
@@ -74,11 +75,22 @@ namespace Admin.API.Data
 
             return photo;
         }
- 
+
         public async Task<bool> SaveAll()
         {
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<List<Equipo>> GetAllEquipos()
+        {
+            var equipos = await _context.Equipos.ToListAsync();
+            return equipos;
+
+        }
+
+        public async Task<Equipo> GetEquipo( int id) 
+        {
+            return await _context.Equipos.FirstOrDefaultAsync( e => e.Id == id);
+        }
     }
 }

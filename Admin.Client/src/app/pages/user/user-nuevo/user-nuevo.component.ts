@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { User } from '../user.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsDatepickerConfig } from 'ngx-bootstrap';
@@ -13,12 +13,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserNuevoComponent implements OnInit {
   users: User[] = [];
+  @ViewChild('username') userNameRef: ElementRef;
   @Output() cancelRegister = new EventEmitter();
   user: User;
   nuevoUser: FormGroup;
   bsConfig: Partial<BsDatepickerConfig>;
 
-  constructor( private userService: UserService,
+  constructor(private userService: UserService,
     private alertify: SweetalertService, private route: ActivatedRoute, private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -44,7 +45,10 @@ export class UserNuevoComponent implements OnInit {
       this.user = Object.assign({}, this.nuevoUser.value);
       this.userService.registrar(this.user).subscribe(() => {
         this.alertify.success(this.user.username + ' Registrado con exito');
+        this.userNameRef.nativeElement.focus();
         this.nuevoUser.reset();
+
+
       }, error => {
         console.log('Error ' + error);
         this.alertify.error(error);

@@ -100,22 +100,27 @@ namespace Admin.API.Controllers
 
 
 
-
         // TODO log si no logro eliminar la foto .
+        [HttpGet("{publicId}", Name = "DeleteFile")]
         public void DeleteFile(string publicId)
         {
 
-            var deleteParams = new DeletionParams(publicId);
-
-            var result = _cloudinary.Destroy(deleteParams);
-
-            if (result.Result == "ok")
+            if (publicId != null)
             {
-                publicId = "";
+                var deleteParams = new DeletionParams(publicId);
+
+
+                var result = _cloudinary.Destroy(deleteParams);
+
+                if (result.Result == "ok")
+                {
+                    publicId = "";
+                }
             }
 
 
         }
+
 
 
 

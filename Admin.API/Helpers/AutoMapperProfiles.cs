@@ -17,6 +17,9 @@ namespace Admin.API.Helpers
             CreateMap<UserUpdatePasswordDto, User>();
             CreateMap<UserUpdateProfileDto, User>();
             CreateMap<FileUploadDto, User>();
+            CreateMap<Equipo, EquipoListDto>();
+            CreateMap<EquipoListDto, Equipo>();
+            CreateMap<EquipoUpdDto, Equipo>();
 
         }
     }
