@@ -21,6 +21,10 @@ export class UserService {
     return this.http.get<User>(this.baseUrl + id);
   }
 
+  checkUserName(username: string ) {
+    return  this.http.get(this.baseUrl + 'userexist/' + username  );
+  }
+
   getAllusers() {
     return this.http.get<User[]>(this.baseUrl + 'all');
   }

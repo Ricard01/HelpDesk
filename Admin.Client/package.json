@@ -27,6 +27,7 @@
     "alertifyjs": "^1.11.2",
     "core-js": "^2.5.4",
     "ngx-bootstrap": "^3.2.0",
+    "ngx-mask": "^7.9.10",
     "ngx-spinner": "^7.0.0",
     "ngx-trend": "^3.4.1",
     "rxjs": "~6.4.0",

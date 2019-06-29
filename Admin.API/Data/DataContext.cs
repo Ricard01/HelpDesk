@@ -32,6 +32,11 @@ namespace Admin.API.Data
                     .IsRequired();
             });
 
+            builder.Entity<Equipo>(entity =>
+            {
+                entity.HasIndex(e => e.NombreEquipo).IsUnique();
+            });
+
             // builder.Entity<Equipo>(equipo =>
             // {
             //     // Llave primaria 
@@ -41,7 +46,7 @@ namespace Admin.API.Data
             //     equipo.HasOne(d => d.User)
             //     .WithOne(p => p.Equipo)
             //     .HasForeignKey<Equipo>(d => d.Id);
-               
+
             // });
 
             // builder.Entity<Equipo> ( equipo => 

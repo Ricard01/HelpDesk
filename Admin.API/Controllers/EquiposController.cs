@@ -14,7 +14,6 @@ namespace Admin.API.Controllers
     [ApiController]
     public class EquiposController : ControllerBase
     {
-
         private readonly IAdminRepository _repo;
         private readonly IMapper _mapper;
 
@@ -26,44 +25,70 @@ namespace Admin.API.Controllers
             _repo = repo;
         }
 
+        [HttpGet("{idEquipo}")]
+        public async Task<IActionResult> GetEquipo(int idEquipo)
+        {
+
+            var equipo = await _repo.GetEquipo(idEquipo);
+            return Ok(equipo);
+
+        }
         [HttpGet]
         public async Task<IActionResult> GetAllEquipos()
         {
             var equipos = await _repo.GetAllEquipos();
 
-            var equiposToReturn = _mapper.Map<IEnumerable<EquipoListDto>>(equipos);
+            // var equiposToReturn = _mapper.Map<IEnumerable<EquipoListDto>>(equipos);
+            // var equiposToReturn = equipos;
 
-            return Ok(equiposToReturn);
+            return Ok(equipos);
         }
 
-        [HttpPut("{idUser}")]
-        public async Task<IActionResult> UpdateEquipo(int idUser, EquipoListDto equipoDto)
+        [HttpPost]
+        public async Task<IActionResult> CreateEquipo(Equipo equipo)
         {
+            // var message = _mapper.Map<Message>(messageForCreationDto);
 
-            var equipoFromRepo = await _repo.GetEquipo( equipoDto.Id);
-            _mapper.Map(equipoDto, equipoFromRepo);
-
-            _repo.Update(equipoFromRepo);
+            _repo.Add(equipo);
 
             if (await _repo.SaveAll())
-                return NoContent();
+            {
 
-            throw new Exception($"Ocurrio un error al actualizar el equipo  ");
+                return Ok();
+            }
+
+            throw new Exception("Ocurrio un error al crear el equipo");
+
 
         }
 
 
         [HttpPut("update")]
-        public async Task<IActionResult> Update(EquipoUpdDto equipoDto) 
+        public async Task<IActionResult> UpdateEquipo(EquipoUpdDto equipoDto)
         {
-            var equipoFromRepo = await _repo.GetEquipo( equipoDto.Id);
+            var equipoFromRepo = await _repo.GetEquipo(equipoDto.Id);
 
-            _mapper.Map( equipoDto, equipoFromRepo );
-            
-            if ( await _repo.SaveAll())
-            return NoContent();
+            _mapper.Map(equipoDto, equipoFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
 
             throw new Exception($"Ocurrion un error al actualizar");
         }
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> DeleteEquipo(Equipo equipo)
+        {
+
+            _repo.Delete(equipo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception("Error eliminado equipo");
+
+        }
+
+
     }
 }

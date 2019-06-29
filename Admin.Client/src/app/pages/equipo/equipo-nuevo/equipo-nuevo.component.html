@@ -1,0 +1,28 @@
+<div class="tab-content">
+
+  <form class="col-md-6" [formGroup]="fEquipoNuevo" action="">
+    <h2 class="text-center text-primary">Crear Equipo </h2>
+    <hr>
+
+    <div class="form-group">
+      <label for="">Nombre Equipo</label>
+      <input type="text" class="form-control form-control-sm" placeholder="Nombre Equipo">
+    </div>
+
+    <div class="form-group">
+      <label>Direccion Ip</label>
+      <input type="text" class="form-control form-cotnrol-sm" placeholder="000.000.000.000" mask="IP">
+    </div>
+
+    <div class="form-group">
+      <label>Caracteristicas</label>
+      <textarea type="text" class="form-control form-cotnrol-sm" placeholder="Win10"></textarea>
+      </div>
+      <div class="form-group text-center">
+        <button class="btn btn-primary " [disabled]="!nuevoUser.valid" type="submit">Guardar</button>
+        <button class="ml-2 btn btn-default" type="button" [routerLink]="['/equipos']" routerLinkActive="router-link-active" (click)="Cancelar()">Cancelar</button>
+    </div>
+
+
+  </form>
+</div>

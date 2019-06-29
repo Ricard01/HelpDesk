@@ -59,9 +59,12 @@ namespace Admin.API.Controllers
                 var user = _userManager.FindByNameAsync(userToReturn.Username).Result;
                     // _userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
                      _userManager.AddToRolesAsync(user, new[] { "User" }).Wait();
-                return CreatedAtRoute("GetUser",
-                    new { controller = "Users", id = userToCreate.Id }, userToReturn);
+                // return CreatedAtRoute("GetUser",
+                //     new { controller = "Users", id = userToCreate.Id }, userToReturn);
+
+                return Ok();
             }
+            
 
             return BadRequest(result.Errors);
         }

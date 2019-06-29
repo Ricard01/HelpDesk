@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -28,14 +28,17 @@ export class ErrorInterceptor implements HttpInterceptor {
                             }
                         }
                     }
-
+                    // User name 'admin' is already taken
                     const serverError2 = error.error;
 
                     let modalStateErrors2 = '';
                     if (serverError2 && typeof serverError2 === 'object') {
                         for (const key in serverError2) {
+                            // if (serverError2[key].code === 'DuplicateUserName') {
+                            //     modalStateErrors2 += serverError2[key].description.substr(1, 10) + 'veamos \n';
+                            // } else
                             if (serverError2[key]) {
-                                modalStateErrors2 += serverError2[key].code + '\n';
+                                modalStateErrors2 += serverError2[key].description + '\n';
                             }
                         }
                     }

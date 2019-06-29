@@ -47,6 +47,30 @@ namespace Admin.API.Controllers
             _cloudinary = new Cloudinary(acc);
         }
 
+        // [AcceptVerbs("Get", "Post")]
+
+        [HttpGet("userexist/{username}")]
+        public async Task<IActionResult> UserNameInUse(string username)
+        {
+            if (username == null)
+            {
+                return NotFound($"{username} no se indico un nombre de usuario valido");
+            }
+
+
+            var user = await _userManager.FindByNameAsync(username);
+            if (user != null)
+            {
+                return new JsonResult(true);
+            }
+            else
+            {
+                return new JsonResult(false);
+
+            }
+
+        }
+
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("All")]
         public async Task<IActionResult> GetAllUsers()
@@ -58,29 +82,29 @@ namespace Admin.API.Controllers
             return Ok(usersToReturn);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
-        {
-            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        // [HttpGet]
+        // public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
+        // {
+        //     var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            var userFromRepo = await _repo.GetUser(currentUserId, true);
+        //     var userFromRepo = await _repo.GetUser(currentUserId, true);
 
-            userParams.UserId = currentUserId;
+        //     userParams.UserId = currentUserId;
+
+ 
+
+        //     var users = await _repo.GetUsers(userParams);
+
+        //     var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(users);
+
+        //     Response.AddPagination(users.PaginaActual, users.PageSize,
+        //         users.TotalCount, users.TotalPaginas);
+
+        //     return Ok(usersToReturn);
+        // }
 
 
-
-            var users = await _repo.GetUsers(userParams);
-
-            var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(users);
-
-            Response.AddPagination(users.PaginaActual, users.PageSize,
-                users.TotalCount, users.TotalPaginas);
-
-            return Ok(usersToReturn);
-        }
-
-
-        [HttpGet("{id}", Name = "GetUser")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
 
@@ -117,11 +141,6 @@ namespace Admin.API.Controllers
         [HttpPut("update/{idUser}")]
         public async Task<IActionResult> UpdateUser(int idUser, UserForUpdateDto userUpdateProfileDto)
         {
-            // TODO validar que solo los usuarios administradores puedan actualizar la informacion de los usuarios
-            // var idAdmin = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-            // if (idUser != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //     return Unauthorized();
 
             var userFromRepo = await _repo.GetUser(idUser, true);
 
@@ -193,7 +212,7 @@ namespace Admin.API.Controllers
 
             throw new Exception("Ocurrio un error al intentar eliminar el usuario");
         }
-
+        [Authorize(Policy = "RequireAdminRole")]
         public void DeletePhotoProfile(string publicId)
         {
             if (publicId != null)

@@ -67,4 +67,21 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 }
 ///////////////////////// ********** END T A B L E ********** /////////////////////////  
+
+
+///////////////////////// ********** ELVIS OPERATOR ? ********** /////////////////////////  
+
+if (input >= 0)
+{
+    classify = "nonnegative";
+}
+else
+{
+    classify = "negative";
+}
+
+classify = (input >= 0) ? "nonnegative" : "negative";
+
+
+///////////////////////// ********** END ELVIS OPERATOR ? ********** /////////////////////////  
 */

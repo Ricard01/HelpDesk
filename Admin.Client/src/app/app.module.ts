@@ -21,7 +21,6 @@ import { NgbdSortableHeader } from './config/sortable.directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
-
 export function getToken() {
   return localStorage.getItem('token');
 }
@@ -49,7 +48,7 @@ export function getToken() {
         whitelistedDomains: ['localhost:5000'],
         blacklistedRoutes: ['localhost:5000/api/auth']
       }
-     }),
+    }),
     // este seria ShareModule
   ],
   exports: [

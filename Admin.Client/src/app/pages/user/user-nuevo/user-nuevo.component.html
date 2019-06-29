@@ -6,8 +6,12 @@
 
         <div class="form-group">
             <label>Nombre de usuario</label>
-            <input #username type="text" [ngClass]="{'is-invalid': nuevoUser.get('username').errors && nuevoUser.get('username').touched}" class="form-control" formControlName="username" placeholder="Nombre de Usuario">
-            <div class="invalid-feedback">Nombre de usuario obligatorio </div>
+            <input #username type="text" [ngClass]="{'is-invalid': nuevoUser.get('username').errors && nuevoUser.get('username').touched}" unique class="form-control" formControlName="username" placeholder="Nombre de Usuario">
+            <div class="invalid-feedback" *ngIf="nuevoUser.get('username').touched && nuevoUser.get('username').hasError('required')">
+                Nombre de usuario obligatorio </div>
+            <div class="invalid-feedback"  *ngIf="isUserTaken()">
+                El nombre de usuario ya existe
+            </div>
         </div>
 
         <div class="form-group">

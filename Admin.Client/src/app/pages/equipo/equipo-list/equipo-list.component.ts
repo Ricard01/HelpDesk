@@ -14,7 +14,7 @@ export class EquipoListComponent implements OnInit {
   pageEvent: PageEvent;
 
 
-  displayedColumns: string[] = ['id', 'nombreequipo', 'ip', 'activo', 'actions'];
+  displayedColumns: string[] = ['id', 'nombreEquipo', 'ip', 'activo', 'actions'];
   dataSource: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -22,6 +22,7 @@ export class EquipoListComponent implements OnInit {
   constructor( private equipoService: EquipoService, ) { }
 
   ngOnInit() {
+    this.RenderDataTable();
   }
 
 

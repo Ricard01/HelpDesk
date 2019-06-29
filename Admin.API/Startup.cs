@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using Admin.API.Data;
 using Admin.API.Helpers;
 using Admin.API.Models;
@@ -14,16 +10,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using static Admin.API.Helpers.Extensions;
 
 namespace Admin.API
 {
@@ -39,6 +33,7 @@ namespace Admin.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
 
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
@@ -47,13 +42,17 @@ namespace Admin.API
             opt.Password.RequiredLength = 6;
             opt.Password.RequireNonAlphanumeric = false;
             opt.Password.RequireUppercase = false;
+
         });
+
 
             builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
             builder.AddEntityFrameworkStores<DataContext>();
             builder.AddRoleValidator<RoleValidator<Role>>();
             builder.AddRoleManager<RoleManager<Role>>();
             builder.AddSignInManager<SignInManager<User>>();
+
+
 
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -78,12 +77,14 @@ namespace Admin.API
             options.AddPolicy("VipOnly", policy => policy.RequireRole("VIP"));
         });
 
+
             services.AddMvc(options =>
              {
-                    // Con esto pedimos autorizacion para todo el proyecto en lugar de un controlador en especifico.
-                    var policy = new AuthorizationPolicyBuilder()
-                     .RequireAuthenticatedUser()
-                     .Build();
+                 // Con esto pedimos autorizacion para todo el proyecto en lugar de un controlador en especifico.
+
+                 var policy = new AuthorizationPolicyBuilder()
+                  .RequireAuthenticatedUser()
+                  .Build();
                  options.Filters.Add(new AuthorizeFilter(policy));
              })
              .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
@@ -99,6 +100,7 @@ namespace Admin.API
             // Mapper.Reset();
             services.AddAutoMapper();
             services.AddTransient<Seed>();
+            //
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<LogUserActivity>();
@@ -113,6 +115,7 @@ namespace Admin.API
             }
             else
             {
+                // TODO Manejo de errores middleware
                 app.UseExceptionHandler(builder =>
                 {
                     builder.Run(async context =>
@@ -129,15 +132,17 @@ namespace Admin.API
                 });
                 // app.UseHsts();
             }
-
+            // El orden es importante
             // app.UseHttpsRedirection();
             seeder.SeedUsers();
+            // Hay que cambiar esto ya que permite TODO
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
+
                 routes.MapSpaFallbackRoute(
                     name: "spa-fallback",
                     defaults: new { controller = "Fallback", action = "Index" }

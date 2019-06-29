@@ -24,8 +24,11 @@ import { UserNuevoComponent } from './user/user-nuevo/user-nuevo.component';
 import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
 // import { UserListResolver } from './user/user-list/user-list.resolver';
 import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component';
+import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
 
 @NgModule({
@@ -39,7 +42,8 @@ import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component'
     EquipoComponent,
     UserRolesComponent,
     UserNuevoComponent,
-    EquipoListComponent
+    EquipoListComponent,
+    EquipoNuevoComponent
   ],
   exports: [
     DashboardComponent,
@@ -50,6 +54,7 @@ import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component'
     MatProgressSpinnerModule
   ],
   imports: [
+    NgxMaskModule.forRoot(options),
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

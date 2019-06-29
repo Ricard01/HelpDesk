@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.API.Dtos;
@@ -76,11 +77,14 @@ namespace Admin.API.Data
             return photo;
         }
 
+
         public async Task<bool> SaveAll()
-        {
-            return await _context.SaveChangesAsync() > 0;
+        {           
+                return await _context.SaveChangesAsync() > 0;
+            
         }
 
+       
         public async Task<List<Equipo>> GetAllEquipos()
         {
             var equipos = await _context.Equipos.ToListAsync();
@@ -88,9 +92,14 @@ namespace Admin.API.Data
 
         }
 
-        public async Task<Equipo> GetEquipo( int id) 
+        public async Task<Equipo> GetEquipo(int id)
         {
-            return await _context.Equipos.FirstOrDefaultAsync( e => e.Id == id);
+            var equipo = await _context.Equipos.FirstOrDefaultAsync(e => e.Id == id);
+            return equipo;
+
+
         }
+
+
     }
 }

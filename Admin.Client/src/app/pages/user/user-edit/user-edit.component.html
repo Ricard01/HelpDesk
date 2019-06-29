@@ -61,8 +61,8 @@
                                             <h4 class="mr-2 ">
                                                 {{ user.username | titlecase}}<small>{{ user.puesto | titlecase}}</small>
                                             </h4>
-                                            <!-- TODO -->
-                                            <!-- Password forms should have (optionally hidden) username fields for accessibility -->
+                                            <!-- TODO Password forms should have (optionally hidden) username fields for accessibility-->
+                                       
 
                                             <a class="ml-2 btn btn-warning  btn-circle"
                                                 (click)="updatePassword = !updatePassword" disabled="!updatePassword">
@@ -113,7 +113,7 @@
                                 <tr>
                                     <td class="field">Cel</td>
                                     <td><input type="text" class="col-md-4 form-control form-control-sm"
-                                            name="phoneNumber" [(ngModel)]="user.phoneNumber"></td>
+                                            name="phoneNumber" [(ngModel)]="user.phoneNumber" mask="(000) 000-0000"></td>
                                     <td></td>
                                 </tr>
                                 <tr class="highlight">

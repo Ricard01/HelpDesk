@@ -1,10 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Admin.API.Dtos
 {
     public class UserForRegisterDto
     {
+        [Display(Name="Nombre de usuario")]
         [Required]
+        [Remote(action:"UserNameInUse", controller:"Users")]
         public string Username { get; set; }
 
         [Required]

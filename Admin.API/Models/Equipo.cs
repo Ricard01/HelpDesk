@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
 namespace Admin.API.Models
 {
@@ -10,6 +7,8 @@ namespace Admin.API.Models
     {
         public int Id { get; set; }
 
+              // [Required]
+        // [StringLength(8, MinimumLength = 4, ErrorMessage = "You must specify a password between 4 and 8 characters")]
         public string NombreEquipo { get; set; }
 
         public string Ip { get; set; }
@@ -17,7 +16,7 @@ namespace Admin.API.Models
         public string Caracteristicas { get; set; }
 
         public Boolean Activo { get; set; }
-        public int?  IdUser { get; set; }
+        public int? IdUser { get; set; }
 
     }
 }

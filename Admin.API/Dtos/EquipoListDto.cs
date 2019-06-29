@@ -1,5 +1,4 @@
 using System;
-using Admin.API.Models;
 
 namespace Admin.API.Dtos
 {
@@ -15,10 +14,6 @@ namespace Admin.API.Dtos
 
         public Boolean Activo { get; set; }
 
-        public int IdUser { get; set; }
-        
-
-        // public User UserEquipo { get; set; }
-
+        public int IdUser { get; set; }     
     }
 }

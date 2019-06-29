@@ -8,13 +8,14 @@ import { UserNuevoComponent } from './user/user-nuevo/user-nuevo.component';
 import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
 import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component';
 import { EquipoComponent } from './equipo/equipo/equipo.component';
+import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.component';
 
 
 
 const pagesRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'allequipos', component: EquipoComponent, data: {roles: ['Admin']}},
-  { path: 'equipos', component: EquipoComponent, data: {roles: ['Admin']}},
+  { path: 'equipo-nuevo', component: EquipoNuevoComponent, data: {roles: ['Admin']}},
+  { path: 'equipos', component: EquipoListComponent, data: {roles: ['Admin']}},
   { path: 'user/:id', component: UserComponent},
   { path: 'user-perfil',  component: UserPerfilComponent, resolve: { user: UserPerfilResolver } },
   { path: 'user-editar/:id', component: UserEditComponent, data: {roles: ['Admin']} },

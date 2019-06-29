@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ImagenPipe } from './_pipes/imagen.pipe';
-import { TableComponent } from './_components/table/table.component';
-import { TableRowComponent } from './_components/table/table-row/table-row.component';
 import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [ ImagenPipe, TableComponent, TableRowComponent],
+  declarations: [
+    ImagenPipe,
+   ],
   imports: [
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
@@ -15,7 +15,6 @@ import { CommonModule } from '@angular/common';
   exports: [
     PaginationModule,
     ImagenPipe,
-    TableComponent,
 
   ]
 })
