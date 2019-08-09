@@ -17,6 +17,15 @@ namespace Admin.API.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<User>()
+            .Property(u => u.Activo)
+            .HasDefaultValue(true);
+
+            builder.Entity<Equipo>()
+             .HasOne( u => u.User)
+             .WithOne( e => e.Equipo)
+             .OnDelete(DeleteBehavior.SetNull);
+
             builder.Entity<UserRole>(userRole =>
             {
                 userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
@@ -31,7 +40,10 @@ namespace Admin.API.Data
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
-
+            
+            builder.Entity<Equipo>()
+            .Property(e => e.Activo)
+            .HasDefaultValue(true);
             builder.Entity<Equipo>(entity =>
             {
                 entity.HasIndex(e => e.NombreEquipo).IsUnique();

@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <form [formGroup]="fEquipo">
+    <form [formGroup]="equipoForm">
         <table class="table table-profile">
             <thead>
                 <tr>
@@ -13,18 +13,16 @@
                 <tr class="highlight">
                     <td class="field">&nbsp;</td>
                     <td>
-
-
-
-                        <select formControlName="equipo" class="col-md-4 custom-select" required>
-                            <!-- (change)="changeCity($event)"  -->
-                            <option [ngValue]="null"> Ninguno </option>
-                            <option *ngFor="let equipo of equipos" [ngValue]="equipo">
-                                {{ equipo.nombreEquipo }}
-                            </option>
-                        </select>
-
-                        <p>Form value: {{ fEquipo.value | json }}</p>
+                        <select formControlName="id"  class="col-md-4 custom-select"
+                        required> 
+                        <option [ngValue]="0" > Ninguno </option>
+                        <option  *ngFor="let equipo of equipos" [ngValue]="equipo.id"    >
+                            {{ equipo.nombreEquipo }}
+                        </option>
+                     
+                       
+                    </select>
+                      
                     </td>
                 </tr>
                 <tr class="divider">
@@ -34,8 +32,11 @@
                 <tr class="highlight">
                     <td class="field">&nbsp;</td>
                     <td class="p-t-10 p-b-10">
-                        <button  (click)="updateEquipo(idUser, this.fEquipo.get('equipo').value)" [disabled]="fEquipo.invalid"
+
+                        <button (click)="updateEquipo(equipo )"
                             class=" col-md-2 col-sm-3 btn btn-primary width-150">Guardar</button>
+
+
                         <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5"
                             routerLink="/usuarios">Cancelar</a>
                     </td>

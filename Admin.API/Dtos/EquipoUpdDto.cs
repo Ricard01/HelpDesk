@@ -14,6 +14,6 @@ namespace Admin.API.Dtos
 
         public Boolean Activo { get; set; }
 
-        public int idUser { get; set; }
+        public int? UserId { get; set; }
     }
 }

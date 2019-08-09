@@ -4,6 +4,6 @@ export interface Equipo {
     ip: string;
     caracteristicas: string;
     activo: boolean;
-    idUser: number;
+    userId?: number;
     // roles?: string[];
   }

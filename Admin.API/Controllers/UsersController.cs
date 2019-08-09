@@ -77,7 +77,7 @@ namespace Admin.API.Controllers
         {
             var users = await _repo.GetAllUsers();
 
-            var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(users);
+            var usersToReturn = _mapper.Map<IEnumerable<UserDetDto>>(users);
 
             return Ok(usersToReturn);
         }

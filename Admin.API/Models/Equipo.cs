@@ -7,16 +7,31 @@ namespace Admin.API.Models
     {
         public int Id { get; set; }
 
-              // [Required]
-        // [StringLength(8, MinimumLength = 4, ErrorMessage = "You must specify a password between 4 and 8 characters")]
+        [Required]
+        [MaxLength(30)]
+        [StringLength(30, ErrorMessage = "El nombre de equipo es obligatorio mi rey")]
         public string NombreEquipo { get; set; }
 
+        [Required]
+        [MaxLength(30)]
         public string Ip { get; set; }
 
         public string Caracteristicas { get; set; }
 
-        public Boolean Activo { get; set; }
-        public int? IdUser { get; set; }
+        public Boolean? Activo { get; set; }
+
+        public User User { get; set; }
+
+        public int? UserId { get; set; }
+
 
     }
 }
+
+// =====================================================
+// 
+//   builder.Entity<Equipo>()
+//             .HasOne( u => u.User)
+//             .WithOne( e => e.Equipo)
+//             .OnDelete(DeleteBehavior.SetNull);
+// =====================================================    

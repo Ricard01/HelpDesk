@@ -1,25 +1,31 @@
 <div class="tab-content">
 
-  <form class="col-md-6" [formGroup]="fEquipoNuevo" action="">
+  <form class="col-md-6" [formGroup]="fEquipoNuevo" (ngSubmit)="crearEquipo()">
     <h2 class="text-center text-primary">Crear Equipo </h2>
     <hr>
 
     <div class="form-group">
-      <label for="">Nombre Equipo</label>
-      <input type="text" class="form-control form-control-sm" placeholder="Nombre Equipo">
+        <label>Nombre Equipo</label>
+        <input #nombreEquipo type="text" [ngClass]="{'is-invalid': fEquipoNuevo.get('nombreEquipo').errors && fEquipoNuevo.get('nombreEquipo').touched}" unique class="form-control" formControlName="nombreEquipo" placeholder="Nombre de Equipo">
+        <div class="invalid-feedback" *ngIf="fEquipoNuevo.get('nombreEquipo').touched && fEquipoNuevo.get('nombreEquipo').hasError('required')">
+           El nombre de Equipo es obligatorio</div>
+        <div class="invalid-feedback"  *ngIf="uniqueNombreEquipo()">
+            El nombre de equipo ya existe
+        </div>
     </div>
+
 
     <div class="form-group">
       <label>Direccion Ip</label>
-      <input type="text" class="form-control form-cotnrol-sm" placeholder="000.000.000.000" mask="IP">
+      <input type="text" class="form-control form-cotnrol-sm" placeholder="000.000.000.000" formControlName="ip" [dropSpecialCharacters]="false" mask="IP" >
     </div>
 
     <div class="form-group">
       <label>Caracteristicas</label>
-      <textarea type="text" class="form-control form-cotnrol-sm" placeholder="Win10"></textarea>
+      <textarea type="text" class="form-control form-cotnrol-sm" placeholder="Win10" formControlName="caracteristicas"></textarea>
       </div>
       <div class="form-group text-center">
-        <button class="btn btn-primary " [disabled]="!nuevoUser.valid" type="submit">Guardar</button>
+        <button class="btn btn-primary " [disabled]="!fEquipoNuevo.valid" type="submit">Guardar</button>
         <button class="ml-2 btn btn-default" type="button" [routerLink]="['/equipos']" routerLinkActive="router-link-active" (click)="Cancelar()">Cancelar</button>
     </div>
 

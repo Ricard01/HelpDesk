@@ -14,10 +14,12 @@ namespace Admin.API.Models
         public string Puesto { get; set; }
 
         public DateTime FechaAlta { get; set; }
-        public Boolean Activo { get; set; }
+        public Boolean? Activo { get; set; }
         public string FotoUrl { get; set; }
 
-         public string PublicId { get; set; }
+        public string PublicId { get; set; }
+
+        public Equipo Equipo { get; set; }
 
         // public Equipo Equipo { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }

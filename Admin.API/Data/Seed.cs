@@ -11,6 +11,7 @@ namespace Admin.API.Data
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
 
+
         public Seed(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _userManager = userManager;

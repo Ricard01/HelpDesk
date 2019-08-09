@@ -1,14 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using Admin.API.Dtos;
 using Admin.API.Helpers;
 using Admin.API.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Admin.API.Data
 {
@@ -53,10 +48,9 @@ namespace Admin.API.Data
             return await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
         }
 
-
         public async Task<List<User>> GetAllUsers()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.Include( e => e.Equipo ).ToListAsync();
             return users;
 
         }
@@ -79,12 +73,12 @@ namespace Admin.API.Data
 
 
         public async Task<bool> SaveAll()
-        {           
-                return await _context.SaveChangesAsync() > 0;
-            
+        {
+            return await _context.SaveChangesAsync() > 0;
+
         }
 
-       
+
         public async Task<List<Equipo>> GetAllEquipos()
         {
             var equipos = await _context.Equipos.ToListAsync();
@@ -98,6 +92,24 @@ namespace Admin.API.Data
             return equipo;
 
 
+        }
+
+        // public async Task<List<Equipo>> GetEquiposDisponibles(int? idUser )
+        // {
+        //     var equiposDisponibles = await _context.Equipos.Where( e => e.IdUser ==  idUser || e.IdUser == null ).ToListAsync();
+        //     return equiposDisponibles;
+        // }
+
+        // public async Task<Equipo> GetEquipoDefault(int id )
+        // {
+        //     var equipoDefault = await _context.Equipos.FirstOrDefaultAsync(e => e.IdUser == id );
+        //     return equipoDefault;
+        // }
+
+        public async Task<Equipo> UniqueEquipo(string nombreEquipo)
+        {
+            var equipo = await _context.Equipos.FirstOrDefaultAsync(e => e.NombreEquipo == nombreEquipo);
+            return equipo;
         }
 
 

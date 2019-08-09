@@ -20,7 +20,7 @@ export class UserListComponent implements OnInit {
   bsModalRef: BsModalRef;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
-  displayedColumns: string[] = ['id', 'username', 'email', 'puesto', 'actions'];
+  displayedColumns: string[] = ['id', 'username', 'email', 'puesto', 'equipo', 'actions'];
   dataSource: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -62,31 +62,6 @@ export class UserListComponent implements OnInit {
   editarUser(idUser: number ) {
 
   }
-
-  // perfilUser(id: number, username: string ) {
-  //   Swal.fire({
-  //     title: 'Perfil ' + username,
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#348fe2',
-  //     cancelButtonColor: '#f2f3f4' ,
-  //     confirmButtonText: 'Guardar ',
-  //     cancelButtonText: '<p class="swal-text-cancel">Cancelar</p> '
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       console.log('iduser ' + id );
-  //       this.userService.deleteUser(id).subscribe( () => {
-  //         this.alertify.success( username + ' Se elimino con exito');
-  //         this.RenderDataTable();
-  //       }, error => {
-  //         console.log(error);
-  //         this.alertify.error('Error usuario logeado actualmente ' + error );
-  //       });
-  //     }
-  //   }).catch(
-  //     err => {
-  //       console.log(err);
-  //     });
-  // }
 
   eliminar(id: number, username: string) {
     Swal.fire({

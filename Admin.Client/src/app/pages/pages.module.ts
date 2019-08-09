@@ -10,10 +10,10 @@ import { MatSortModule, MatPaginatorModule, MatTableModule, MatInputModule, MatP
 
 // NG
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserComponent } from './user/user.component';
+
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { ConfiguracionComponent } from './configuracion/configuracion.component';
-
+import { UserComponent } from './user/user/user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserPerfilComponent } from './user/user-perfil/user-perfil.component';
@@ -26,6 +26,7 @@ import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
 import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component';
 import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+
 
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};

@@ -10,8 +10,7 @@ import { userNameValidator } from '../../../shared/_helpers/unique-username-vali
 
 @Component({
   selector: 'app-user-nuevo',
-  templateUrl: './user-nuevo.component.html',
-  styles: []
+  templateUrl: './user-nuevo.component.html'
 })
 export class UserNuevoComponent implements OnInit {
   users: User[] = [];
@@ -19,7 +18,7 @@ export class UserNuevoComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   user: User;
   nuevoUser: FormGroup;
-  bsConfig: Partial<BsDatepickerConfig>;
+  // bsConfig: Partial<BsDatepickerConfig>;
 
   constructor(private userService: UserService,
     private alertify: SweetalertService, private route: ActivatedRoute, private fb: FormBuilder) { }

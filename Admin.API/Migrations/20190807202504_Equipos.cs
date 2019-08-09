@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Admin.API.Migrations
 {
-    public partial class initial : Migration
+    public partial class Equipos : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,8 +45,9 @@ namespace Admin.API.Migrations
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Puesto = table.Column<string>(nullable: true),
                     FechaAlta = table.Column<DateTime>(nullable: false),
-                    Activo = table.Column<bool>(nullable: false),
-                    FotoUrl = table.Column<string>(nullable: true)
+                    Activo = table.Column<bool>(nullable: true, defaultValue: true),
+                    FotoUrl = table.Column<string>(nullable: true),
+                    PublicId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -159,6 +160,29 @@ namespace Admin.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Equipos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    NombreEquipo = table.Column<string>(maxLength: 30, nullable: false),
+                    Ip = table.Column<string>(maxLength: 30, nullable: false),
+                    Caracteristicas = table.Column<string>(nullable: true),
+                    Activo = table.Column<bool>(nullable: true, defaultValue: true),
+                    UserId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Equipos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Equipos_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -195,6 +219,18 @@ namespace Admin.API.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipos_NombreEquipo",
+                table: "Equipos",
+                column: "NombreEquipo",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipos_UserId",
+                table: "Equipos",
+                column: "UserId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -213,6 +249,9 @@ namespace Admin.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Equipos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

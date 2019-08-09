@@ -103,6 +103,7 @@ namespace Admin.API
             //
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IEquipoRepository, EquipoRepository>();
             services.AddScoped<LogUserActivity>();
         }
 

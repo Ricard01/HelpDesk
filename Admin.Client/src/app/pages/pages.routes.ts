@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
-import { UserComponent } from './user/user.component';
+import { UserComponent } from './user/user/user.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserPerfilComponent } from './user/user-perfil/user-perfil.component';
 import { UserNuevoComponent } from './user/user-nuevo/user-nuevo.component';
@@ -9,6 +9,7 @@ import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
 import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component';
 import { EquipoComponent } from './equipo/equipo/equipo.component';
 import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.component';
+
 
 
 

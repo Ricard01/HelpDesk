@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './user.model';
-import { UserService } from './user.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
 import pageSettings from 'src/app/config/page-settings';
+import { User } from '../user.model';
+import { UserService } from '../user.service';
 
 
 @Component({

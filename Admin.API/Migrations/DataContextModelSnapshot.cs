@@ -17,6 +17,38 @@ namespace Admin.API.Migrations
                 .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("Admin.API.Models.Equipo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool?>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Caracteristicas");
+
+                    b.Property<string>("Ip")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<string>("NombreEquipo")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.Property<int?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NombreEquipo")
+                        .IsUnique();
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Equipos");
+                });
+
             modelBuilder.Entity("Admin.API.Models.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -47,7 +79,9 @@ namespace Admin.API.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<bool>("Activo");
+                    b.Property<bool?>("Activo")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(true);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -179,6 +213,14 @@ namespace Admin.API.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("Admin.API.Models.Equipo", b =>
+                {
+                    b.HasOne("Admin.API.Models.User", "User")
+                        .WithOne("Equipo")
+                        .HasForeignKey("Admin.API.Models.Equipo", "UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 
             modelBuilder.Entity("Admin.API.Models.UserRole", b =>

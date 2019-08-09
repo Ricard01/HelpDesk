@@ -84,4 +84,36 @@ classify = (input >= 0) ? "nonnegative" : "negative";
 
 
 ///////////////////////// ********** END ELVIS OPERATOR ? ********** /////////////////////////  
+///////////////////////// ********** SELECT DEPRECATED ********** /////////////////////////  
+OPT1
+<select formControlName="fcequipo" [(ngModel)]="selectedEquipo" class="col-md-4 custom-select"
+                            required>
+                            <option [ngValue]="null" > Ninguno </option>
+                            <option  *ngFor="let equipo of equipos" [value]="equipo.id"  >
+                                {{ equipo.nombreEquipo }}
+                            </option>
+                        </select>
+
+
+  setFormValues() {
+
+       this.selectedEquipo = this.equipos.find(i => i.idUser === this.idUsuario);
+      this.equipoForm.get('fcequipo2').patchValue(this.selectedEquipo2);
+
+  }
+
+
+OPT2
+ <select [value]="selectedEquipo" (change)="onChangeEquipo($event.target.value)"
+                            formControlName="equipo" id="ddOwnerLevel" class="col-md-4 custom-select" required>
+                            <option [value]="0" disabled>Selecciona un Equipo</option>
+                            <option *ngFor="let equipo of equipos"
+                                [ngValue]="equipo.idUser == null ? equipo : equipo ">{{ equipo.nombreEquipo}}
+                            </option>
+                        </select>
+
+  onChangeEquipo(event: any) {
+    this.selectedEquipo = this.equipos.find(e => e.nombreEquipo === event.target.value);
+    this.setFormValues();
+  }
 */
