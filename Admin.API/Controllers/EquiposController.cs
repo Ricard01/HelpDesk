@@ -29,6 +29,8 @@ namespace Admin.API.Controllers
         public async Task<IActionResult> GetEquipo(int idEquipo)
         {
             var equipo = await _repo.GetEquipo(idEquipo);
+            // var equipoReturn = _mapper.Map<EquipoUpdDto>(equipo);
+
             return Ok(equipo);
         }
 
@@ -98,14 +100,11 @@ namespace Admin.API.Controllers
 
             throw new Exception("Ocurrio un error al crear el equipo");
 
-
-
-
         }
 
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpPut("update")]
-        public async Task<IActionResult> UpdateEquipo(EquipoUpdDto equipo)
+        [HttpPut("updateEquipoUser")]
+        public async Task<IActionResult> UpdateEquipoUser(EquipoUpdUserDto equipo)
         {
             var equipoRepo = await _repo.GetEquipo(equipo.Id);
             var equipoUser = await _repo.GetEquipoOfUser(equipo.UserId);
@@ -159,6 +158,23 @@ namespace Admin.API.Controllers
 
         }
 
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPut("update/{EquipoId}")]
+        public async Task<IActionResult> UpdateEquipo(int EquipoId, EquipoUpdDto equipo)
+        {
+            var equipoRepo = await _repo.GetEquipo(EquipoId);
+
+            _mapper.Map(equipo, equipoRepo);
+
+            _repo.Update(equipoRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+               throw new Exception($"Ocurrio un error al actualizar");
+
+        }
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("delete/{id}")]
         public async Task<IActionResult> DeleteEquipo(int id)

@@ -3,6 +3,7 @@ import { PageEvent, MatPaginator, MatSort, MatTableDataSource } from '@angular/m
 import { EquipoService } from '../equipo.service';
 import Swal from 'sweetalert2';
 import { SweetalertService } from '../../../shared/_services/sweetalert.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-equipo-list',
@@ -14,13 +15,13 @@ export class EquipoListComponent implements OnInit {
 
   pageEvent: PageEvent;
 
-
   displayedColumns: string[] = ['id', 'nombreEquipo', 'ip', 'activo', 'actions'];
   dataSource: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   closeResult: string;
-  constructor( private equipoService: EquipoService, private alertify: SweetalertService ) { }
+  constructor( private equipoService: EquipoService, private alertify: SweetalertService
+    , private route: ActivatedRoute ) { }
 
   ngOnInit() {
     this.RenderDataTable();

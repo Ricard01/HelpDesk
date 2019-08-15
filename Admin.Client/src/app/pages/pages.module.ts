@@ -26,6 +26,7 @@ import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
 import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component';
 import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { EquipoEditComponent } from './equipo/equipo-edit/equipo-edit.component';
 
 
 
@@ -44,7 +45,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     UserRolesComponent,
     UserNuevoComponent,
     EquipoListComponent,
-    EquipoNuevoComponent
+    EquipoNuevoComponent,
+    EquipoEditComponent
   ],
   exports: [
     DashboardComponent,

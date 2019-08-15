@@ -46,7 +46,7 @@ export class EquipoComponent implements OnInit {
       this.equipo.userId = this.idUsuario;
       console.log('thisE' + this.equipo);
       // this.equipo.idUser = this.idUsuario;
-      this.equipoService.updateEquipo(this.equipo).subscribe(() => {
+      this.equipoService.updateEquipoUser(this.equipo).subscribe(() => {
         this.alertify.success(' Actualizado con exito');
 
       }, error => {
@@ -55,7 +55,7 @@ export class EquipoComponent implements OnInit {
       });
     } else {
       this.selectedEquipo.userId = 0;
-      this.equipoService.updateEquipo(this.selectedEquipo).subscribe(() => {
+      this.equipoService.updateEquipoUser(this.selectedEquipo).subscribe(() => {
         this.alertify.success(' Actualizado con exito');
 
       }, error => {

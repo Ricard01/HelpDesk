@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Equipo } from './equipo.model';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -11,6 +12,12 @@ export class EquipoService {
   baseUrl = environment.apiUrl + 'equipos/';
   equpo: Equipo;
   constructor(public http: HttpClient) { }
+
+  getEquipo(id: number): Observable<Equipo> {
+    console.log('Inicia');
+    return this.http.get<Equipo>(this.baseUrl + id);
+    console.log('Finaliza');
+  }
 
   getAllEquipos() {
     return this.http.get<Equipo[]>(this.baseUrl);
@@ -28,10 +35,13 @@ export class EquipoService {
     return this.http.post(this.baseUrl, equipo);
   }
 
-  updateEquipo(equipo: Equipo) {
-    return this.http.put(this.baseUrl + 'update', equipo);
+  updateEquipoUser(equipo: Equipo) {
+    return this.http.put(this.baseUrl + 'updateEquipoUser', equipo);
   }
 
+  updateEquipo(equipoId: number, equipo: Equipo) {
+    return this.http.put(this.baseUrl + 'update/' + equipoId, equipo);
+  }
   checkNombreEquipo(nombreEquipo: string) {
     return this.http.get(this.baseUrl + 'equipoExist/' + nombreEquipo);
   }
