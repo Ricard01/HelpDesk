@@ -12,6 +12,8 @@ namespace Admin.API.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         // Apartir de esta informacion se crea una migracion con ef datamigration
         public DbSet<Equipo> Equipos { get; set; }
+
+        public DbSet<Ticket> Tickets { get; set; }
         // public DbSet<File> Files { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
