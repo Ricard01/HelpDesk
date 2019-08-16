@@ -27,6 +27,8 @@ import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component'
 import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { EquipoEditComponent } from './equipo/equipo-edit/equipo-edit.component';
+import { EquipoReadComponent } from './equipo/equipo-read/equipo-read.component';
+
 
 
 
@@ -46,7 +48,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     UserNuevoComponent,
     EquipoListComponent,
     EquipoNuevoComponent,
-    EquipoEditComponent
+    EquipoEditComponent,
+    EquipoReadComponent
   ],
   exports: [
     DashboardComponent,

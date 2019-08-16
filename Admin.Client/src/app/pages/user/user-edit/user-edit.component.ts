@@ -43,8 +43,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
 
   tabs = {
-    editPerfil: false,
-    equipo: true,
+    editPerfil: true,
+    equipo: false,
     perfiles: false
   };
 

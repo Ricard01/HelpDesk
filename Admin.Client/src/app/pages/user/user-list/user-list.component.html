@@ -32,7 +32,7 @@
 
         <ng-container matColumnDef="equipo">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Equipo </mat-header-cell>
-            <mat-cell *matCellDef="let row"> <a *ngIf="row.equipo?.id" [routerLink]="['/equipo/', row.equipo.id]" routerLinkActive="router-link-active">{{row.equipo?.nombreEquipo}} </a> </mat-cell>
+            <mat-cell *matCellDef="let row"> <a *ngIf="row.equipo?.id" [routerLink]="['/equipo/detalle', row.equipo.id ]" routerLinkActive="router-link-active">{{row.equipo?.nombreEquipo}} </a> </mat-cell>
         </ng-container>
 
 

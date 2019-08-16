@@ -1,0 +1,46 @@
+<div class="tab-content">
+
+  <form class="col-md-6" [formGroup]="equipoEditForm" (ngSubmit)="equipoUpdate(equipo.id)">
+
+    <div class="form-group">
+      <label> Equipo </label>
+      <input id="nombreEquipo" type="text" class="form-control" formControlName="nombreEquipo"
+        placeholder="Nombre de Equipo">
+    </div>
+
+    <div class="form-group">
+      <label>Ip </label>
+      <input type="text" class="form-control" formControlName="ip" placeholder="000.000.000.000" [dropSpecialCharacters]="false" mask="IP">
+    </div>
+
+    <div class="form-group">
+      <label>Caracterisitcas</label>
+      <textarea class="form-control" formControlName="caracteristicas"></textarea>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-form-label">Estatus </label>
+      <div class="col-md-9">
+        <div class="radio radio-css radio-inline">
+          <input id="1" class="form-check-input" type="radio" [value]="true" formControlName="activo">
+          <label class="form-check-label" for="1">Activo </label>
+        </div>
+
+        <div class="radio radio-css radio-inline">
+          <input id="2" class="form-check-input" type="radio" [value]="false" formControlName="activo">
+          <label class="form-check-label" for="2"> Inactivo</label>
+        </div>
+      </div>
+      <!--  id activo -->
+    </div>
+
+    <button type="submit" [disabled]="!equipoEditForm.dirty"
+      class=" col-md-2 col-sm-3 btn btn-primary width-150">Actualizar</button>
+    <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5"
+      routerLink="/equipos">Cancelar</a>
+
+
+
+  </form>
+
+</div>

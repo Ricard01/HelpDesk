@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EquipoService } from '../equipo.service';
 import { Equipo } from '../equipo.model';
 import { SweetalertService } from '../../../shared/_services/sweetalert.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-equipo-edit',
@@ -17,10 +18,14 @@ export class EquipoEditComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private equipoService: EquipoService,
-    private sweetAlert: SweetalertService) { }
+    private sweetAlert: SweetalertService,
+    private location: Location) { }
 
   equipoEditForm: FormGroup;
   equipo: Equipo;
+  @Input() idUsuario: number;
+  @Input() ViewMode: Boolean;
+  showActualizar = true;
   ngOnInit() {
 
     this.route.params.subscribe(params => {
@@ -32,13 +37,17 @@ export class EquipoEditComponent implements OnInit {
   }
 
   getEquipo(id: number) {
+
+
     this.equipoService.getEquipo(id)
       .subscribe(equipo => {
         this.equipo = equipo;
         this.equipoEditForm.patchValue(this.equipo);
-        // TODO modo lectura
-        // this.equipoEditForm.disable({ onlySelf: true });
-        console.log('Equipo ' + this.equipo);
+
+        if (this.ViewMode) {
+          this.showActualizar = false;
+          this.equipoEditForm.disable({ onlySelf: true });
+        }
       });
   }
 
@@ -64,6 +73,8 @@ export class EquipoEditComponent implements OnInit {
     }
   }
 
-
+  cancelEquipo() {
+    this.location.back(); // <-- go back to previous location on cancel
+  }
 
 }

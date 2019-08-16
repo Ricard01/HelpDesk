@@ -1,7 +1,11 @@
 <div class="tab-content">
 
-  <form class="col-md-6" [formGroup]="equipoEditForm" (ngSubmit)="equipoUpdate(equipo.id)">
 
+  <form class="col-md-6" [formGroup]="equipoEditForm" (ngSubmit)="equipoUpdate(equipo.id)">
+<!-- TODO regresar atras
+    <a class="btn btn-primary btn-icon btn-circle" (click)="cancelEquipo()"> <i class="fas fa-arrow-alt-circle-left text-white"></i></a> -->
+    <h2 class="text-center text-primary">Equipo </h2>
+    <hr>
     <div class="form-group">
       <label> Equipo </label>
       <input id="nombreEquipo" type="text" class="form-control" formControlName="nombreEquipo"
@@ -10,7 +14,8 @@
 
     <div class="form-group">
       <label>Ip </label>
-      <input type="text" class="form-control" formControlName="ip" placeholder="000.000.000.000" [dropSpecialCharacters]="false" mask="IP">
+      <input type="text" class="form-control" formControlName="ip" placeholder="000.000.000.000"
+        [dropSpecialCharacters]="false" mask="IP">
     </div>
 
     <div class="form-group">
@@ -33,13 +38,13 @@
       </div>
       <!--  id activo -->
     </div>
-
-    <button type="submit" [disabled]="!equipoEditForm.dirty"
-      class=" col-md-2 col-sm-3 btn btn-primary width-150">Actualizar</button>
-    <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5"
-      routerLink="/equipos">Cancelar</a>
-
-
+    <div *ngIf="showActualizar">
+      <button type="submit" [disabled]="!equipoEditForm.dirty"
+        class=" col-md-2 col-sm-3 btn btn-primary width-150">Actualizar</button>
+     
+      <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5"
+        routerLink="/equipos">Cancelar</a>
+      </div>
 
   </form>
 

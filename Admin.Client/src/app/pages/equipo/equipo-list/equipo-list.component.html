@@ -14,7 +14,7 @@
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
             <mat-cell *matCellDef="let row">
-                {{row.id}}  </mat-cell>
+            <a [routerLink]="['/equipo/detalle/', row.id]" routerLinkActive="router-link-active" >  {{row.id}}  </a>    </mat-cell>
 
         </ng-container>
 

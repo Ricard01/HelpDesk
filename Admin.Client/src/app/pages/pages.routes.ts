@@ -9,13 +9,14 @@ import { UserPerfilResolver } from './user/user-perfil/user-perfil.resolver';
 import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component';
 import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.component';
 import { EquipoEditComponent } from './equipo/equipo-edit/equipo-edit.component';
+import { EquipoReadComponent } from './equipo/equipo-read/equipo-read.component';
 
 
 
 
 const pagesRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
-  { path: 'equipo/:id/:viewMode', component: EquipoEditComponent},
+  { path: 'equipo/detalle/:id', component: EquipoReadComponent},
   { path: 'equipo-editar/:id', component: EquipoEditComponent},
   { path: 'equipo-nuevo', component: EquipoNuevoComponent, data: {roles: ['Admin']}},
   { path: 'equipos', component: EquipoListComponent, data: {roles: ['Admin']}},
