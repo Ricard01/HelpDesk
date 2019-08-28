@@ -37,17 +37,14 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.renderer.removeClass(document.body, 'bg-white');
   }
 
-  login( loginForm: NgForm ) {
-    if ( loginForm.invalid ) {
+  login(loginForm: NgForm) {
+    if (loginForm.invalid) {
       return;
     }
     this.authService.login(this.model, loginForm.value.recordar).subscribe(
-      next => {
-        console.log('Inicio de sesion');
-      },
       error => {
         console.log(error);
-        this.alert.error( 'El nombre de usuario o password no es valido');
+        this.alert.error('El nombre de usuario o password no es valido');
       },
       () => {
         this.router.navigate(['/dashboard']);

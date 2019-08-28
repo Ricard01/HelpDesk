@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EquipoService } from '../equipo.service';
 import { Equipo } from '../equipo.model';
@@ -13,7 +13,7 @@ export class EquipoNuevoComponent implements OnInit {
 
   fEquipoNuevo: FormGroup;
   equipo: Equipo;
-  @ViewChild('nombreEquipo') nombreEquipoRef: ElementRef;
+  @ViewChild('nombreEquipo', {static: true}) nombreEquipoRef: ElementRef;
   @Output() cancelRegistro = new EventEmitter();
 
   constructor(private equipoService: EquipoService, private fb: FormBuilder, private alertify: SweetalertService) { }

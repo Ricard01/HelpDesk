@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190816003558_Ticket")]
-    partial class Ticket
+    [Migration("20190816203401_Tickets")]
+    partial class Tickets
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -91,10 +91,11 @@ namespace Admin.API.Migrations
                         .IsRequired()
                         .HasMaxLength(30);
 
-                    b.Property<int>("UserId")
-                        .HasColumnName("CreoUserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
                 });
@@ -248,6 +249,14 @@ namespace Admin.API.Migrations
                         .WithOne("Equipo")
                         .HasForeignKey("Admin.API.Models.Equipo", "UserId")
                         .OnDelete(DeleteBehavior.SetNull);
+                });
+
+            modelBuilder.Entity("Admin.API.Models.Ticket", b =>
+                {
+                    b.HasOne("Admin.API.Models.User")
+                        .WithMany("Tickets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Admin.API.Models.UserRole", b =>

@@ -21,31 +21,31 @@ export class ErrorInterceptor implements HttpInterceptor {
                     const serverError = error.error.errors;
 
                     let modalStateErrors = '';
-                    if (serverError && typeof serverError === 'object') {
-                        for (const key in serverError) {
-                            if (serverError[key]) {
-                                modalStateErrors += serverError[key] + '\n';
+                    if (serverError.errors && typeof serverError.errors === 'object') {
+                        for (const key in serverError.errors) {
+                            if (serverError.errors[key]) {
+                                modalStateErrors += serverError.errors[key] + '\n';
                             }
                         }
                     }
                     // User name 'admin' is already taken
-                    const serverError2 = error.error;
+                    // const serverError2 = error.error;
 
-                    let modalStateErrors2 = '';
-                    if (serverError2 && typeof serverError2 === 'object') {
-                        for (const key in serverError2) {
-                            // if (serverError2[key].code === 'DuplicateUserName') {
-                            //     modalStateErrors2 += serverError2[key].description.substr(1, 10) + 'veamos \n';
-                            // } else
-                            if (serverError2[key]) {
-                                modalStateErrors2 += serverError2[key].description + '\n';
-                            }
-                        }
-                    }
+                    // let modalStateErrors2 = '';
+                    // if (serverError2 && typeof serverError2 === 'object') {
+                    //     for (const key in serverError2) {
+                    //         // if (serverError2[key].code === 'DuplicateUserName') {
+                    //         //     modalStateErrors2 += serverError2[key].description.substr(1, 10) + 'veamos \n';
+                    //         // } else
+                    //         if (serverError2[key]) {
+                    //             modalStateErrors2 += serverError2[key].description + '\n';
+                    //         }
+                    //     }
+                    // }
 
 
 
-                    return throwError(modalStateErrors || serverError || modalStateErrors2 || 'Server Error');
+                    return throwError(modalStateErrors || serverError || 'Server Error');
                 }
             })
         );

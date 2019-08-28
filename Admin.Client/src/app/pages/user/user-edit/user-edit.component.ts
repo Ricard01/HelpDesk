@@ -73,7 +73,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     this.userService.updateUser(id, this.user).subscribe(() => {
       this.sweetAlert.success('Perfil actualizado correctamente');
     }, error => {
-      console.log(error);
+      // console.log(error);
       this.sweetAlert.error(error);
     });
   }

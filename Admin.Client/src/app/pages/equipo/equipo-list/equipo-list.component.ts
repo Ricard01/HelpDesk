@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PageEvent, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { EquipoService } from '../equipo.service';
 import Swal from 'sweetalert2';
 import { SweetalertService } from '../../../shared/_services/sweetalert.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-equipo-list',
@@ -17,11 +18,10 @@ export class EquipoListComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'nombreEquipo', 'ip', 'activo', 'actions'];
   dataSource: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   closeResult: string;
-  constructor( private equipoService: EquipoService, private alertify: SweetalertService
-    , private route: ActivatedRoute ) { }
+  constructor( private equipoService: EquipoService, private alertify: SweetalertService ) { }
 
   ngOnInit() {
     this.RenderDataTable();

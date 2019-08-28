@@ -33,7 +33,7 @@ async function getImage() {
   });
   if (file) {
     const reader = new FileReader;
-    reader.onload = (e) => {
+    reader.onload = () => {
       Swal.fire({
         title: 'Imagen Actualizada',
         imageUrl: reader.result.toString(),

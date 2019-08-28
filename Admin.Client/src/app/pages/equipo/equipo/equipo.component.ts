@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { EquipoService } from '../equipo.service';
 import { Equipo } from '../equipo.model';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { SweetalertService } from '../../../shared/_services/sweetalert.service';
 
 @Component({
@@ -44,13 +44,13 @@ export class EquipoComponent implements OnInit {
     if (this.equipoForm.valid) {
       this.equipo = Object.assign({}, this.equipoForm.value);
       this.equipo.userId = this.idUsuario;
-      console.log('thisE' + this.equipo);
+      // console.log('thisE' + this.equipo);
       // this.equipo.idUser = this.idUsuario;
       this.equipoService.updateEquipoUser(this.equipo).subscribe(() => {
         this.alertify.success(' Actualizado con exito');
 
       }, error => {
-        console.log('Error ' + error);
+        // console.log('Error ' + error);
         this.alertify.error(error);
       });
     } else {

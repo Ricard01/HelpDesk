@@ -1,7 +1,6 @@
-import { Component, OnDestroy, Input, Output, EventEmitter, Renderer2, OnInit } from '@angular/core';
+import { Component, OnDestroy, Output, EventEmitter, OnInit } from '@angular/core';
 import pageSettings from '../../config/page-settings';
 import { AuthService } from '../_services/auth.service';
-import { Router } from '@angular/router';
 import { User } from '../../pages/user/user.model';
 @Component({
   selector: 'app-header',
@@ -44,7 +43,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.pageSettings.pageMobileMegaMenuToggled = false;
   }
 
-  constructor(private renderer: Renderer2, public authService: AuthService) { }
+  constructor(public authService: AuthService) { }
 
 
 }

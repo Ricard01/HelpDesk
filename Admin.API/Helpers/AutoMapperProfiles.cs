@@ -11,6 +11,7 @@ namespace Admin.API.Helpers
         {
             // Source, 
             // Origen , Destino 
+            CreateMap<User, UserDto>(); 
             CreateMap<User, UserForDetailedDto>();
             CreateMap<User, UserDetDto>();
             CreateMap<User, UserForReturnDto>();
@@ -23,6 +24,8 @@ namespace Admin.API.Helpers
             CreateMap<Equipo, EquipoListDto>();
             CreateMap<EquipoListDto, Equipo>();
             CreateMap<EquipoUpdDto, Equipo>();
+            CreateMap<Ticket, TicketListDto>();
+
 
         }
     }

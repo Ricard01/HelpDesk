@@ -15,7 +15,7 @@ export class UserPerfilResolver implements Resolve<User> {
     resolve(route: ActivatedRouteSnapshot): Observable<User> {
         return this.userService.getUser(this.authService.user.id).pipe(
             catchError(error => {
-                this.alertify.error('Ocurrio un problema al obtener la informacion');
+                this.alertify.error('Ocurrio un problema al obtener la informacion' + error);
                 this.router.navigate(['/dashboard']);
                 return of(null);
             })

@@ -76,6 +76,7 @@ export class UserPerfilComponent implements OnInit, OnDestroy {
 
   updateUserProfile() {
     this.userService.updateUserProfile(this.authService.decodedToken.nameid, this.user).subscribe(next => {
+      console.log(next);
       this.sweetAlert.success('Perfil actualizado correctamente');
       // this.editForm.reset(this.user);
     }, error => {

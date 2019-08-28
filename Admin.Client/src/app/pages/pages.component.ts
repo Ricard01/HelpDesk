@@ -1,6 +1,5 @@
-import { Component, OnInit, HostListener, Renderer2 } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import pageSettings from '../config/page-settings';
-import { Title } from '@angular/platform-browser';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -13,25 +12,24 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class PagesComponent implements OnInit {
 
   constructor(
-    private titleService: Title,
     private router: Router,
-    private ngxSpiner: NgxSpinnerService,
-    private renderer: Renderer2
+    private spinner: NgxSpinnerService,
   ) {
-    router.events.subscribe(e => {
+
+    this.router.events.subscribe(e => {
       if (e instanceof NavigationStart) {
         if (window.innerWidth < 768) {
           this.pageSettings.pageMobileSidebarToggled = false;
         }
         if (e.url !== '/') {
-          ngxSpiner.show();
+          this.spinner.show(undefined, { fullScreen: true });
         }
       }
       if (e instanceof NavigationEnd) {
         if (e.url !== '/') {
-          setTimeout(function() {
-            ngxSpiner.hide();
-          }, 300);
+          setTimeout( () => {
+            this.spinner.hide();
+          }, 400);
         }
       }
     });
@@ -43,6 +41,7 @@ export class PagesComponent implements OnInit {
 
   ngOnInit() {
     // page settings
+
     this.pageSettings = pageSettings;
 
   }
@@ -55,18 +54,19 @@ export class PagesComponent implements OnInit {
     if (top > 0) {
       this.pageHasScroll = true;
     } else {
+      // console.log($event);
       this.pageHasScroll = false;
     }
   }
 
-// Minimiza a la izq sidebar
-onToggleSidebarMinified(val: boolean): void {
-  if (this.pageSettings.pageSidebarMinified) {
-    this.pageSettings.pageSidebarMinified = false;
-  } else {
-    this.pageSettings.pageSidebarMinified = true;
+  // Minimiza a la izq sidebar
+  onToggleSidebarMinified(val: boolean): void {
+    if (this.pageSettings.pageSidebarMinified) {
+      this.pageSettings.pageSidebarMinified = false;
+    } else {
+      this.pageSettings.pageSidebarMinified = true;
+    }
   }
-}
   // set page right collapse
   onToggleSidebarRight(val: boolean): void {
     if (this.pageSettings.pageSidebarRightCollapsed) {

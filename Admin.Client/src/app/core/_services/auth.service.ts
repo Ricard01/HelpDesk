@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { User } from '../../pages/user/user.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
 import pageSettings from 'src/app/config/page-settings';
 import { User } from '../user.model';
@@ -15,8 +15,7 @@ import { UserService } from '../user.service';
 export class UserComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService,
-    private fb: FormBuilder
+    private userService: UserService
   ) {
 
   }

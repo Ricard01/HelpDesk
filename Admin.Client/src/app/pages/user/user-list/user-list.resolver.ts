@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { User } from '../user.model';
-import { UserService } from '../user.service';
-import { SweetalertService } from '../../../shared/_services/sweetalert.service';
-import { AuthService } from '../../../core/_services/auth.service';
+// import { Injectable } from '@angular/core';
+// import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
+// import { Observable, of } from 'rxjs';
+// import { catchError } from 'rxjs/operators';
+// import { User } from '../user.model';
+// import { UserService } from '../user.service';
+// import { SweetalertService } from '../../../shared/_services/sweetalert.service';
+// import { AuthService } from '../../../core/_services/auth.service';
 
 
 // @Injectable()

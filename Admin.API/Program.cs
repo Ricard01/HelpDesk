@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace Admin.API
     {
         public static void Main(string[] args)
         {
+       
             CreateWebHostBuilder(args).Build().Run();
         }
 

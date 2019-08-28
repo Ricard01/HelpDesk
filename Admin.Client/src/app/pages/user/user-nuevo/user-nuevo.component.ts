@@ -1,11 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { User } from '../user.model';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { BsDatepickerConfig } from 'ngx-bootstrap';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
 import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
-import { ActivatedRoute } from '@angular/router';
-
 import { userNameValidator } from '../../../shared/_helpers/unique-username-validator';
 
 @Component({
@@ -14,14 +11,14 @@ import { userNameValidator } from '../../../shared/_helpers/unique-username-vali
 })
 export class UserNuevoComponent implements OnInit {
   users: User[] = [];
-  @ViewChild('username') userNameRef: ElementRef;
+  @ViewChild('username', {static: true}) userNameRef: ElementRef;
   @Output() cancelRegister = new EventEmitter();
   user: User;
   nuevoUser: FormGroup;
   // bsConfig: Partial<BsDatepickerConfig>;
 
   constructor(private userService: UserService,
-    private alertify: SweetalertService, private route: ActivatedRoute, private fb: FormBuilder) { }
+    private alertify: SweetalertService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.createRegisterForm();
@@ -51,9 +48,8 @@ export class UserNuevoComponent implements OnInit {
         this.userNameRef.nativeElement.focus();
         this.nuevoUser.reset();
 
-
       }, error => {
-        console.log('Error ' + error);
+        // console.log('Error ' + error);
         this.alertify.error(error);
       });
     }

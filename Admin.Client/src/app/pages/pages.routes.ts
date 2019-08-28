@@ -10,12 +10,15 @@ import { EquipoListComponent } from './equipo/equipo-list/equipo-list.component'
 import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.component';
 import { EquipoEditComponent } from './equipo/equipo-edit/equipo-edit.component';
 import { EquipoReadComponent } from './equipo/equipo-read/equipo-read.component';
+import { TicketListComponent } from './ticket/ticket-list/ticket-list.component';
+import { TicketListResolver } from './ticket/ticket-list/ticket-list.resolver';
 
 
 
 
 const pagesRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'tickets', component: TicketListComponent, resolve: { tickets: TicketListResolver}},
   { path: 'equipo/detalle/:id', component: EquipoReadComponent},
   { path: 'equipo-editar/:id', component: EquipoEditComponent},
   { path: 'equipo-nuevo', component: EquipoNuevoComponent, data: {roles: ['Admin']}},

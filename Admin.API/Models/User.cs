@@ -24,5 +24,7 @@ namespace Admin.API.Models
         // public Equipo Equipo { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
 
+        public ICollection<Ticket> Tickets { get; set; }
+
     }
 }

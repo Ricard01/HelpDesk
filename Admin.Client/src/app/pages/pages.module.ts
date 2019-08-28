@@ -6,7 +6,14 @@ import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSortModule, MatPaginatorModule, MatTableModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 // NG
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -28,9 +35,9 @@ import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.compone
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { EquipoEditComponent } from './equipo/equipo-edit/equipo-edit.component';
 import { EquipoReadComponent } from './equipo/equipo-read/equipo-read.component';
-
-
-
+import { TicketListComponent } from './ticket/ticket-list/ticket-list.component';
+import { TicketListResolver } from './ticket/ticket-list/ticket-list.resolver';
+import { PaginationModule } from 'ngx-bootstrap';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -49,15 +56,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     EquipoListComponent,
     EquipoNuevoComponent,
     EquipoEditComponent,
-    EquipoReadComponent
+    EquipoReadComponent,
+    TicketListComponent,
   ],
   exports: [
     DashboardComponent,
-    MatInputModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatProgressSpinnerModule
   ],
   imports: [
     NgxMaskModule.forRoot(options),
@@ -65,9 +68,13 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     FormsModule,
     ReactiveFormsModule,
     CoreModule,
+    PaginationModule,
     SharedModule,
     NgbModule.forRoot(),
     PAGES_ROUTES,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatNativeDateModule,
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
@@ -77,9 +84,10 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
   entryComponents: [
     UserRolesComponent
   ],
-    providers: [
-      UserPerfilResolver,
-      // UserListResolver
-    ]
+  providers: [
+    UserPerfilResolver,
+    TicketListResolver
+    // UserListResolver
+  ]
 })
-export class PagesModule {}
+export class PagesModule { }

@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using System.Text;
 using Admin.API.Data;
 using Admin.API.Helpers;
@@ -25,6 +26,7 @@ namespace Admin.API
     {
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -35,7 +37,8 @@ namespace Admin.API
         {
 
             services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
-
+            // // No hizo ni madres esto
+            // CultureInfo.CurrentCulture = new CultureInfo("es-ES");
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
         {
             opt.Password.RequireDigit = false;
@@ -98,12 +101,16 @@ namespace Admin.API
             services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             // este se puede eliminar o mejorar ya add automaper se ejecuta 2 veces entonces hay que validar si esta en dev mode
             // Mapper.Reset();
+            // Actualizacio net core 2.2
+            // services.AddAutoMapper(typeof(AdminRepository).Assembly);
+
             services.AddAutoMapper();
             services.AddTransient<Seed>();
             //
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IEquipoRepository, EquipoRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<LogUserActivity>();
         }
 
@@ -135,7 +142,7 @@ namespace Admin.API
             }
             // El orden es importante
             // app.UseHttpsRedirection();
-            seeder.SeedUsers();
+            // seeder.SeedUsers();
             // Hay que cambiar esto ya que permite TODO
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();

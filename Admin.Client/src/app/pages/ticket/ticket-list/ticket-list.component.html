@@ -1,0 +1,147 @@
+<div class="row mb-2">
+
+  <div class="col-2 bd-highlight">
+    <h1 class="page-header"> <i class="fas fa-check-square"></i> Tickets</h1>
+  </div>
+
+  <div class="col-2  ml-auto p-1 bd-highlight">
+    <a [routerLink]="['/ticket-nuevo']" class="btn btn-block btn-primary  btn-circle">
+      Nuevo &nbsp; <i class="fa fa-plus"></i>
+    </a>
+  </div>
+
+</div>
+
+<div class="tab-content">
+  <form class="form-inline" [formGroup]="filtroForm" (ngSubmit)="getTickets()" #formDirective="ngForm" novalidate>
+
+    <div class="form-group px-2">
+      <div class="input-group">
+        <mat-form-field>
+          <!-- style display-inline sino queda en el mismo renglon -->
+          <input matInput [matDatepicker]="picker" placeholder="Fecha Inicial" style="width: 100px"
+            formControlName="fechaIni">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+      </div>
+    </div>
+
+    <div class="form-group px-2">
+      <div class="input-group">
+
+        <mat-form-field>
+          <!-- style display-inline sino queda en el mismo renglon -->
+          <input matInput [matDatepicker]="fechaFin" placeholder="Fecha Final" style="width: 100px"
+            formControlName="fechaFin" [errorStateMatcher]="matcher">
+          <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+          <mat-datepicker #fechaFin></mat-datepicker>
+          <mat-error *ngIf="filtroForm.hasError('fechaIncorrecta')">La Fecha Final no puede ser menor a la Fecha Inicial
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="form-group px-2">
+      <label for="estatus">Estatus: </label>
+      <select class="form-control ml-1" style="width: 130px" id="status" formControlName="estatus">
+        <option *ngFor="let estatus of estatusList" [value]="estatus.value"> {{ estatus.display }} </option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary " [disabled]="!filtroForm.valid" type="submit">Aplicar</button>
+    <button (click)="borrarFiltros(formDirective)" type="button" class="btn btn-info" [disabled]="!filtroForm.valid"
+      style="margin-left:10px">Borrar Filtros</button>
+
+  </form>
+
+  <!-- TODO Nota matColumnDef debe coincider con {{ nombreVar }} para que funcione Sort -->
+  <!-- 
+  <mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection ="asc" matSortDisableClear>
+    <ng-container matColumnDef="id" >
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+      <mat-cell *matCellDef="let ticket"> {{ticket.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaAlta">
+      <mat-header-cell *matHeaderCellDef mat-sort-header > Fecha </mat-header-cell>
+      <mat-cell *matCellDef="let ticket"> {{ticket.fechaAlta  | date: 'dd/MM/yyyy'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="usuario">
+      <mat-header-cell *matHeaderCellDef > Usuario </mat-header-cell>
+      <mat-cell *matCellDef="let ticket"> {{ticket.user.username}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="titulo">
+      <mat-header-cell *matHeaderCellDef > Titulo </mat-header-cell>
+      <mat-cell *matCellDef="let ticket"> {{ticket.titulo}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="prioridad">
+      <mat-header-cell *matHeaderCellDef mat-sort-header > Prioridad </mat-header-cell>
+      <mat-cell *matCellDef="let ticket"> {{ticket.prioridad}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </mat-header-cell>
+      <mat-cell *matCellDef="let ticket"> {{ticket.status}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="acciones">
+      <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+      <mat-cell *matCellDef="let ticket">
+
+        <button title="Editar" routerLinkActive="router-link-active"
+          class="ml-4 btn btn-info btn-icon btn-circle btn-sm">
+          <i class="fa fa-edit"></i>
+        </button>
+
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+  </mat-table> -->
+
+
+  <div class="table-responsive">
+    <table class="table table-hover m-b-0 ">
+      <thead>
+        <tr>
+          <th data-sortable="true" data-sort-name="id" data-sort-order="desc"># Ticket</th>
+          <th>Fecha</th>
+          <th>Usuario</th>
+          <th>Titulo</th>
+          <th>Prioridad</th>
+          <th sortable-column="estatus">Estatus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <th> {{ ticket.id }}</th>
+          <td> {{ ticket.fechaAlta  | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ ticket.user.username}}</td>
+          <td>{{ ticket.titulo }}</td>
+          <td>{{ ticket.prioridad }}</td>
+          <td>{{ ticket.status }}</td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row pt-4">
+    <div class="col-auto mr-auto"><label>Total Tickets: {{paginacion.totalItems }}</label></div>
+    <div class="col-auto">
+      <pagination [boundaryLinks]="true" [totalItems]="paginacion.totalItems" [itemsPerPage]="paginacion.itemsxPagina"
+        [(ngModel)]="paginacion.paginaActual" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+      </pagination>
+    </div>
+  </div>
+
+
+</div>

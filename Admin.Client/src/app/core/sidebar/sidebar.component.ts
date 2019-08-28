@@ -47,7 +47,7 @@ import { User } from '../../pages/user/user.model';
 export class SidebarComponent implements OnInit , AfterViewChecked {
   photoUrl: string;
   navProfileState = 'collapse';
-  @ViewChild('sidebarScrollbar') private sidebarScrollbar: ElementRef;
+  @ViewChild('sidebarScrollbar', {static: false }) private sidebarScrollbar: ElementRef;
   @Output() toggleSidebarMinified = new EventEmitter<boolean>();
   @Output() hideMobileSidebar = new EventEmitter<boolean>();
   @Input() pageSidebarMinified;
@@ -131,7 +131,7 @@ export class SidebarComponent implements OnInit , AfterViewChecked {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event) {
+  onResize() {
     if (window.innerWidth <= 767) {
       this.mobileMode = true;
       this.desktopMode = false;

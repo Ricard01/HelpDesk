@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
-import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatSort, MatTableDataSource, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SweetalertService } from '../../../shared/_services/sweetalert.service';
 import Swal from 'sweetalert2';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
@@ -23,11 +24,11 @@ export class UserListComponent implements OnInit {
   displayedColumns: string[] = ['id', 'username', 'email', 'puesto', 'equipo', 'actions'];
   dataSource: any;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   closeResult: string;
 
-  constructor(private userService: UserService, private http: HttpClient,
+  constructor(private userService: UserService,
     private alertify: SweetalertService, private modalService: BsModalService) { }
 
   ngOnInit() {
@@ -59,9 +60,6 @@ export class UserListComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  editarUser(idUser: number ) {
-
-  }
 
   eliminar(id: number, username: string) {
     Swal.fire({
