@@ -33,6 +33,7 @@ export class TicketService {
       params = params.append('fechaIni', userParams.fechaIni);
       params = params.append('fechaFin', userParams.fechaFin);
       params = params.append('estatus', userParams.estatus);
+      params = params.append('orderby', userParams.orderBy);
     }
     return this.http.get<Ticket[]>(this.baseUrl, { observe: 'response', params })
       .pipe(

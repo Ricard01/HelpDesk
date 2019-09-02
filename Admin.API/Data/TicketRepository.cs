@@ -50,13 +50,42 @@ namespace Admin.API.Data
             {
                 switch (userParams.OrderBy)
                 {
+                    case "Id":
+                        tickets = tickets.OrderBy(u => u.Id);
+                        break;
+
+                    case "Estatus":
+                        tickets = tickets.OrderBy(u => u.Status);
+                        break;
+
                     case "estatus":
                         tickets = tickets.OrderByDescending(u => u.Status);
+                        break;
+
+                    case "Fecha":
+                        tickets = tickets.OrderBy(u => u.FechaAlta);
+                        break;
+
+                    case "fecha":
+                        tickets = tickets.OrderByDescending(u => u.FechaAlta);
+                        break;
+
+                    case "Prioridad":
+                        tickets = tickets.OrderBy(u => u.Prioridad);
                         break;
 
                     case "prioridad":
                         tickets = tickets.OrderByDescending(u => u.Prioridad);
                         break;
+
+                    case "Usuario":
+                        tickets = tickets.OrderBy(u => u.User.UserName);
+                        break;
+
+                    case "usuario":
+                        tickets = tickets.OrderByDescending(u => u.User.UserName);
+                        break;
+
 
                     default:
                         tickets = tickets.OrderByDescending(u => u.Id);

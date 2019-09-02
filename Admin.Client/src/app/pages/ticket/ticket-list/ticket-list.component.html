@@ -13,6 +13,7 @@
 </div>
 
 <div class="tab-content">
+
   <form class="form-inline" [formGroup]="filtroForm" (ngSubmit)="getTickets()" #formDirective="ngForm" novalidate>
 
     <div class="form-group px-2">
@@ -56,6 +57,9 @@
       style="margin-left:10px">Borrar Filtros</button>
 
   </form>
+
+
+
 
   <!-- TODO Nota matColumnDef debe coincider con {{ nombreVar }} para que funcione Sort -->
   <!-- 
@@ -106,27 +110,74 @@
 
   </mat-table> -->
 
+  <div class="row form-group m-b-10">
+
+    <div class="col-md-2">
+      <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="Buscar por # Ticket" />
+    </div>
+
+  </div>
+
+
+  <!-- <div class="form-group">
+      <label for="inputEmail3" class="col-form-label">Ordenar Por:</label>
+      <div class="col-auto">
+        <select class="form-control form-control-sm" (change)="onOrderBySelected($event.target.value)">
+          <option *ngFor="let item of orderList" [value]='item.value'> {{ item.display }} </option>
+        </select>
+      </div>
+    </div> -->
+
+
+
+
 
   <div class="table-responsive">
-    <table class="table table-hover m-b-0 ">
+    <table appSortable class="table table-hover m-b-0 ">
       <thead>
         <tr>
-          <th data-sortable="true" data-sort-name="id" data-sort-order="desc"># Ticket</th>
-          <th>Fecha</th>
-          <th>Usuario</th>
+          <th id="Id" (click)="onClick($event, isDesc = !isDesc, link1)">
+            # Ticket <i #link1 class="selector"></i>
+          </th>
+          <th id="Fecha" (click)="onClick($event, isDesc = !isDesc, link2)">
+            Fecha <i #link2 class="selector"></i>
+          </th>
+          <th id="Usuario" (click)="onClick($event, isDesc = !isDesc, link3)">
+            Usuario<i #link3 class="selector"></i>
+          </th>
           <th>Titulo</th>
-          <th>Prioridad</th>
-          <th sortable-column="estatus">Estatus</th>
+          <th id="Prioridad" (click)="onClick($event, isDesc = !isDesc, link4)">
+            Prioridad
+            <i #link4 class="selector"></i>
+          </th>
+          <th id="Estatus" (click)="onClick($event, isDesc = !isDesc, link5)">
+            Estatus
+            <i #link5 class="selector"></i>
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ticket of tickets">
+        <tr *ngFor="let ticket of tickets | ticket : searchTerm ">
           <th> {{ ticket.id }}</th>
           <td> {{ ticket.fechaAlta  | date: 'dd/MM/yyyy' }}</td>
           <td>{{ ticket.user.username}}</td>
           <td>{{ ticket.titulo }}</td>
-          <td>{{ ticket.prioridad }}</td>
-          <td>{{ ticket.status }}</td>
+          <td>
+            <span [ngSwitch]=" ticket.prioridad ">
+              <span *ngSwitchCase="1"> Baja </span>
+              <span *ngSwitchCase="2"> Normal </span>
+              <span *ngSwitchCase="3"> <i class="fas fa-exclamation-triangle text-danger"></i> Urgente </span>
+
+            </span></td>
+
+          <td>
+            <span [ngSwitch]=" ticket.status ">
+              <span class="label label-primary" *ngSwitchCase=1> Abierto </span>
+              <span class="label label-info" *ngSwitchCase=2> + Abierto </span>
+              <span class="label label-warning" *ngSwitchCase=3> En proceso </span>
+              <span class="label label-success" *ngSwitchCase=4>Cerrado </span>
+              <span *ngSwitchDefault> No se </span>
+            </span></td>
         </tr>
 
       </tbody>
@@ -136,12 +187,12 @@
   <div class="row pt-4">
     <div class="col-auto mr-auto"><label>Total Tickets: {{paginacion.totalItems }}</label></div>
     <div class="col-auto">
-      <pagination [boundaryLinks]="true" [totalItems]="paginacion.totalItems" [itemsPerPage]="paginacion.itemsxPagina"
-        [(ngModel)]="paginacion.paginaActual" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
-        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+      <pagination *ngIf="!paginator" [boundaryLinks]="true" [totalItems]="paginacion.totalItems"
+        [itemsPerPage]="paginacion.itemsxPagina" [(ngModel)]="paginacion.paginaActual"
+        (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;">
       </pagination>
     </div>
   </div>
-
 
 </div>

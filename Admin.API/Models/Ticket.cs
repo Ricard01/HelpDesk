@@ -35,7 +35,7 @@ namespace Admin.API.Models
 
     public enum Status
     {
-        Abierto = 1, EnProceso = 2, Cerrado = 3, ReAbrir = 4
+        Abierto = 1, ReAbrir = 2, EnProceso  = 3, Cerrado = 4
     }
 
     //    bitacoraImportacion.TipoProceso = (int)TipoProceso.Nuevo;

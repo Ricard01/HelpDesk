@@ -6,6 +6,7 @@ import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SortableModule } from 'ngx-bootstrap/sortable';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -38,6 +39,7 @@ import { EquipoReadComponent } from './equipo/equipo-read/equipo-read.component'
 import { TicketListComponent } from './ticket/ticket-list/ticket-list.component';
 import { TicketListResolver } from './ticket/ticket-list/ticket-list.resolver';
 import { PaginationModule } from 'ngx-bootstrap';
+// import { HasRoleDirective } from '../shared/_directives/has-role.directive';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -63,6 +65,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     DashboardComponent,
   ],
   imports: [
+    SortableModule.forRoot(),
     NgxMaskModule.forRoot(options),
     CommonModule,
     FormsModule,

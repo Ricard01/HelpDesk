@@ -1,6 +1,7 @@
 
 export interface Filtros {
-    fechaIni: string;
-    fechaFin: string;
-    estatus: number;
+    fechaIni?: string;
+    fechaFin?: string;
+    estatus?: string;
+    orderBy?: string;
 }
