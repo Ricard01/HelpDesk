@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,9 +23,11 @@ namespace Admin.API.Models
         // [Column(TypeName = "decimal(5, 2)")]
         public byte Prioridad { get; set; }
 
-        public byte Status { get; set; }
+        public byte Estatus { get; set; }
 
         public User User { get; set; }
+
+        public ICollection<TicketsAsignados> TicketsAsignados { get; set; }
 
     }
 
@@ -33,7 +36,7 @@ namespace Admin.API.Models
         Normal = 1, Alta = 2, Urgente = 3
     }
 
-    public enum Status
+    public enum Estatus
     {
         Abierto = 1, ReAbrir = 2, EnProceso  = 3, Cerrado = 4
     }

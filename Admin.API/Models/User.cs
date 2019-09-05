@@ -26,5 +26,7 @@ namespace Admin.API.Models
 
         public ICollection<Ticket> Tickets { get; set; }
 
+        public ICollection<TicketsAsignados> TicketsAsignados { get; set; }
+
     }
 }

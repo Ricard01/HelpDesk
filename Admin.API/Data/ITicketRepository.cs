@@ -9,8 +9,8 @@ namespace Admin.API.Data
     {
         Task<Ticket> GetTicket(int id);
 
-        Task<List<Ticket>> GetTicketsAll();
+        Task<List<Ticket>> GetMyTickets(int idUser);
 
-         Task<PagedList<Ticket>> GetTickets(UserParams userParams);
+        Task<PagedList<Ticket>> GetTickets(UserParams userParams);
     }
 }

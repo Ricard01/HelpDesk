@@ -3,37 +3,21 @@ using System;
 using Admin.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Admin.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190903172419_Ticket")]
+    partial class Ticket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("Admin.API.Models.AdjuntosTicket", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FotoUrl");
-
-                    b.Property<string>("PublicId");
-
-                    b.Property<int>("TicketId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TicketId");
-
-                    b.ToTable("AdjuntosTicket");
-                });
 
             modelBuilder.Entity("Admin.API.Models.Equipo", b =>
                 {
@@ -114,19 +98,6 @@ namespace Admin.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
-                });
-
-            modelBuilder.Entity("Admin.API.Models.TicketsAsignados", b =>
-                {
-                    b.Property<int>("TicketId");
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("TicketId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TicketsAsignados");
                 });
 
             modelBuilder.Entity("Admin.API.Models.User", b =>
@@ -272,14 +243,6 @@ namespace Admin.API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Admin.API.Models.AdjuntosTicket", b =>
-                {
-                    b.HasOne("Admin.API.Models.Ticket", "Ticket")
-                        .WithMany()
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Admin.API.Models.Equipo", b =>
                 {
                     b.HasOne("Admin.API.Models.User", "User")
@@ -292,19 +255,6 @@ namespace Admin.API.Migrations
                 {
                     b.HasOne("Admin.API.Models.User", "User")
                         .WithMany("Tickets")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Admin.API.Models.TicketsAsignados", b =>
-                {
-                    b.HasOne("Admin.API.Models.Ticket", "Ticket")
-                        .WithMany()
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Admin.API.Models.User", "User")
-                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

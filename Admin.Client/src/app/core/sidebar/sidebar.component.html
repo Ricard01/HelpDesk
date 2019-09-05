@@ -38,11 +38,18 @@
             </li>
 
             <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['/equipos']"> <i class="fas fa-desktop"></i><span> Catalogos Equipos</span> </a>
+                <a class="nav-link" [routerLink]="['/equipos']"> <i class="fas fa-desktop"></i><span> Catalogos
+                        Equipos</span> </a>
             </li>
 
             <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['/tickets']"> <i class="fas fa-check-square"></i><span> Tickets</span> </a>
+                <a class="nav-link" [routerLink]="['/tickets']"> <i class="fas fa-check-square"></i><span>
+                      Mis Tickets</span> </a>
+            </li>
+
+            <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/tickets/admin']"> <i class="fas fa-list-alt "></i><span>
+                       Lista de Tickets </span> </a>
             </li>
 
 
@@ -54,7 +61,8 @@
 
             <!-- <li *appHasRole="['Admin', 'Moderator']" class="nav-item" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['/admin']">Admin</a> -->
-            <li><a href="javascript:;" class="sidebar-minify-btn" (click)="toggleMinified()"><i class="fa fa-angle-double-left"></i></a></li>
+            <li><a href="javascript:;" class="sidebar-minify-btn" (click)="toggleMinified()"><i
+                        class="fa fa-angle-double-left"></i></a></li>
             <!-- end sidebar minify button -->
         </ul>
         <!-- end sidebar nav -->

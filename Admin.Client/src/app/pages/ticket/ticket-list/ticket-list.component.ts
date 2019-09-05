@@ -8,9 +8,7 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, Ng
 import { Filtros } from 'src/app/config/filtros';
 import { DatePipe } from '@angular/common';
 import { ErrorStateMatcher } from '@angular/material/core';
-// import { MatPaginator, PageEvent } from '@angular/material/paginator';
-// import { MatSort } from '@angular/material/sort';
-// import { MatTableDataSource } from '@angular/material/table';
+
 
 export class CrossFieldErrorMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -28,15 +26,7 @@ export class CrossFieldErrorMatcher implements ErrorStateMatcher {
 
 export class TicketListComponent implements OnInit {
 
-  // displayedColumns = ['id', 'fechaAlta', 'usuario', 'titulo', 'prioridad', 'status', 'acciones'];
-  // dataSource;
-  // @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  // @ViewChild(MatSort, {static: true}) sort: MatSort;
-  // length = 100;
-  // pageSize = 10;
-  // pageSizeOptions: number[] = [5, 10, 25, 100];
-  // MatPaginator Output
-  // pageEvent: PageEvent;
+
 
   private _searchTerm: string;
   filtroTickets: Ticket[];

@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Admin.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190816203401_Tickets")]
-    partial class Tickets
+    [Migration("20190903223942_TicketsAsignados")]
+    partial class TicketsAsignados
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Admin.API.Models.Equipo", b =>
@@ -79,13 +79,13 @@ namespace Admin.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<byte>("Estatus");
+
                     b.Property<DateTime>("FechaAlta");
 
                     b.Property<string>("Mensaje");
 
                     b.Property<byte>("Prioridad");
-
-                    b.Property<byte>("Status");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
@@ -98,6 +98,19 @@ namespace Admin.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Tickets");
+                });
+
+            modelBuilder.Entity("Admin.API.Models.TicketsAsignados", b =>
+                {
+                    b.Property<int>("TicketId");
+
+                    b.Property<int>("UserId");
+
+                    b.HasKey("TicketId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TicketsAsignados");
                 });
 
             modelBuilder.Entity("Admin.API.Models.User", b =>
@@ -253,8 +266,21 @@ namespace Admin.API.Migrations
 
             modelBuilder.Entity("Admin.API.Models.Ticket", b =>
                 {
-                    b.HasOne("Admin.API.Models.User")
+                    b.HasOne("Admin.API.Models.User", "User")
                         .WithMany("Tickets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Admin.API.Models.TicketsAsignados", b =>
+                {
+                    b.HasOne("Admin.API.Models.Ticket", "Ticket")
+                        .WithMany()
+                        .HasForeignKey("TicketId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Admin.API.Models.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

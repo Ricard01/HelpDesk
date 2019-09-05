@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using Admin.API.Data;
 using Admin.API.Helpers;
@@ -142,7 +141,7 @@ namespace Admin.API
             }
             // El orden es importante
             // app.UseHttpsRedirection();
-            // seeder.SeedUsers();
+             seeder.SeedUsers();
             // Hay que cambiar esto ya que permite TODO
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
             app.UseAuthentication();

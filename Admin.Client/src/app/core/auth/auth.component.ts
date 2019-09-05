@@ -42,12 +42,12 @@ export class AuthComponent implements OnInit, OnDestroy {
       return;
     }
     this.authService.login(this.model, loginForm.value.recordar).subscribe(
+      next => {
+        this.router.navigate(['/dashboard']);
+      },
       error => {
         console.log(error);
         this.alert.error('El nombre de usuario o password no es valido');
-      },
-      () => {
-        this.router.navigate(['/dashboard']);
       }
     );
   }

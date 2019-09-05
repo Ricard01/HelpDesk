@@ -6,6 +6,6 @@ export interface Ticket {
     titulo: string;
     mensaje: string;
     prioridad: number;
-    status: number;
+    estatus: number;
     user: User;
 }

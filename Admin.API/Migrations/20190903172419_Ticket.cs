@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Admin.API.Migrations
 {
-    public partial class Tickets : Migration
+    public partial class Ticket : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,7 @@ namespace Admin.API.Migrations
                     Titulo = table.Column<string>(maxLength: 30, nullable: false),
                     Mensaje = table.Column<string>(nullable: true),
                     Prioridad = table.Column<byte>(nullable: false),
-                    Status = table.Column<byte>(nullable: false)
+                    Estatus = table.Column<byte>(nullable: false)
                 },
                 constraints: table =>
                 {

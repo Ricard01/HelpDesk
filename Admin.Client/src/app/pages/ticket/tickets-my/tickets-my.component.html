@@ -1,0 +1,78 @@
+<div class="row mb-2">
+
+    <div class="col-3 bd-highlight">
+        <h1 class="page-header"> <i class="fas fa-check-square"></i> Mis Tickets</h1>
+    </div>
+
+    <div class="col-2  ml-auto p-1 bd-highlight">
+        <a [routerLink]="['/ticket-nuevo']" class="btn btn-block btn-primary  btn-circle">
+            Nuevo &nbsp; <i class="fa fa-plus"></i>
+        </a>
+    </div>
+
+</div>
+
+
+<!-- TODO Nota matColumnDef debe coincider con {{ nombreVar }} para que funcione Sort -->
+<mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear>
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> {{ticket.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaAlta">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> {{ticket.fechaAlta  | date: 'dd/MM/yyyy'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="usuario">
+        <mat-header-cell *matHeaderCellDef> Usuario </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> {{ticket.user.username}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="titulo">
+        <mat-header-cell *matHeaderCellDef> Titulo </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> {{ticket.titulo}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="prioridad">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Prioridad </mat-header-cell>
+        <mat-cell *matCellDef="let ticket">
+            <span [ngSwitch]=" ticket.prioridad ">
+                <span *ngSwitchCase="1"> Baja </span>
+                <span *ngSwitchCase="2"> Normal </span>
+                <span *ngSwitchCase="3"> <i class="fas fa-exclamation-triangle text-danger"></i> Urgente </span>
+            </span> 
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="estatus">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </mat-header-cell>
+        <mat-cell *matCellDef="let ticket">
+                <span [ngSwitch]=" ticket.estatus ">
+                        <span class="label label-primary" *ngSwitchCase=1> Abierto </span>
+                        <span class="label label-info" *ngSwitchCase=2> + Abierto </span>
+                        <span class="label label-warning" *ngSwitchCase=3> En proceso </span>
+                        <span class="label label-success" *ngSwitchCase=4>Cerrado </span>
+                        <span *ngSwitchDefault> No se </span>
+                      </span>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let ticket">
+
+            <button title="Editar" routerLinkActive="router-link-active"
+                class="ml-4 btn btn-info btn-icon btn-circle btn-sm">
+                <i class="fa fa-edit"></i>
+            </button>
+
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+
+<mat-paginator [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons></mat-paginator>

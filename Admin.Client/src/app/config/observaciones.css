@@ -111,9 +111,26 @@ OPT2
                                 [ngValue]="equipo.idUser == null ? equipo : equipo ">{{ equipo.nombreEquipo}}
                             </option>
                         </select>
-
+w
   onChangeEquipo(event: any) {
     this.selectedEquipo = this.equipos.find(e => e.nombreEquipo === event.target.value);
     this.setFormValues();
   }
+
+  modelBuilder.Entity<Team>().HasData(
+          new Team[] or single new Team
+    {
+        new Team
+        {
+            TeamId = 101,
+            Name = "Entity Framework",
+            TwitterAlias = "efmagicunicorns"
+        },
+        new Team
+        {
+            TeamId = 102,
+            Name = ".NET",
+            TwitterAlias = "dotnet"
+        }
+    });
 */

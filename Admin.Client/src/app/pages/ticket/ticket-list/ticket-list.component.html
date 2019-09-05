@@ -58,58 +58,6 @@
 
   </form>
 
-
-
-
-  <!-- TODO Nota matColumnDef debe coincider con {{ nombreVar }} para que funcione Sort -->
-  <!-- 
-  <mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection ="asc" matSortDisableClear>
-    <ng-container matColumnDef="id" >
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
-      <mat-cell *matCellDef="let ticket"> {{ticket.id}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="fechaAlta">
-      <mat-header-cell *matHeaderCellDef mat-sort-header > Fecha </mat-header-cell>
-      <mat-cell *matCellDef="let ticket"> {{ticket.fechaAlta  | date: 'dd/MM/yyyy'}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="usuario">
-      <mat-header-cell *matHeaderCellDef > Usuario </mat-header-cell>
-      <mat-cell *matCellDef="let ticket"> {{ticket.user.username}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="titulo">
-      <mat-header-cell *matHeaderCellDef > Titulo </mat-header-cell>
-      <mat-cell *matCellDef="let ticket"> {{ticket.titulo}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="prioridad">
-      <mat-header-cell *matHeaderCellDef mat-sort-header > Prioridad </mat-header-cell>
-      <mat-cell *matCellDef="let ticket"> {{ticket.prioridad}} </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="status">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </mat-header-cell>
-      <mat-cell *matCellDef="let ticket"> {{ticket.status}} </mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="acciones">
-      <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
-      <mat-cell *matCellDef="let ticket">
-
-        <button title="Editar" routerLinkActive="router-link-active"
-          class="ml-4 btn btn-info btn-icon btn-circle btn-sm">
-          <i class="fa fa-edit"></i>
-        </button>
-
-      </mat-cell>
-    </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-
-  </mat-table> -->
-
   <div class="row form-group m-b-10">
 
     <div class="col-md-2">
@@ -127,9 +75,6 @@
         </select>
       </div>
     </div> -->
-
-
-
 
 
   <div class="table-responsive">

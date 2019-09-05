@@ -1,3 +1,4 @@
+using System.Reflection;
 using Admin.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -12,20 +13,27 @@ namespace Admin.API.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         // Apartir de esta informacion se crea una migracion con ef datamigration
         public DbSet<Equipo> Equipos { get; set; }
-
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketsAsignados> TicketsAsignados { get; set; }
+        public DbSet<AdjuntosTicket> AdjuntosTicket { get; set; }
+
         // public DbSet<File> Files { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            // // genera todos los fluent api 
+            // base.ApplyEntityTypeConfigurations(Assembly.GetExecutingAssembly());
+
             base.OnModelCreating(builder);
+
+            builder.ApplyConfiguration(new TicketAsignadoConfiguration());
 
             builder.Entity<User>()
             .Property(u => u.Activo)
             .HasDefaultValue(true);
 
             builder.Entity<Equipo>()
-             .HasOne( u => u.User)
-             .WithOne( e => e.Equipo)
+             .HasOne(u => u.User)
+             .WithOne(e => e.Equipo)
              .OnDelete(DeleteBehavior.SetNull);
 
             builder.Entity<UserRole>(userRole =>
@@ -42,7 +50,7 @@ namespace Admin.API.Data
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
             });
-            
+
             builder.Entity<Equipo>()
             .Property(e => e.Activo)
             .HasDefaultValue(true);

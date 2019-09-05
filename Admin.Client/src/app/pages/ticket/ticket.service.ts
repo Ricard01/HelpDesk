@@ -20,6 +20,10 @@ export class TicketService {
     return this.http.get<Ticket>(this.baseUrl + id);
   }
 
+  getMyTickets( ) {
+    return this.http.get<Ticket[]>(this.baseUrl + 'My');
+  }
+
   getTickets(pagina?, itemsxPagina?, userParams?): Observable<PaginacionRes<Ticket[]>> {
     const paginacionRes: PaginacionRes<Ticket[]> = new PaginacionRes<Ticket[]>();
     let params = new HttpParams();

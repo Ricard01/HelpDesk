@@ -39,6 +39,7 @@ import { EquipoReadComponent } from './equipo/equipo-read/equipo-read.component'
 import { TicketListComponent } from './ticket/ticket-list/ticket-list.component';
 import { TicketListResolver } from './ticket/ticket-list/ticket-list.resolver';
 import { PaginationModule } from 'ngx-bootstrap';
+import { TicketsMyComponent } from './ticket/tickets-my/tickets-my.component';
 // import { HasRoleDirective } from '../shared/_directives/has-role.directive';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -60,6 +61,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     EquipoEditComponent,
     EquipoReadComponent,
     TicketListComponent,
+    TicketsMyComponent,
   ],
   exports: [
     DashboardComponent,

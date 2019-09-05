@@ -16,6 +16,6 @@ namespace Admin.API.Dtos
 
         public byte Prioridad { get; set; }
 
-        public byte Status { get; set; }
+        public byte Estatus { get; set; }
     }
 }
