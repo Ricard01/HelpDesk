@@ -102,7 +102,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ticket of tickets | ticket : searchTerm ">
+        <tr *ngFor="let ticket of tickets  ">
           <th> {{ ticket.id }}</th>
           <td> {{ ticket.fechaAlta  | date: 'dd/MM/yyyy' }}</td>
           <td>{{ ticket.user.username}}</td>
@@ -116,7 +116,7 @@
             </span></td>
 
           <td>
-            <span [ngSwitch]=" ticket.status ">
+            <span [ngSwitch]=" ticket.estatus ">
               <span class="label label-primary" *ngSwitchCase=1> Abierto </span>
               <span class="label label-info" *ngSwitchCase=2> + Abierto </span>
               <span class="label label-warning" *ngSwitchCase=3> En proceso </span>

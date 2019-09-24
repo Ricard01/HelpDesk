@@ -10,7 +10,7 @@ namespace Admin.API.Dtos
         public DateTime FechaAlta { get; set; }
         // public bool IsMain { get; set; }
 
-        public string FotoUrl { get; set; }
+        public string ArchivoUrl { get; set; }
 
          public string PublicId { get; set; }
       

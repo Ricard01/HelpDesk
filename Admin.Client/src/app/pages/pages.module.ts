@@ -15,7 +15,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-
+import { FileUploadModule } from 'ng2-file-upload';
 // NG
 import { DashboardComponent } from './dashboard/dashboard.component';
 
@@ -40,7 +40,10 @@ import { TicketListComponent } from './ticket/ticket-list/ticket-list.component'
 import { TicketListResolver } from './ticket/ticket-list/ticket-list.resolver';
 import { PaginationModule } from 'ngx-bootstrap';
 import { TicketsMyComponent } from './ticket/tickets-my/tickets-my.component';
+import { TicketNuevoComponent } from './ticket/ticket-nuevo/ticket-nuevo.component';
 // import { HasRoleDirective } from '../shared/_directives/has-role.directive';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { TicketNuevoResolver } from './ticket/ticket-nuevo/ticket-nuevo.resolver';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -62,11 +65,15 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     EquipoReadComponent,
     TicketListComponent,
     TicketsMyComponent,
+    TicketNuevoComponent,
+
   ],
   exports: [
     DashboardComponent,
   ],
   imports: [
+    FileUploadModule,
+    AngularMultiSelectModule,
     SortableModule.forRoot(),
     NgxMaskModule.forRoot(options),
     CommonModule,
@@ -91,6 +98,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
   ],
   providers: [
     UserPerfilResolver,
+    TicketNuevoResolver,
     TicketListResolver
     // UserListResolver
   ]

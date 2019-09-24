@@ -22,7 +22,9 @@ namespace Admin.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FotoUrl");
+                    b.Property<string>("ArchivoUrl");
+
+                    b.Property<DateTime>("FechaAlta");
 
                     b.Property<string>("PublicId");
 
@@ -275,7 +277,7 @@ namespace Admin.API.Migrations
             modelBuilder.Entity("Admin.API.Models.AdjuntosTicket", b =>
                 {
                     b.HasOne("Admin.API.Models.Ticket", "Ticket")
-                        .WithMany()
+                        .WithMany("AdjuntosTicket")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -298,13 +300,13 @@ namespace Admin.API.Migrations
 
             modelBuilder.Entity("Admin.API.Models.TicketsAsignados", b =>
                 {
-                    b.HasOne("Admin.API.Models.Ticket", "Ticket")
-                        .WithMany()
+                    b.HasOne("Admin.API.Models.Ticket")
+                        .WithMany("TicketsAsignados")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Admin.API.Models.User", "User")
-                        .WithMany()
+                    b.HasOne("Admin.API.Models.User")
+                        .WithMany("TicketsAsignados")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

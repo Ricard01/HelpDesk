@@ -48,9 +48,14 @@ namespace Admin.API.Data
             return await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
         }
 
+        public async Task<List<User>> GetUsersForTicket(int userId)
+        {
+            var users = await _context.Users.Where( u => u.Id != userId).ToListAsync();
+            return users;
+        }
         public async Task<List<User>> GetAllUsers()
         {
-            var users = await _context.Users.Include( e => e.Equipo ).ToListAsync();
+            var users = await _context.Users.Include(e => e.Equipo).ToListAsync();
             return users;
 
         }

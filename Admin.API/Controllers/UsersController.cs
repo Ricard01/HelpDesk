@@ -82,26 +82,20 @@ namespace Admin.API.Controllers
             return Ok(usersToReturn);
         }
 
-        // [HttpGet]
-        // public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
-        // {
-        //     var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-        //     var userFromRepo = await _repo.GetUser(currentUserId, true);
+        [HttpGet("{userId}/forticket")]
+        public async Task<IActionResult> GetUsersForTicket(int userId)
+        {
 
-        //     userParams.UserId = currentUserId;
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
 
- 
+            var users = await _repo.GetUsersForTicket(userId);
 
-        //     var users = await _repo.GetUsers(userParams);
+            var usersToReturn = _mapper.Map<IEnumerable<UserDetDto>>(users);
 
-        //     var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDto>>(users);
-
-        //     Response.AddPagination(users.PaginaActual, users.PageSize,
-        //         users.TotalCount, users.TotalPaginas);
-
-        //     return Ok(usersToReturn);
-        // }
+            return Ok(usersToReturn);
+        }
 
 
         [HttpGet("{id}")]
@@ -176,7 +170,6 @@ namespace Admin.API.Controllers
             }
             return BadRequest(result.Errors);
 
-
         }
 
         [Authorize(Policy = "RequireAdminRole")]
@@ -213,6 +206,7 @@ namespace Admin.API.Controllers
             throw new Exception("Ocurrio un error al intentar eliminar el usuario");
         }
         [Authorize(Policy = "RequireAdminRole")]
+
         public void DeletePhotoProfile(string publicId)
         {
             if (publicId != null)

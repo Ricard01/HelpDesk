@@ -6,7 +6,7 @@ namespace Admin.API.Dtos
     {
         public int TicketId { get; set; }
 
-        public int UserId { get; set; }
+        public int Id { get; set; }
 
         public UserDto UserDto { get; set; }
 

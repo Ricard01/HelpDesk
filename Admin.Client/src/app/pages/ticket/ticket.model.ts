@@ -8,4 +8,5 @@ export interface Ticket {
     prioridad: number;
     estatus: number;
     user: User;
+    ticketsAsignados?: string[];
 }

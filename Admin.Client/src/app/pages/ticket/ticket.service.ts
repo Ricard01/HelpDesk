@@ -20,7 +20,7 @@ export class TicketService {
     return this.http.get<Ticket>(this.baseUrl + id);
   }
 
-  getMyTickets( ) {
+  getMyTickets() {
     return this.http.get<Ticket[]>(this.baseUrl + 'My');
   }
 
@@ -50,6 +50,10 @@ export class TicketService {
           return paginacionRes;
         })
       );
+  }
+
+  createTicket(ticket: Ticket) {
+    return this.http.post(this.baseUrl, ticket);
   }
 
 }

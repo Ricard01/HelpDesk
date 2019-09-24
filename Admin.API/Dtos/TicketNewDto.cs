@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Admin.API.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace Admin.API.Dtos
 {
@@ -20,7 +20,7 @@ namespace Admin.API.Dtos
 
         public byte Estatus { get; set; }
 
-        public UserDto UserDto { get; set; }
+        // public UserDto UserDto { get; set; }
 
         public ICollection<TicketsAsignadosDto> TicketsAsignados { get; set; }
 

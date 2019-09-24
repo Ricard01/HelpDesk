@@ -29,6 +29,8 @@ namespace Admin.API.Models
 
         public ICollection<TicketsAsignados> TicketsAsignados { get; set; }
 
+        public ICollection<AdjuntosTicket> AdjuntosTicket { get; set; }
+
     }
 
     public enum Prioridad

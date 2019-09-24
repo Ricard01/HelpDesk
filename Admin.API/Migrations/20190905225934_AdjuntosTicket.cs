@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Admin.API.Migrations
@@ -14,8 +15,9 @@ namespace Admin.API.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     TicketId = table.Column<int>(nullable: false),
-                    FotoUrl = table.Column<string>(nullable: true),
-                    PublicId = table.Column<string>(nullable: true)
+                    ArchivoUrl = table.Column<string>(nullable: true),
+                    PublicId = table.Column<string>(nullable: true),
+                    FechaAlta = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

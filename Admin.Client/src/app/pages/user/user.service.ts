@@ -29,6 +29,10 @@ export class UserService {
     return this.http.get<User[]>(this.baseUrl + 'all');
   }
 
+  getUsersForTicket(userId: number ) {
+    return this.http.get<User[]>(this.baseUrl + userId + '/forticket' );
+  }
+
   // getUsers(pagina?, itemsxPagina?): Observable<PaginacionRes<User[]>> {
   //   const paginacionResult: PaginacionRes<User[]> = new PaginacionRes<User[]>();
 

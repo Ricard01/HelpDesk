@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { ImagenPipe } from './_pipes/imagen.pipe';
 import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
-import { TicketPipe } from './_pipes/ticket.pipe';
-// import { HasRoleDirective } from './_directives/has-role.directive';
+import { AdjuntarComponent } from './_components/adjuntar/adjuntar.component';
+
 
 
 @NgModule({
   declarations: [
     ImagenPipe,
-    TicketPipe,
+    AdjuntarComponent,
   ],
   providers: [
   ],
@@ -22,7 +22,7 @@ import { TicketPipe } from './_pipes/ticket.pipe';
   exports: [
     PaginationModule,
     ImagenPipe,
-    TicketPipe
+    AdjuntarComponent
   ]
 })
 export class SharedModule { }

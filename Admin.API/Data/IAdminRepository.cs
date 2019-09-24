@@ -13,6 +13,7 @@ namespace Admin.API.Data
         Task<bool> SaveAll();
 
         Task<List<User>> GetAllUsers();
+        Task<List<User>> GetUsersForTicket(int userId);
 
         Task<PagedList<User>> GetUsers(UserParams userParams);
         Task<User> GetUser(int id, bool isCurrentUser);

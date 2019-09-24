@@ -85,9 +85,7 @@ namespace Admin.API.Controllers
             fileUploadDto.FotoUrl = uploadResult.Uri.ToString();
             fileUploadDto.PublicId = uploadResult.PublicId;
 
-
             var photo = _mapper.Map(fileUploadDto, userFromRepo);
-
 
             if (await _repo.SaveAll())
             {
@@ -95,11 +93,9 @@ namespace Admin.API.Controllers
                 return CreatedAtRoute("GetPhoto", new { id = userId }, photoToReturn);
             }
 
-            return BadRequest("Could not add the photo");
+            return BadRequest("No se pudo agregar la foto");
         }
-
-
-
+      
         // TODO log si no logro eliminar la foto .
         [HttpGet("{publicId}", Name = "DeleteFile")]
         public void DeleteFile(string publicId)
@@ -109,7 +105,6 @@ namespace Admin.API.Controllers
             {
                 var deleteParams = new DeletionParams(publicId);
 
-
                 var result = _cloudinary.Destroy(deleteParams);
 
                 if (result.Result == "ok")
@@ -118,14 +113,8 @@ namespace Admin.API.Controllers
                 }
             }
 
-
         }
 
-
-
-
-
-
-
     }
+
 }

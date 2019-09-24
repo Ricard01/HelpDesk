@@ -9,7 +9,8 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noUnusedLocals": true,
+    "removeComments": true,
+    "noUnusedLocals": false,
     "noUnusedParameters": false,
     "importHelpers": true,
     "target": "es2015",
@@ -22,4 +23,5 @@
     ],
     "paths": { "@angular/*": ["../node_modules/@angular/*"] }
   }
+    
 }
