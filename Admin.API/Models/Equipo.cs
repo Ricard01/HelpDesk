@@ -7,13 +7,13 @@ namespace Admin.API.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(30)]
-        [StringLength(30, ErrorMessage = "El nombre de equipo es obligatorio mi rey")]
+        // [Required]
+        // [MaxLength(30)]
+        // [StringLength(30, ErrorMessage = "El nombre de equipo es obligatorio mi rey")]
         public string NombreEquipo { get; set; }
 
-        [Required]
-        [MaxLength(30)]
+        // [Required]
+        // [MaxLength(30)]
         public string Ip { get; set; }
 
         public string Caracteristicas { get; set; }

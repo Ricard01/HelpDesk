@@ -15,7 +15,9 @@
 
                 <div class="form-group">
                     <label for="titulo">Titulo</label>
-                    <input type="text" class="form-control" formControlName="titulo">
+                    <input  [ngClass]="{'is-invalid': formTicketNuevo.get('titulo').errors && formTicketNuevo.get('titulo').touched}" type="text" class="form-control" formControlName="titulo">
+                    <div class="invalid-feedback" *ngIf="formTicketNuevo.get('titulo').hasError('maxlength') && formTicketNuevo.get('titulo').touched" >
+                        Máximo 60 Caracteres</div>
                 </div>
 
                 <div class="form-group">
@@ -94,9 +96,4 @@
     </div>
 
 
-
-
-
 </div>
-
-<!-- <app-adjuntar [archivos]="ticket.adjuntos">  </app-adjuntar> -->

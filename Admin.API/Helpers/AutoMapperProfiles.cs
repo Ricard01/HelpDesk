@@ -24,16 +24,29 @@ namespace Admin.API.Helpers
             CreateMap<Equipo, EquipoListDto>();
             CreateMap<EquipoListDto, Equipo>();
             CreateMap<EquipoUpdDto, Equipo>();
-            // CreateMap<Ticket, TicketNewDto>();
-            CreateMap<TicketNewDto, Ticket >();
-            CreateMap<Ticket, TicketListDto>();  
-             CreateMap<TicketListDto, UserDto>(); 
-            CreateMap<TicketsAsignados, TicketsAsignadosDto>();  
+
+
+            // Maps GetTicketsAsignadosById
+            CreateMap<Ticket, TicketDto>();
+            CreateMap<AdjuntosTicket, AdjuntosTicketDetalleDto>();
+            CreateMap<TicketsAsignados, TicketsAsignadosDto>();
+
+            CreateMap<TicketNewDto, Ticket>();
+            CreateMap<Ticket, TicketListDto>();
+            // CreateMap<TicketListDto, UserDto>();
+
             CreateMap<TicketsAsignadosDto, TicketsAsignados>()
-             .ForMember(dest => dest.UserId, opt => {
-                    opt.MapFrom(d => d.Id);
-                });   
-            CreateMap<AdjuntosTicketDto, AdjuntosTicket>();      
+             .ForMember(dest => dest.UserId, opt =>
+             {
+                 opt.MapFrom(d => d.Id);
+             });
+            CreateMap<AdjuntosTicketDto, AdjuntosTicket>();
+              CreateMap<AdjuntosRespuestaDto, AdjuntosRespuesta>();
+
+            // CreateMap<TicketRespuesta, TicketRespuestaDto>();
+
+            // update respuesta 
+            CreateMap<TicketRespuestaDto, TicketRespuesta>();
             // CreateMap<TicketNewDto, UserDto>();
             // CreateMap<TicketNewDto, TicketsAsignadosDto>();
 

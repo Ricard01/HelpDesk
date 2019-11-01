@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Admin.API.Data;
+using Admin.API.Persistence;
 using Admin.API.Dtos;
 using Admin.API.Helpers;
 using Admin.API.Models;
@@ -19,17 +20,17 @@ namespace Admin.API.Controllers
     [ApiController]
     public class TicketsController : ControllerBase
     {
-        private const string V = "titulo";
+        #region ctor
         private readonly IAdminRepository _repo;
         private readonly ITicketRepository _repot;
         private readonly IMapper _mapper;
-        private readonly DataContext _context;
+        private readonly AdminContext _context;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         private Cloudinary _cloudinary;
 
 
         public TicketsController(IAdminRepository repo, ITicketRepository repot, IMapper mapper,
-        DataContext context, IOptions<CloudinarySettings> cloudinaryConfig)
+        AdminContext context, IOptions<CloudinarySettings> cloudinaryConfig)
         {
             _cloudinaryConfig = cloudinaryConfig;
             _mapper = mapper;
@@ -47,19 +48,22 @@ namespace Admin.API.Controllers
 
         }
 
-        [HttpGet("{ticketId}")]
-        public async Task<IActionResult> GetTicketById(int ticketId)
+        #endregion
+
+        [HttpGet("TicketAsignadoById/{ticketId}")]
+        public async Task<IActionResult> GetTicketAsignadoById(int ticketId)
         {
-            var ticket = await _repot.GetTicket(ticketId);
+            var ticket = await _repot.GetTicketAsignadoById(ticketId);
+
             return Ok(ticket);
         }
 
-        /// <summary>Crea una lista de Tickets para el usuario logeado.
+
+        /// <summary>Lista de tickets asignados al usuario.
         /// <para>TicketsAsignados.</para>
         /// </summary>  
-
-        [HttpGet("My")]
-        public async Task<IActionResult> GetMyTickets()
+        [HttpGet("GetMisTicketsAsignados")]
+        public async Task<IActionResult> GetMisTicketsAsignados()
         {
             var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -70,12 +74,13 @@ namespace Admin.API.Controllers
                 return NoContent();
             }
 
-            var tickets = await _repot.GetMyTickets(userFromRepo.Id);
+            var tickets = await _repot.GetMisTicketsAsignados(userFromRepo.Id);
 
             var ticketsReturn = _mapper.Map<IEnumerable<TicketListDto>>(tickets);
 
             return Ok(ticketsReturn);
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetTickets([FromQuery]UserParams userParams)
@@ -99,7 +104,6 @@ namespace Admin.API.Controllers
         }
 
 
-
         [HttpPost]
         public async Task<IActionResult> CreateTicket(TicketNewDto ticketDto)
         {
@@ -112,6 +116,7 @@ namespace Admin.API.Controllers
             }
             throw new Exception("Ocurrio un error al crear el ticket");
         }
+
 
         [HttpPost("Adjuntar/{ticketId}")]
         public async Task<IActionResult> AdjuntosTicket(int ticketId, [FromForm]AdjuntosTicketDto fileUploadDto)
@@ -148,6 +153,7 @@ namespace Admin.API.Controllers
             if (uploadResult.StatusCode.ToString() == "OK")
             {
                 // mapeo los resultados devueltos 
+                fileUploadDto.Nombre = fileUploadDto.File.FileName;
                 fileUploadDto.ArchivoUrl = uploadResult.Uri.ToString();
                 fileUploadDto.PublicId = uploadResult.PublicId;
                 fileUploadDto.TicketId = ticketId;
@@ -164,6 +170,76 @@ namespace Admin.API.Controllers
             throw new Exception("Ocurrio un error al crear el ticket");
         }
 
-       
+        [HttpPost("TicketRespuesta")]
+        public async Task<IActionResult> CreateTicketRespuesta(TicketRespuestaDto respuestaDto)
+        {
+
+            var respuesta = _mapper.Map<TicketRespuesta>(respuestaDto);
+            _context.Add(respuesta);
+
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                var ticket = new Ticket { Id = respuesta.TicketId };
+                ticket.Estatus = respuesta.Estatus;
+                _context.Entry(ticket).Property(e => e.Estatus).IsModified = true;
+                _context.SaveChanges();
+                return Ok(respuesta.Id);
+
+            }
+            throw new Exception("Ocurrio un error al crear el ticket");
+        }
+
+        [HttpPost("AdjuntosRspuesta/{respuestaId}")]
+        public async Task<IActionResult> AdjuntosRspuesta(int respuestaId, [FromForm]AdjuntosRespuestaDto fileUploadDto)
+        {
+            // //valida que la peticion sea del usuario logeado
+            // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            //     return Unauthorized();
+
+            var file = fileUploadDto.File;
+
+            var uploadResult = new RawUploadResult();
+
+            if (file.Length > 0)
+            {
+                using (var stream = file.OpenReadStream())
+                {
+
+                    var uploadParams = new RawUploadParams()
+                    {
+                        // especifico los parametros para guardar el archivo
+                        File = new FileDescription(file.FileName, stream),
+                        UseFilename = true,
+                        UniqueFilename = true,
+                        Folder = "TicketsRespuesta"
+                    };
+
+                    // Guarda el archivo en la nube 
+                    uploadResult = _cloudinary.Upload(uploadParams);
+
+                }
+
+
+            }
+            if (uploadResult.StatusCode.ToString() == "OK")
+            {
+                // mapeo los resultados devueltos 
+                fileUploadDto.Nombre = fileUploadDto.File.FileName;
+                fileUploadDto.ArchivoUrl = uploadResult.Uri.ToString();
+                fileUploadDto.PublicId = uploadResult.PublicId;
+                fileUploadDto.TicketRespuestaId = respuestaId;
+            }
+            // mapeo el dto con la clase
+            var adTicket = _mapper.Map<AdjuntosRespuesta>(fileUploadDto);
+            _context.Add(adTicket);
+
+
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return Ok();
+            }
+            throw new Exception("Ocurrio un error al crear el ticket");
+        }
+
     }
 }

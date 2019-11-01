@@ -2,7 +2,7 @@
 
 
   <form class="col-md-6" [formGroup]="equipoEditForm" (ngSubmit)="equipoUpdate(equipo.id)">
-<!-- TODO regresar atras
+    <!-- TODO regresar atras
     <a class="btn btn-primary btn-icon btn-circle" (click)="cancelEquipo()"> <i class="fas fa-arrow-alt-circle-left text-white"></i></a> -->
     <h2 class="text-center text-primary">Equipo </h2>
     <hr>
@@ -41,10 +41,10 @@
     <div *ngIf="showActualizar">
       <button type="submit" [disabled]="!equipoEditForm.dirty"
         class=" col-md-2 col-sm-3 btn btn-primary width-150">Actualizar</button>
-     
+
       <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5"
         routerLink="/equipos">Cancelar</a>
-      </div>
+    </div>
 
   </form>
 

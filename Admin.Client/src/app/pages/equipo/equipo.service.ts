@@ -14,9 +14,7 @@ export class EquipoService {
   constructor(public http: HttpClient) { }
 
   getEquipo(id: number): Observable<Equipo> {
-    console.log('Inicia');
     return this.http.get<Equipo>(this.baseUrl + id);
-    console.log('Finaliza');
   }
 
   getAllEquipos() {

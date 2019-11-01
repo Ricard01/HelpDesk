@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Admin.API.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -10,8 +9,8 @@ using Admin.API.Models;
 using Microsoft.Extensions.Options;
 using Admin.API.Helpers;
 using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
 using System.Collections.Generic;
+using Admin.API.Persistence;
 
 namespace Admin.API.Controllers
 {
@@ -19,13 +18,13 @@ namespace Admin.API.Controllers
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
     {
-        private readonly DataContext _context;
+        private readonly AdminContext _context;
         private readonly UserManager<User> _userManager;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         private Cloudinary _cloudinary;
 
         public AdminController(
-            DataContext context,
+            AdminContext context,
             UserManager<User> userManager,
             IOptions<CloudinarySettings> cloudinaryConfig)
         {

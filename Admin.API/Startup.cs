@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text;
 using Admin.API.Data;
+using Admin.API.Persistence;
 using Admin.API.Helpers;
 using Admin.API.Models;
 using AutoMapper;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using static Admin.API.Helpers.Extensions;
 
@@ -35,7 +37,7 @@ namespace Admin.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<AdminContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             // // No hizo ni madres esto
             // CultureInfo.CurrentCulture = new CultureInfo("es-ES");
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
@@ -49,7 +51,7 @@ namespace Admin.API
 
 
             builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
-            builder.AddEntityFrameworkStores<DataContext>();
+            builder.AddEntityFrameworkStores<AdminContext>();
             builder.AddRoleValidator<RoleValidator<Role>>();
             builder.AddRoleManager<RoleManager<Role>>();
             builder.AddSignInManager<SignInManager<User>>();
@@ -111,10 +113,11 @@ namespace Admin.API
             services.AddScoped<IEquipoRepository, EquipoRepository>();
             services.AddScoped<ITicketRepository, TicketRepository>();
             services.AddScoped<LogUserActivity>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -122,6 +125,7 @@ namespace Admin.API
             }
             else
             {
+                // logger.LogInformation("RICARDO In Development environment RICARDO");
                 // TODO Manejo de errores middleware
                 app.UseExceptionHandler(builder =>
                 {

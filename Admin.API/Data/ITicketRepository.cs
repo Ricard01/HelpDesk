@@ -9,7 +9,9 @@ namespace Admin.API.Data
     {
         Task<Ticket> GetTicket(int id);
 
-        Task<List<Ticket>> GetMyTickets(int idUser);
+        Task<object> GetTicketAsignadoById(int ticketId);
+
+        Task<List<Ticket>> GetMisTicketsAsignados(int idUser);
 
         Task<PagedList<Ticket>> GetTickets(UserParams userParams);
     }

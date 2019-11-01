@@ -39,11 +39,14 @@ import { EquipoReadComponent } from './equipo/equipo-read/equipo-read.component'
 import { TicketListComponent } from './ticket/ticket-list/ticket-list.component';
 import { TicketListResolver } from './ticket/ticket-list/ticket-list.resolver';
 import { PaginationModule } from 'ngx-bootstrap';
-import { TicketsMyComponent } from './ticket/tickets-my/tickets-my.component';
 import { TicketNuevoComponent } from './ticket/ticket-nuevo/ticket-nuevo.component';
 // import { HasRoleDirective } from '../shared/_directives/has-role.directive';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { TicketNuevoResolver } from './ticket/ticket-nuevo/ticket-nuevo.resolver';
+import { TicketRespComponent } from './ticket/ticket-resp/ticket-resp.component';
+import { TicketAsignadoComponent } from './ticket/ticket-asignado/ticket-asignado.component';
+import { ArchivoComponent } from './attachFile/archivo/archivo.component';
+import { TicketComponent } from './ticket/ticket/ticket.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -64,8 +67,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     EquipoEditComponent,
     EquipoReadComponent,
     TicketListComponent,
-    TicketsMyComponent,
     TicketNuevoComponent,
+    TicketRespComponent,
+    TicketAsignadoComponent,
+    ArchivoComponent,
+    TicketComponent
 
   ],
   exports: [
@@ -82,7 +88,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     CoreModule,
     PaginationModule,
     SharedModule,
-    NgbModule.forRoot(),
+    NgbModule,
     PAGES_ROUTES,
     MatDatepickerModule,
     MatMomentDateModule,

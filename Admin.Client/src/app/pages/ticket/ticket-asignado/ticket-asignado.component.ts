@@ -6,10 +6,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-tickets-my',
-  templateUrl: './tickets-my.component.html',
-  styleUrls: ['./tickets-my.component.css']
+  templateUrl: './ticket-asignado.component.html',
+  styleUrls: ['./ticket-asignado.component.css']
 })
-export class TicketsMyComponent implements OnInit {
+export class TicketAsignadoComponent implements OnInit {
 
   displayedColumns = ['id', 'fechaAlta', 'usuario', 'titulo', 'prioridad', 'estatus', 'acciones'];
   dataSource;
@@ -27,7 +27,7 @@ export class TicketsMyComponent implements OnInit {
   }
 
   getMyTickets() {
-    this._ticketService.getMyTickets().subscribe( res => {
+    this._ticketService.getMisTicketsAsignados().subscribe( res => {
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = res;
       this.dataSource.sort = this.sort;

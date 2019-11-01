@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.API.Persistence;
 using Admin.API.Helpers;
 using Admin.API.Models;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,9 @@ namespace Admin.API.Data
 {
     public class AdminRepository : IAdminRepository
     {
-        private readonly DataContext _context;
+        private readonly AdminContext _context;
 
-        public AdminRepository(DataContext context)
+        public AdminRepository(AdminContext context)
         {
             _context = context;
         }

@@ -1,22 +1,43 @@
-using System.Reflection;
 using Admin.API.Models;
+using Admin.API.Persistence.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
-namespace Admin.API.Data
+namespace Admin.API.Persistence
 {
-    public class DataContext : IdentityDbContext<User, Role, int,
+    public class AdminContext : IdentityDbContext<User, Role, int,
         IdentityUserClaim<int>, UserRole, IdentityUserLogin<int>,
         IdentityRoleClaim<int>, IdentityUserToken<int>>
+
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        private ILoggerFactory GetLoggerFactory()
+        {
+            IServiceCollection serviceCollection = new ServiceCollection();
+            serviceCollection.AddLogging(builder =>
+                   builder.AddConsole()
+                          .AddFilter(DbLoggerCategory.Database.Command.Name,
+                                     LogLevel.Information));
+            return serviceCollection.BuildServiceProvider()
+                    .GetService<ILoggerFactory>();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLoggerFactory(GetLoggerFactory());
+        }
+        
+        public AdminContext(DbContextOptions<AdminContext> options) : base(options) { }
         // Apartir de esta informacion se crea una migracion con ef datamigration
         public DbSet<Equipo> Equipos { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketsAsignados> TicketsAsignados { get; set; }
         public DbSet<AdjuntosTicket> AdjuntosTicket { get; set; }
-
+        public DbSet<TicketRespuesta> TicketsRespuestas { get; set; }
+        public DbSet<AdjuntosRespuesta> AdjuntosRespuestas { get; set; }
+    
         // public DbSet<File> Files { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -26,6 +47,14 @@ namespace Admin.API.Data
             base.OnModelCreating(builder);
 
             builder.ApplyConfiguration(new TicketAsignadoConfiguration());
+
+            builder.ApplyConfiguration(new EquipoConfiguration());
+
+            builder.ApplyConfiguration(new TicketConfiguration());
+
+            builder.ApplyConfiguration(new TicketRespuestaConfiguration());
+
+            builder.ApplyConfiguration(new AdjuntosRespuestaConfiguration());
 
             builder.Entity<User>()
             .Property(u => u.Activo)

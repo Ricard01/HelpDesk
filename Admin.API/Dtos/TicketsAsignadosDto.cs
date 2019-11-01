@@ -5,11 +5,13 @@ namespace Admin.API.Dtos
     public class TicketsAsignadosDto
     {
         public int TicketId { get; set; }
-
         public int Id { get; set; }
 
-        public UserDto UserDto { get; set; }
 
-        public Ticket Ticket { get; set; }
+        // Se comentaron porque en teoria no deberian estar aqui ademas de que no tienen relacion
+
+        // public UserDto UserDto { get; set; }
+
+        // public Ticket Ticket { get; set; }
     }
 }

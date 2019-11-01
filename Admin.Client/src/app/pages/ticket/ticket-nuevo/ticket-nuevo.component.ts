@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from '../../user/user.model';
-import { ActivatedRoute, UrlHandlingStrategy } from '@angular/router';
-import { FileUploader, FileLikeObject, FileItem } from 'ng2-file-upload';
+import { ActivatedRoute } from '@angular/router';
+import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 import { AuthService } from 'src/app/core/_services/auth.service';
 import { environment } from 'src/environments/environment';
 import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
@@ -54,7 +54,9 @@ export class TicketNuevoComponent implements OnInit {
       searchAutofocus: true,
       lazyLoading: true,
     };
+
   }
+
 
   initializeUploader() {
     this.uploader = new FileUploader({
@@ -74,11 +76,11 @@ export class TicketNuevoComponent implements OnInit {
 
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
     this.uploader.onWhenAddingFileFailed = (item, filter, options) => this.onWhenAddingFileFailed(item, filter, options);
-
+    this.uploader.onCompleteAll = () => this.onCompleteAll();
     this.uploader.onSuccessItem = (item, response, status, headers) => {
+      // this._alertify.success('Ticket ' + this.ticketId + ' se creo con exito');
       if (response) {
         const res: any = JSON.parse(response);
-        console.log(response);
         const adjunto = {
           id: res.id,
           url: res.url,
@@ -92,7 +94,7 @@ export class TicketNuevoComponent implements OnInit {
 
   createFormTicketNuevo() {
     this.formTicketNuevo = this.fb.group({
-      titulo: [null, Validators.required],
+      titulo: [null, [Validators.required, Validators.maxLength(60)]],
       mensaje: [null, Validators.required],
       prioridad: ['1', Validators.required],
       ticketsasignados: [null, Validators.required]
@@ -114,18 +116,23 @@ export class TicketNuevoComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    console.log(item);
-    console.log(this.selectedItems);
+    console.log(item.username);
   }
-
+  onCompleteAll() {
+    this._alertify.success('Ticket ' + this.ticketId + ' se creo con exito');
+  }
   createTicket() {
     if (this.formTicketNuevo.valid) {
       this.ticket = Object.assign({}, this.formTicketNuevo.value);
       this.ticket.userId = this._authService.decodedToken.nameid;
       this._ticketService.createTicket(this.ticket).subscribe((res: any) => {
         this.ticketId = res;  // <-- Aqui establezco el ticketId
-        this.uploader.setOptions({ url: this.baseUrl + this.ticketId });
-        this.uploader.uploadAll();
+        if (this.uploader.queue.length > 0) {
+          this.uploader.setOptions({ url: this.baseUrl + this.ticketId });
+          this.uploader.uploadAll();
+        } else {
+          this._alertify.success('Ticket ' + this.ticketId + ' Creado con exito');
+        }
         this.formTicketNuevo.reset();
       }, error => {
         console.log('Error ' + error);

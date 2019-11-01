@@ -1,15 +1,15 @@
 using System;
 using System.Threading.Tasks;
-using Admin.API.Data;
 using Admin.API.Models;
+using Admin.API.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Admin.API.Data
 {
     public class AuthRepository : IAuthRepository
     {
-        private readonly DataContext _context;
-        public AuthRepository(DataContext context)
+        private readonly AdminContext _context;
+        public AuthRepository(AdminContext context)
         {
             _context = context;
         }

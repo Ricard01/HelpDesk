@@ -13,7 +13,7 @@ import { HasRoleDirective } from '../shared/_directives/has-role.directive';
   imports: [
     RouterModule,
     CommonModule,
-    NgbModule.forRoot(),
+    NgbModule,
     NgxSpinnerModule,
   ],
   declarations: [

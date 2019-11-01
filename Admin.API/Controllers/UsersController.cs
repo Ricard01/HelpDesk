@@ -18,7 +18,7 @@ using Microsoft.Extensions.Options;
 namespace Admin.API.Controllers
 {
 
-    [ServiceFilter(typeof(LogUserActivity))]
+    // [ServiceFilter(typeof(LogUserActivity))]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -207,6 +207,9 @@ namespace Admin.API.Controllers
         }
         [Authorize(Policy = "RequireAdminRole")]
 
+// TODO no se puede eliminar el usuario si tiene tickets asociados o equipo asignado.
+// TODO indicar usuarios como inactivos y que no salgan en la lista para asignar tickets.
+// TODO que no se pueda asignar un equipo inactivo.
         public void DeletePhotoProfile(string publicId)
         {
             if (publicId != null)

@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginacionRes } from 'src/app/config/pagination';
+import { TicketRespuesta } from './ticket-resp/ticket-resp.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +21,12 @@ export class TicketService {
     return this.http.get<Ticket>(this.baseUrl + id);
   }
 
-  getMyTickets() {
-    return this.http.get<Ticket[]>(this.baseUrl + 'My');
+  getMisTicketsAsignadosById(ticketid: number) {
+    return this.http.get<Ticket>(this.baseUrl + 'TicketAsignadoById/' + ticketid);
+  }
+
+  getMisTicketsAsignados() {
+    return this.http.get<Ticket[]>(this.baseUrl + 'GetMisTicketsAsignados');
   }
 
   getTickets(pagina?, itemsxPagina?, userParams?): Observable<PaginacionRes<Ticket[]>> {
@@ -54,6 +59,10 @@ export class TicketService {
 
   createTicket(ticket: Ticket) {
     return this.http.post(this.baseUrl, ticket);
+  }
+
+  createTicketRespuesta(respuesta: TicketRespuesta) {
+    return this.http.post(this.baseUrl + 'TicketRespuesta' , respuesta);
   }
 
 }

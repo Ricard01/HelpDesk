@@ -1,0 +1,242 @@
+<div *ngIf="this.ticket">
+    <h3 class="badge badge-dark f-s-16"> Ticket #{{ this.ticket.id }} </h3>
+    <!-- T I C K E T -->
+    <div class="tab-content">
+
+        <div class="row mb-2">
+            <div class="ml-2">
+                <img class="rounded-circle width-50" [src]="this.ticket.userFotoUrl">
+                <label class="ml-2 label label-indigo"> {{ this.ticket.userName }} </label>
+            </div>
+
+            <div class="row fecha ml-auto mb-4 mr-2 ">
+                <div class="col py-1 px-3 mr-3">
+                    <div class="text-muted small row ">&nbsp;Creado el: </div>
+                    <div class="font-weight-semibold text-black">{{ this.ticket.fechaAlta | date: 'dd/MM/yyyy' }}</div>
+                </div>
+                <div class="col bl py-1 px-3 mr-3">
+                    <div class="text-muted small row ">&nbsp;Ult. Actualización:</div>
+                    <div class="font-weight-semibold text-black">{{ this.ticket.fechaAlta | date: 'dd/MM/yyyy' }} </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group col-9">
+                <label for="titulo">Titulo</label>
+                <input type="text" class="form-control" [disabled]="true" [value]="this.ticket.titulo">
+            </div>
+
+            <div class="form-group col-3" [ngSwitch]=" ticket.prioridad ">
+                <label for="prioridad"> Prioridad</label>
+
+                <fieldset disabled>
+                    <select class="form-control">
+                        <option *ngSwitchCase=1> Normal </option>
+                        <option *ngSwitchCase=2> Alta </option>
+                        <option *ngSwitchCase=3> Urgente </option>
+                    </select>
+                </fieldset>
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="mensaje">Mensaje</label>
+            <textarea name="mensaje" class="form-control" rows="5" [disabled]="true"
+                [value]="this.ticket.mensaje"></textarea>
+        </div>
+
+        <ul class="attached-document clearfix">
+            <ng-container *ngFor="let item of ticket.adjuntos">
+                <ng-container [ngSwitch]="item.nombre | filetype">
+
+                    <li class="fa-file" *ngSwitchCase="'docx'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <i class="fa fa-file-word"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'doc'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <i class="fa fa-file-word"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file-excel" *ngSwitchCase="'xls'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <i class="fa fa-file-word"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'xlsx'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <i class="fa fa-file-word"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-camera" *ngSwitchCase="'jpeg'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <img [src]="item.archivoUrl" />
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-camera" *ngSwitchCase="'jpg'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <img [src]="item.archivoUrl" />
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-camera" *ngSwitchCase="'png'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <img [src]="item.archivoUrl" />
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'pdf'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <i class="fa fa-file-pdf"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'rar'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <i class="fa fa-file-archive"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'zip'">
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <i class="fa fa-file-archive"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchDefault>
+                        <div class="document-file">
+                            <a [href]="item.archivoUrl" target="_blank">
+                                <i class="fa fa-file"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="item.archivoUrl" target="_blank">{{ item.nombre }}</a>
+                        </div>
+                    </li>
+
+                </ng-container>
+            </ng-container>
+        </ul>
+
+    </div>
+    <!-- E N D  T I C K E T -->
+
+    <!-- T I C K E T  R E S P U E S T A S-->
+    <app-ticket-resp [respuestas]="this.ticket.ticketRespuestas"></app-ticket-resp> 
+    <!-- E N D  T I C K E T  R E S P U E S T A S-->
+</div>
+
+<!-- R E S P U E S T A  N E W-->
+<div class="tab-content mt-2" *ngIf="cargarRespuestas">
+    <form [formGroup]="formRespuesta" (ngSubmit)="guardarRespuesta()">
+        <div class="row mb-2">
+
+            <div class="ml-2">
+                <img class="rounded-circle width-50" [src]="user.fotoUrl">
+                <label class="ml-2 label label-indigo">{{ user.username }} </label>
+            </div>
+
+            <div class="row fecha ml-auto mb-4 mr-2 ">
+                <div class="col py-1 px-3 mr-3">
+                    <div class="text-muted small row ">&nbsp;Fecha: </div>
+                    <div class="font-weight-semibold text-black">{{ fecha | date: 'dd/MM/yyyy' }}</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="mensaje">Respuesta</label>
+            <textarea name="mensaje" class="form-control" rows="5" formControlName="respuesta"></textarea>
+        </div>
+
+        <div class="form-row">
+
+
+            <div class="form-group form-inline  col-md-7">
+                <label class="btn btn-grey custom-input-btn">
+                    <input type="file" ng2FileSelect [uploader]="uploader" style="display:none" multiple>
+                    <i class="fa fa-fw fa-paperclip"></i> Adjuntar <span class="ml-2 badge badge-default">10Mb
+                        max</span>
+                </label>
+                <label *ngIf="uploader?.queue?.length" for=""> &nbsp; {{ uploader?.queue?.length }}
+                    Archivos &nbsp;&nbsp; </label>
+
+                <label *ngFor="let item of uploader.queue" class="mr-2">
+
+                    <strong> {{ item?.file?.name }} </strong>
+                    <a class="btn btn-default btn-xs" (click)="item.remove()">
+                        <span class="fa fa-times"></span>
+                    </a>
+                </label>
+            </div>
+
+            <div class="form-group form-inline col-md-3">
+                <label for="estatus">Ticket Estatus &nbsp;</label>
+                <select class="form-control" formControlName="estatus">
+                    <option value='' >Seleccionar </option>
+                    <option value="3"> En Proceso </option>
+                    <option value="4"> Cerrar </option>
+                </select>
+            </div>
+
+            <div class="form-group form-inline col-md-2">
+                <button [disabled]="!formRespuesta.valid" class="align-items-end btn btn-primary btn-block btn-circle" type="submit">Responder</button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!-- E N D  R E S P U E S T A-->

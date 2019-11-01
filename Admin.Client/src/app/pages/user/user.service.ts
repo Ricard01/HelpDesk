@@ -30,7 +30,7 @@ export class UserService {
   }
 
   getUsersForTicket(userId: number ) {
-    return this.http.get<User[]>(this.baseUrl + userId + '/forticket' );
+    return this.http.get<any[]>(this.baseUrl + userId + '/forticket' );
   }
 
   // getUsers(pagina?, itemsxPagina?): Observable<PaginacionRes<User[]>> {

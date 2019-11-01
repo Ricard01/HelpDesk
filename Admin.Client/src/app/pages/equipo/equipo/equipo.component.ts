@@ -98,21 +98,5 @@ export class EquipoComponent implements OnInit {
     );
   }
 
-
-
-  // updateEquipo(equipo: Equipo) {
-  //   equipo.idUser = this.idUsuario;
-  //   console.log('id' + this.idUsuario);
-  //   this.equipoService.updateEquipo(equipo).subscribe(res => {
-  //     this.alertify.success(' Actualizado con exito');
-
-  //   }, error => {
-  //     console.log('Error ' + error);
-  //     this.alertify.error(error);
-  //   });
-
-  // }
-
-
 }
 

@@ -2,14 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Admin.API.Models;
+using Admin.API.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Admin.API.Data
 {
     public class EquipoRepository : IEquipoRepository
     {
-        private readonly DataContext _context;
-        public EquipoRepository(DataContext context)
+        private readonly AdminContext _context;
+        public EquipoRepository(AdminContext context)
         {
             _context = context;
         }

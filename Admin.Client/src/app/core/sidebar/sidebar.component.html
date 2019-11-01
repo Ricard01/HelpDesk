@@ -18,7 +18,7 @@
                         <i class="fa fa-user"></i>
                     </div>
                     <div class="info">
-                        <b></b> {{ user.username }}
+                        <b> {{ user.username }}</b> 
                         <small>{{ user.puesto }}</small>
                     </div>
                 </a>
@@ -44,7 +44,7 @@
 
             <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['/tickets']"> <i class="fas fa-check-square"></i><span>
-                      Mis Tickets</span> </a>
+                       Tickets Asignados</span> </a>
             </li>
 
             <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">

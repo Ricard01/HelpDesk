@@ -1,0 +1,146 @@
+<div class="tab-content" *ngFor="let item of respuestas">
+    <form>
+        <div class="row mb-2">
+
+            <div class="ml-2">
+                <img class="rounded-circle width-50" [src]="item.fotoUrl">
+                <label class="ml-2 label label-indigo"> {{ item?.userName }} </label>
+            </div>
+
+            <div class="row fecha ml-auto mb-4 mr-2 ">
+                <div class="col py-1 px-3 mr-3">
+                    <div class="text-muted small row ">&nbsp;Fecha: </div>
+                    <div class="font-weight-semibold text-black">{{ item.fecha | date: 'dd/MM/yyyy' }}</div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="mensaje">Respuesta</label>
+            <textarea name="mensaje" class="form-control" rows="5" [value]="item.respuesta"
+                [disabled]="true"></textarea>
+        </div>
+
+        <ul class="attached-document clearfix">
+            <ng-container *ngFor="let adjunto of item.adjuntosRespuesta">
+                <ng-container [ngSwitch]="adjunto.nombre | filetype">
+
+                    <li class="fa-file" *ngSwitchCase="'docx'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <i class="fa fa-file-word"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'doc'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <i class="fa fa-file-word"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file-excel" *ngSwitchCase="'xls'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <i class="fa fa-file-word"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'xlsx'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <i class="fa fa-file-word"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-camera" *ngSwitchCase="'jpeg'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <img [src]="adjunto.archivoUrl" />
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-camera" *ngSwitchCase="'jpg'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <img [src]="adjunto.archivoUrl" />
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-camera" *ngSwitchCase="'png'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <img [src]="adjunto.archivoUrl" />
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'pdf'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <i class="fa fa-file-pdf"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'rar'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <i class="fa fa-file-archive"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchCase="'zip'">
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <i class="fa fa-file-archive"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                    <li class="fa-file" *ngSwitchDefault>
+                        <div class="document-file">
+                            <a [href]="adjunto.archivoUrl" target="_blank">
+                                <i class="fa fa-file"></i>
+                            </a>
+                        </div>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        </div>
+                    </li>
+
+                </ng-container>
+            </ng-container>
+        </ul>
+
+
+    </form>
+</div>
