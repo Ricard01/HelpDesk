@@ -3,7 +3,7 @@
         <div class="row mb-2">
 
             <div class="ml-2">
-                <img class="rounded-circle width-50" [src]="item.fotoUrl">
+                <img class="rounded-circle width-50" [src]="item.fotoUrl || '../../../assets/img/user/user.png'">
                 <label class="ml-2 label label-indigo"> {{ item?.userName }} </label>
             </div>
 
@@ -25,6 +25,7 @@
 
         <ul class="attached-document clearfix">
             <ng-container *ngFor="let adjunto of item.adjuntosRespuesta">
+                <!-- TODO avoid logic in template https://www.freecodecamp.org/news/best-practices-for-a-clean-and-performant-angular-application-288e7b39eb6f/ -->
                 <ng-container [ngSwitch]="adjunto.nombre | filetype">
 
                     <li class="fa-file" *ngSwitchCase="'docx'">
@@ -33,7 +34,8 @@
                                 <i class="fa fa-file-word"></i>
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -43,7 +45,8 @@
                                 <i class="fa fa-file-word"></i>
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -53,7 +56,8 @@
                                 <i class="fa fa-file-word"></i>
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -63,7 +67,8 @@
                                 <i class="fa fa-file-word"></i>
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -73,7 +78,8 @@
                                 <img [src]="adjunto.archivoUrl" />
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -83,7 +89,8 @@
                                 <img [src]="adjunto.archivoUrl" />
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -93,7 +100,8 @@
                                 <img [src]="adjunto.archivoUrl" />
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -103,7 +111,8 @@
                                 <i class="fa fa-file-pdf"></i>
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -113,7 +122,8 @@
                                 <i class="fa fa-file-archive"></i>
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -123,7 +133,8 @@
                                 <i class="fa fa-file-archive"></i>
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 
@@ -133,7 +144,8 @@
                                 <i class="fa fa-file"></i>
                             </a>
                         </div>
-                        <div class="document-name"><a [href]="adjunto.archivoUrl" target="_blank">{{ adjunto.nombre }}</a>
+                        <div class="document-name"><a [href]="adjunto.archivoUrl"
+                                target="_blank">{{ adjunto.nombre }}</a>
                         </div>
                     </li>
 

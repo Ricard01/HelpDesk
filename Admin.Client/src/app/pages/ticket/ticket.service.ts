@@ -21,12 +21,19 @@ export class TicketService {
     return this.http.get<Ticket>(this.baseUrl + id);
   }
 
-  getMisTicketsAsignadosById(ticketid: number) {
+  getTicketCreadoById(ticketid: number) {
+    return this.http.get<Ticket>(this.baseUrl + 'GetTicketCreadoById/' + ticketid);
+  }
+
+  getTicketsCreados() {
+    return this.http.get<Ticket[]>( this.baseUrl + 'GetTicketsCreados');
+  }
+  getTicketAsignadoById(ticketid: number) {
     return this.http.get<Ticket>(this.baseUrl + 'TicketAsignadoById/' + ticketid);
   }
 
-  getMisTicketsAsignados() {
-    return this.http.get<Ticket[]>(this.baseUrl + 'GetMisTicketsAsignados');
+  getTicketsAsignados() {
+    return this.http.get<Ticket[]>(this.baseUrl + 'GetTicketsAsignados');
   }
 
   getTickets(pagina?, itemsxPagina?, userParams?): Observable<PaginacionRes<Ticket[]>> {

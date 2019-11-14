@@ -3,21 +3,39 @@
     <!-- T I C K E T -->
     <div class="tab-content">
 
-        <div class="row mb-2">
-            <div class="ml-2">
+        <div class="form-row">
+
+            <div class="form-group col-8 ">
+
+
                 <img class="rounded-circle width-50" [src]="this.ticket.userFotoUrl">
-                <label class="ml-2 label label-indigo"> {{ this.ticket.userName }} </label>
+                <label class="ml-2 label label-indigo" style="margin-right: 100px;"> {{ this.ticket.userName }} </label>
+
+                <ng-container *ngIf="this.creados">
+
+                    <span class=" userasignado  label label-default f-s-10 " style="font-weight: bold;">Usuario
+                        Asignado:</span>
+                    <ng-container *ngFor="let item of this.ticket.userAsignados">
+                        <img class=" ml-2 rounded-circle width-40"
+                            [src]="item.fotoUrl || '../../../assets/img/user/user.png' ">
+                        <span class="label label-purple f-s-10">{{ item.userName }}</span>
+                    </ng-container>
+
+                </ng-container>
+
+
             </div>
 
-            <div class="row fecha ml-auto mb-4 mr-2 ">
+
+            <div class="fecha ml-auto mb-4 mr-2 ">
                 <div class="col py-1 px-3 mr-3">
                     <div class="text-muted small row ">&nbsp;Creado el: </div>
                     <div class="font-weight-semibold text-black">{{ this.ticket.fechaAlta | date: 'dd/MM/yyyy' }}</div>
                 </div>
-                <div class="col bl py-1 px-3 mr-3">
+                <!-- <div class="col bl py-1 px-3 mr-3">
                     <div class="text-muted small row ">&nbsp;Ult. Actualización:</div>
                     <div class="font-weight-semibold text-black">{{ this.ticket.fechaAlta | date: 'dd/MM/yyyy' }} </div>
-                </div>
+                </div> -->
             </div>
 
         </div>
@@ -172,12 +190,12 @@
     <!-- E N D  T I C K E T -->
 
     <!-- T I C K E T  R E S P U E S T A S-->
-    <app-ticket-resp [respuestas]="this.ticket.ticketRespuestas"></app-ticket-resp> 
+    <app-ticket-resp [respuestas]="this.ticket.ticketRespuestas"></app-ticket-resp>
     <!-- E N D  T I C K E T  R E S P U E S T A S-->
 </div>
 
 <!-- R E S P U E S T A  N E W-->
-<div class="tab-content mt-2" *ngIf="cargarRespuestas">
+<div class="tab-content mt-2" *ngIf="respuestaNew">
     <form [formGroup]="formRespuesta" (ngSubmit)="guardarRespuesta()">
         <div class="row mb-2">
 
@@ -225,14 +243,15 @@
             <div class="form-group form-inline col-md-3">
                 <label for="estatus">Ticket Estatus &nbsp;</label>
                 <select class="form-control" formControlName="estatus">
-                    <option value='' >Seleccionar </option>
+                    <option value=''>Seleccionar </option>
                     <option value="3"> En Proceso </option>
                     <option value="4"> Cerrar </option>
                 </select>
             </div>
 
             <div class="form-group form-inline col-md-2">
-                <button [disabled]="!formRespuesta.valid" class="align-items-end btn btn-primary btn-block btn-circle" type="submit">Responder</button>
+                <button [disabled]="!formRespuesta.valid" class="align-items-end btn btn-primary btn-block btn-circle"
+                    type="submit">Responder</button>
             </div>
 
         </div>

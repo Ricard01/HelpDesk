@@ -7,7 +7,7 @@ import { catchError } from 'rxjs/operators';
 import { TicketService } from '../ticket.service';
 
 @Injectable()
-export class TicketListResolver implements Resolve<Ticket[]> {
+export class TicketAdminResolver implements Resolve<Ticket[]> {
     numPagina = 1;
     itemsxPagina = 10;
     constructor(private ticketService: TicketService, private router: Router,

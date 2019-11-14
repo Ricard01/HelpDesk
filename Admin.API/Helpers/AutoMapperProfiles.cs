@@ -34,14 +34,18 @@ namespace Admin.API.Helpers
             CreateMap<TicketNewDto, Ticket>();
             CreateMap<Ticket, TicketListDto>();
             // CreateMap<TicketListDto, UserDto>();
-
+            CreateMap<TicketsAsignados, TicketsAsignadosDto>()
+            .ForMember(dest => dest.Id, opt =>
+          {
+              opt.MapFrom(d => d.UserId);
+          }); ;
             CreateMap<TicketsAsignadosDto, TicketsAsignados>()
              .ForMember(dest => dest.UserId, opt =>
              {
                  opt.MapFrom(d => d.Id);
              });
             CreateMap<AdjuntosTicketDto, AdjuntosTicket>();
-              CreateMap<AdjuntosRespuestaDto, AdjuntosRespuesta>();
+            CreateMap<AdjuntosRespuestaDto, AdjuntosRespuesta>();
 
             // CreateMap<TicketRespuesta, TicketRespuestaDto>();
 

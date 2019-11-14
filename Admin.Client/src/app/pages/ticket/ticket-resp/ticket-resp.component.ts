@@ -14,7 +14,8 @@ export class TicketRespComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log('Respuestas');
+    console.log(this.respuestas);
   }
 
 }

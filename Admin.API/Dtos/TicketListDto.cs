@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Admin.API.Dtos
 {
@@ -17,5 +18,7 @@ namespace Admin.API.Dtos
         public byte Prioridad { get; set; }
 
         public byte Estatus { get; set; }
+
+        public ICollection<TicketsAsignadosDto> TicketsAsignados { get; set; }
     }
 }

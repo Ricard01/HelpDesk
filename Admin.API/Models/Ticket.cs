@@ -12,6 +12,7 @@ namespace Admin.API.Models
         public Ticket()
         {
             AdjuntosTicket = new HashSet<AdjuntosTicket>();
+            // TicketsAsignados = new HashSet<TicketsAsignados>();
         }
         public int Id { get; set; }
         public int UserId { get; set; }

@@ -50,6 +50,35 @@ namespace Admin.API.Controllers
 
         #endregion
 
+
+        [HttpGet("GetTicketCreadoById/{TicketId}")]
+        public async Task<IActionResult> GetTicketsCreadosById(int TicketId)
+        {
+           
+
+            var ticket = await _repot.GetTicketCreadoById(TicketId);
+
+            return Ok(ticket);
+        }
+
+        [HttpGet("GetTicketsCreados")]
+        public async Task<IActionResult> GetTicketsCreados()
+        {
+            var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var userFromRepo = await _repo.GetUser(currentUserID);
+
+            if (userFromRepo == null)
+            {
+                return NoContent();
+            }
+
+            var tickets = await _repot.GetTicketsCreados(userFromRepo.Id);
+
+            var ticketsReturn = _mapper.Map<IEnumerable<TicketListDto>>(tickets);
+
+            return Ok(ticketsReturn);
+        }
         [HttpGet("TicketAsignadoById/{ticketId}")]
         public async Task<IActionResult> GetTicketAsignadoById(int ticketId)
         {
@@ -62,8 +91,8 @@ namespace Admin.API.Controllers
         /// <summary>Lista de tickets asignados al usuario.
         /// <para>TicketsAsignados.</para>
         /// </summary>  
-        [HttpGet("GetMisTicketsAsignados")]
-        public async Task<IActionResult> GetMisTicketsAsignados()
+        [HttpGet("GetTicketsAsignados")]
+        public async Task<IActionResult> GetTicketsAsignados()
         {
             var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -74,7 +103,7 @@ namespace Admin.API.Controllers
                 return NoContent();
             }
 
-            var tickets = await _repot.GetMisTicketsAsignados(userFromRepo.Id);
+            var tickets = await _repot.GetTicketsAsignados(userFromRepo.Id);
 
             var ticketsReturn = _mapper.Map<IEnumerable<TicketListDto>>(tickets);
 

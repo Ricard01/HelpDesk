@@ -4,6 +4,7 @@
     <div class="overflow-scroll height-full" #sidebarScrollbar *ngIf="desktopMode" (scroll)="onScroll($event)">
         <ng-container *ngTemplateOutlet="sidebarNav"></ng-container>
     </div>
+    
     <div class="mobile-scroll" *ngIf="mobileMode" (scroll)="onScroll($event)">
         <ng-container *ngTemplateOutlet="sidebarNav"></ng-container>
     </div>
@@ -28,7 +29,7 @@
         <!-- end sidebar user -->
         <!-- begin sidebar nav -->
         <ul class="nav">
-            <li class="nav-header">Navigation</li>
+            <li class="nav-header">Menu</li>
 
 
 
@@ -37,19 +38,24 @@
                 <a class="nav-link" [routerLink]="['/usuarios']"> <i class="fas fa-user"></i><span> Usuarios</span> </a>
             </li>
 
-            <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+            <li *appHasRole="['Admin']" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['/equipos']"> <i class="fas fa-desktop"></i><span> Catalogos
                         Equipos</span> </a>
             </li>
 
             <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
-                <a class="nav-link" [routerLink]="['/tickets']"> <i class="fas fa-check-square"></i><span>
-                       Tickets Asignados</span> </a>
+                <a class="nav-link" [routerLink]="['/tickets/creados']"> <i class="fas fa-check-square"></i><span>
+                       Tickets Creados</span> </a>
             </li>
 
             <li #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
+                <a class="nav-link" [routerLink]="['/tickets/asignados']"> <i class="fas fa-check-square"></i><span>
+                       Tickets Asignados</span> </a>
+            </li>
+
+            <li  *appHasRole="['Admin']"  #rla1="routerLinkActive" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active">
                 <a class="nav-link" [routerLink]="['/tickets/admin']"> <i class="fas fa-list-alt "></i><span>
-                       Lista de Tickets </span> </a>
+                       Tickets  </span> </a>
             </li>
 
 

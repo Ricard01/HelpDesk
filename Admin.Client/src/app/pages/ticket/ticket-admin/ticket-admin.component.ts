@@ -17,14 +17,14 @@ export class CrossFieldErrorMatcher implements ErrorStateMatcher {
 }
 
 @Component({
-  selector: 'app-ticket-list',
-  templateUrl: './ticket-list.component.html',
-  styleUrls: ['./ticket-list.component.css'],
+  selector: 'app-ticket-admin',
+  templateUrl: './ticket-admin.component.html',
+  styleUrls: ['./ticket-admin.component.css'],
 
 })
 
 
-export class TicketListComponent implements OnInit {
+export class TicketAdminComponent implements OnInit {
 
 
 

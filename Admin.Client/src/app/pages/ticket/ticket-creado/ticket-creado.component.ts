@@ -3,13 +3,15 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { TicketService } from '../ticket.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router, NavigationExtras } from '@angular/router';
+
 
 @Component({
-  selector: 'app-tickets-my',
-  templateUrl: './ticket-asignado.component.html',
-  styleUrls: ['./ticket-asignado.component.css']
+  selector: 'app-ticket-creado',
+  templateUrl: './ticket-creado.component.html',
+  styleUrls: ['./ticket-creado.component.css']
 })
-export class TicketAsignadoComponent implements OnInit {
+export class TicketCreadoComponent implements OnInit {
 
   displayedColumns = ['id', 'fechaAlta', 'usuario', 'titulo', 'prioridad', 'estatus', 'acciones'];
   dataSource;
@@ -18,16 +20,17 @@ export class TicketAsignadoComponent implements OnInit {
   length = 100;
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  // MatPaginator: Output;
   pageEvent: PageEvent;
-  constructor(private _ticketService: TicketService) { }
+  routerCreado = true;
+  constructor(private _ticketService: TicketService, private _route: Router) { }
 
   ngOnInit() {
-    this.getMyTickets();
+    this.getTicketsCreados();
   }
 
-  getMyTickets() {
-    this._ticketService.getTicketsAsignados().subscribe(res => {
+  getTicketsCreados() {
+    this._ticketService.getTicketsCreados().subscribe(res => {
+      console.log(res);
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = res;
       this.dataSource.sort = this.sort;
@@ -36,7 +39,6 @@ export class TicketAsignadoComponent implements OnInit {
       error => {
         console.log('Se produjo un error mientras intentaba recuperar Usuarios!' + error);
       });
-
   }
 
   applyFilter(filterValue: string) {
@@ -45,5 +47,10 @@ export class TicketAsignadoComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
+  goTicket(ticketId: number) {
+    this._route.navigate(['ticket/', ticketId]);
+    // const ticketCreado: NavigationExtras = {state: {example: 'This is an example'}};
+    // this._route.navigate(['/ticket/', ticketId], ticketCreado);
+  }
 
 }

@@ -10,7 +10,7 @@ namespace Admin.API.Dtos
 
         // Se comentaron porque en teoria no deberian estar aqui ademas de que no tienen relacion
 
-        // public UserDto UserDto { get; set; }
+         public UserDto User { get; set; }
 
         // public Ticket Ticket { get; set; }
     }

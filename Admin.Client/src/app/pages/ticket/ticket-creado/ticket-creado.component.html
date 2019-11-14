@@ -1,7 +1,7 @@
 <div class="row mb-2">
 
     <div class="col-3 bd-highlight">
-        <h1 class="page-header"> <i class="fas fa-check-square"></i> Tickets Recibidos</h1>
+        <h1 class="page-header"> <i class="fas fa-check-square"></i> Tickets Creados</h1>
     </div>
 
     <div class="col-2  ml-auto p-1 bd-highlight">
@@ -21,7 +21,7 @@
 <!-- TODO Nota matColumnDef debe coincider con {{ nombreVar }} para que funcione Sort -->
 <mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="asc" matSortDisableClear>
     <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Id </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Folio </mat-header-cell>
         <mat-cell *matCellDef="let ticket"> {{ticket.id}} </mat-cell>
     </ng-container>
 
@@ -31,8 +31,16 @@
     </ng-container>
 
     <ng-container matColumnDef="usuario">
-        <mat-header-cell *matHeaderCellDef> Asignó </mat-header-cell>
-        <mat-cell *matCellDef="let ticket"> {{ticket.user.username}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> Usuarios </mat-header-cell>
+        <mat-cell *matCellDef="let ticket"> 
+            <ng-container   *ngFor="let user of ticket.ticketsAsignados; let i= index"> 
+                <div *ngIf="i <= 1">
+                        {{ user.user.username}} &nbsp;
+                </div>
+            </ng-container>
+            
+            
+            </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="titulo">
@@ -59,7 +67,7 @@
                         <span class="label label-info" *ngSwitchCase=2> + Abierto </span>
                         <span class="label label-warning" *ngSwitchCase=3> En proceso </span>
                         <span class="label label-success" *ngSwitchCase=4>Cerrado </span>
-                        <span *ngSwitchDefault> No se </span>
+                        <span *ngSwitchDefault> Cerrado</span>
                       </span>
         </mat-cell>
     </ng-container>
@@ -67,8 +75,9 @@
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let ticket">
 
-            <button title="Responder" [routerLink]="['/ticket/asignados',ticket.id]" routerLinkActive="router-link-active"
+            <button title="Responder" [routerLink]="['/ticket/creados',ticket.id ]" routerLinkActive="router-link-active"
                 class="ml-4 btn btn-info btn-icon btn-circle btn-sm">
+                
                 <i class="far fa-comments"></i>
             </button>
 

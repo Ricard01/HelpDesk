@@ -6,6 +6,7 @@ using Admin.API.Helpers;
 using Admin.API.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Admin.API.Dtos;
 
 namespace Admin.API.Data
 {
@@ -28,10 +29,47 @@ namespace Admin.API.Data
             return ticket;
         }
 
-        public async Task<object> GetTicketAsignadoById(int ticketId)
+        public async Task<List<Ticket>> GetTicketsCreados(int idUser)
         {
 
-            var ticket = await (from t in _context.Tickets.TagWith("GetTicketAsignadoById") where t.Id == ticketId
+            var tickets = await _context.Tickets
+            .Include(ticketAsignado => ticketAsignado.TicketsAsignados)
+            .ThenInclude(user => user.User)
+         .Where(ticket => ticket.UserId == idUser).ToListAsync();
+
+            #region 2Forma
+            // TODO Filtrar solo username 
+            // var tickets = await (from ticket in _context.Tickets.TagWith("GetTicketsCreados")
+            //                      join ticketAsig in _context.TicketsAsignados on ticket.Id equals ticketAsig.TicketId
+            //                      into ticketsAsignados
+
+            //                     //  join us in _context.Users on ta.UserId equals us.Id
+
+            //                      where ticket.UserId == idUser
+            //                      select new Ticket
+            //                      {
+
+            //                          Id = ticket.Id,
+            //                          FechaAlta = ticket.FechaAlta,
+            //                          Mensaje = ticket.Mensaje,
+            //                          Prioridad = ticket.Prioridad,
+            //                          TicketsAsignados = ticketsAsignados.ToList()
+
+
+            //                      }
+            //                     ).ToListAsync();
+            #endregion
+
+
+            return tickets;
+        }
+
+        public async Task<object> GetTicketCreadoById(int ticketId)
+        {
+
+            var ticket = await (from t in _context.Tickets.TagWith("GetTicketCreadoById")
+
+                                where t.Id == ticketId
 
                                 select new
                                 {
@@ -40,6 +78,36 @@ namespace Admin.API.Data
                                     Mensaje = t.Mensaje,
                                     FechaAlta = t.FechaAlta,
                                     Prioridad = t.Prioridad,
+                                    Estatus = t.Estatus,
+                                    UserAsignados = from ticketsAsignados in _context.TicketsAsignados where ticketsAsignados.TicketId == ticketId select new { ticketsAsignados.User.UserName, ticketsAsignados.User.FotoUrl, ticketsAsignados.User.Id },
+                                    UserName = t.User.UserName,
+                                    UserFotoUrl = t.User.FotoUrl,
+                                    Adjuntos = from adjt in _context.AdjuntosTicket where adjt.TicketId == ticketId select adjt,
+
+                                    TicketRespuestas = from resp in _context.TicketsRespuestas
+                                                       where resp.TicketId == ticketId
+                                                       orderby resp.Id
+                                                       select new { resp.Id, resp.Respuesta, resp.Fecha, resp.Estatus, resp.User.UserName, resp.User.FotoUrl, resp.AdjuntosRespuesta }
+                                                       //    adjResp = (from adjr in _context.AdjuntosRespuestas where adjr.TicketRespuestaId == resp.Id select adjr )},
+
+                                }).FirstOrDefaultAsync();
+
+            return ticket;
+        }
+        public async Task<object> GetTicketAsignadoById(int ticketId)
+        {
+
+            var ticket = await (from t in _context.Tickets.TagWith("GetTicketAsignadoById")
+                                where t.Id == ticketId
+
+                                select new
+                                {
+                                    Id = t.Id,
+                                    Titulo = t.Titulo,
+                                    Mensaje = t.Mensaje,
+                                    FechaAlta = t.FechaAlta,
+                                    Prioridad = t.Prioridad,
+                                    Estatus = t.Estatus,
                                     UserName = t.User.UserName,
                                     UserFotoUrl = t.User.FotoUrl,
                                     Adjuntos = from adjt in _context.AdjuntosTicket where adjt.TicketId == ticketId select adjt,
@@ -55,7 +123,7 @@ namespace Admin.API.Data
             return ticket;
         }
 
-        public async Task<List<Ticket>> GetMisTicketsAsignados(int idUser)
+        public async Task<List<Ticket>> GetTicketsAsignados(int idUser)
         {
             // Este quedo "perfecto"
             var tickets = from t in _context.Tickets.Include(u => u.User)

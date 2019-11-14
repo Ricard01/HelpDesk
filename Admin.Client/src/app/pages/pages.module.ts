@@ -36,8 +36,6 @@ import { EquipoNuevoComponent } from './equipo/equipo-nuevo/equipo-nuevo.compone
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { EquipoEditComponent } from './equipo/equipo-edit/equipo-edit.component';
 import { EquipoReadComponent } from './equipo/equipo-read/equipo-read.component';
-import { TicketListComponent } from './ticket/ticket-list/ticket-list.component';
-import { TicketListResolver } from './ticket/ticket-list/ticket-list.resolver';
 import { PaginationModule } from 'ngx-bootstrap';
 import { TicketNuevoComponent } from './ticket/ticket-nuevo/ticket-nuevo.component';
 // import { HasRoleDirective } from '../shared/_directives/has-role.directive';
@@ -47,6 +45,9 @@ import { TicketRespComponent } from './ticket/ticket-resp/ticket-resp.component'
 import { TicketAsignadoComponent } from './ticket/ticket-asignado/ticket-asignado.component';
 import { ArchivoComponent } from './attachFile/archivo/archivo.component';
 import { TicketComponent } from './ticket/ticket/ticket.component';
+import { TicketAdminComponent } from './ticket/ticket-admin/ticket-admin.component';
+import { TicketCreadoComponent } from './ticket/ticket-creado/ticket-creado.component';
+import { TicketAdminResolver } from './ticket/ticket-admin/ticket-admin.resolver';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -66,12 +67,13 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     EquipoNuevoComponent,
     EquipoEditComponent,
     EquipoReadComponent,
-    TicketListComponent,
     TicketNuevoComponent,
     TicketRespComponent,
     TicketAsignadoComponent,
     ArchivoComponent,
-    TicketComponent
+    TicketComponent,
+    TicketAdminComponent,
+    TicketCreadoComponent
 
   ],
   exports: [
@@ -105,7 +107,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
   providers: [
     UserPerfilResolver,
     TicketNuevoResolver,
-    TicketListResolver
+    TicketAdminResolver
     // UserListResolver
   ]
 })

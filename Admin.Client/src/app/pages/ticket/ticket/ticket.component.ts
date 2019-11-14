@@ -9,6 +9,7 @@ import { TicketService } from '../ticket.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TicketRespuesta } from '../ticket-resp/ticket-resp.model';
 
+
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.component.html',
@@ -16,16 +17,22 @@ import { TicketRespuesta } from '../ticket-resp/ticket-resp.model';
 })
 export class TicketComponent implements OnInit {
 
+
+  tipo: string;
+  ticketId: number;
   ticket: any;
   user: User;
   fecha = new Date();
   respuesta: TicketRespuesta;
+  creados: boolean;
 
   @Input() adjuntos: any[];
   selectedItems = [];
   uploader: FileUploader;
 
   cargarRespuestas = false;
+  respuestaNew: boolean;
+
   formRespuesta: FormGroup;
   baseUrl = environment.apiUrl + 'tickets/AdjuntosRspuesta/';
 
@@ -33,27 +40,62 @@ export class TicketComponent implements OnInit {
     private _alertify: SweetalertService, private _ticketService: TicketService,
     private fb: FormBuilder) {
 
+    this._route.data.subscribe(data => {
+      this.tipo = data.tipo;
+    });
+
     this._route.params.subscribe(params => {
-
-      const ticketId = params['id'];
-
-      this._ticketService.getMisTicketsAsignadosById(ticketId).subscribe(
-        (resp: any) => {
-          this.ticket = resp;
-
-          if (this.ticket.ticketRespuestas != null) {
-            this.cargarRespuestas = true;
-          }
-        });
+      this.ticketId = params['id'];
     });
 
   }
 
   ngOnInit() {
     this.user = this._authService.user;
+    this.cargarTicket();
+  }
+
+  cargarTicket() {
+
+    if (this.tipo === 'creados') {
+
+      this._ticketService.getTicketCreadoById(this.ticketId).subscribe(
+        (resp: any) => {
+
+          this.ticket = resp;
+          this.creados = true;
+          console.log(this.ticket);
+
+          if (this.ticket.estatus !== 4) {
+            this.inicializarRespuesta();
+          }
+
+        });
+
+    } else {
+
+      this._ticketService.getTicketAsignadoById(this.ticketId).subscribe(
+        (resp: any) => {
+
+          this.ticket = resp;
+
+          if (this.ticket.estatus !== 4) {
+            this.inicializarRespuesta();
+          }
+
+        });
+
+    }
+
+  }
+
+  inicializarRespuesta() {
+    console.log('Cargar Respuesta New');
+    this.respuestaNew = true;
     this.crearFormRespuesta();
     this.initializeUploader();
   }
+
   crearFormRespuesta() {
     this.formRespuesta = this.fb.group({
       respuesta: ['', Validators.required],
