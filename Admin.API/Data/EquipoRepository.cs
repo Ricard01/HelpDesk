@@ -9,6 +9,7 @@ namespace Admin.API.Data
 {
     public class EquipoRepository : IEquipoRepository
     {
+        
         private readonly AdminContext _context;
         public EquipoRepository(AdminContext context)
         {
@@ -36,13 +37,11 @@ namespace Admin.API.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
-
         public async Task<Equipo> GetEquipo(int id)
         {
             var equipo = await _context.Equipos.FirstOrDefaultAsync(e => e.Id == id);
             return equipo;
         }
-
 
         public async Task<Equipo> GetEquipoOfUser(int? UserId)
         {
@@ -55,19 +54,10 @@ namespace Admin.API.Data
             var equipos = await _context.Equipos.ToListAsync();
             return equipos;
         }
-        public async Task<List<Equipo>> GetEquipos()
-        {
-            var equipos = await _context.Equipos.ToListAsync();
-            return equipos;
-        }
-
-        // =====================================================
-        // Obtengo la lista de equipos disponibles para el usuario a editar =>
-        // donde el id del usuario sea igual al usuario a editar y el idUser sea null
-        // =====================================================
+       
         public async Task<List<Equipo>> GetEquiposDisponibles(int? idUser)
         {
-            var equiposDisponibles = await _context.Equipos.Where(e => e.UserId == idUser || e.UserId == null).ToListAsync();
+            var equiposDisponibles = await _context.Equipos.TagWith("GetEquiposDisponibles").Where(e => e.UserId == idUser || e.UserId == null && e.Activo == true).ToListAsync();
             return equiposDisponibles;
         }
 
@@ -75,9 +65,7 @@ namespace Admin.API.Data
         {
             var equipoDefault = await _context.Equipos.FirstOrDefaultAsync(e => e.UserId == id);
             return equipoDefault;
-        }
-
-      
+        }      
 
         public async Task<Equipo> UniqueEquipo(string nombreEquipo)
         {
@@ -85,12 +73,6 @@ namespace Admin.API.Data
             return equipo;
         }
 
-
-
-        public Task<Equipo> updateEquipoIdUser(int? idUser)
-        {
-            throw new System.NotImplementedException();
-        }
 
     }
 }

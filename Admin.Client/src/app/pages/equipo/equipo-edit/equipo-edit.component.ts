@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EquipoService } from '../equipo.service';
 import { Equipo } from '../equipo.model';
-import { SweetalertService } from '../../../shared/_services/sweetalert.service';
+import { SweetalertService } from '../../../shared/services/sweetalert.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -37,8 +37,6 @@ export class EquipoEditComponent implements OnInit {
   }
 
   getEquipo(id: number) {
-
-
     this.equipoService.getEquipo(id)
       .subscribe(equipo => {
         this.equipo = equipo;

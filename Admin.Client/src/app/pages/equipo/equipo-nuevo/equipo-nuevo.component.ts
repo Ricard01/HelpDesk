@@ -2,8 +2,8 @@ import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EquipoService } from '../equipo.service';
 import { Equipo } from '../equipo.model';
-import { nombreEquipoValidator } from '../../../shared/_helpers/unique_nombreEquipo-validator';
-import { SweetalertService } from '../../../shared/_services/sweetalert.service';
+import { nombreEquipoValidator } from '../../../shared/helpers/unique_nombreEquipo-validator';
+import { SweetalertService } from '../../../shared/services/sweetalert.service';
 
 @Component({
   selector: 'app-equipo-nuevo',

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { User } from '../../user/user.model';
 import { UserService } from '../../user/user.service';
-import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
+import { SweetalertService } from 'src/app/shared/services/sweetalert.service';
 import { AuthService } from 'src/app/core/_services/auth.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';

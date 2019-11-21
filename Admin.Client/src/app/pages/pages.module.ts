@@ -43,11 +43,14 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { TicketNuevoResolver } from './ticket/ticket-nuevo/ticket-nuevo.resolver';
 import { TicketRespComponent } from './ticket/ticket-resp/ticket-resp.component';
 import { TicketAsignadoComponent } from './ticket/ticket-asignado/ticket-asignado.component';
-import { ArchivoComponent } from './attachFile/archivo/archivo.component';
 import { TicketComponent } from './ticket/ticket/ticket.component';
 import { TicketAdminComponent } from './ticket/ticket-admin/ticket-admin.component';
 import { TicketCreadoComponent } from './ticket/ticket-creado/ticket-creado.component';
 import { TicketAdminResolver } from './ticket/ticket-admin/ticket-admin.resolver';
+import { HeaderUserComponent } from './user/_shared/header-user.component';
+import { EquipoUserComponent } from './user/_shared/equipo-user.component';
+
+
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -70,10 +73,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     TicketNuevoComponent,
     TicketRespComponent,
     TicketAsignadoComponent,
-    ArchivoComponent,
     TicketComponent,
     TicketAdminComponent,
-    TicketCreadoComponent
+    TicketCreadoComponent,
+    HeaderUserComponent,
+    EquipoUserComponent,
 
   ],
   exports: [

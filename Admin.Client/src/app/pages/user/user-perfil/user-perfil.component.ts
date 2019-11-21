@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
-import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
+import { SweetalertService } from 'src/app/shared/services/sweetalert.service';
 import pageSettings from 'src/app/config/page-settings';
 import { User } from '../user.model';
 import { FormGroup } from '@angular/forms';
 import { AuthService } from 'src/app/core/_services/auth.service';
-import { UploadService } from 'src/app/shared/_services/upload.service';
+import { UploadService } from 'src/app/shared/services/upload.service';
 import { Equipo } from '../../equipo/equipo.model';
 
 @Component({
@@ -21,12 +21,12 @@ export class UserPerfilComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private authService: AuthService,
     private userService: UserService,
-    private uploadService: UploadService,
     private sweetAlert: SweetalertService
   ) {
     this.pageSettings.pageContentFullWidth = true;
   }
-
+  actImg = true;
+  viewMode = true;
   selectedFile: File;
   pageSettings = pageSettings;
   id: number;
@@ -53,23 +53,10 @@ export class UserPerfilComponent implements OnInit, OnDestroy {
       }
     }
   }
+
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.user = data['user'];
-    });
-
-  }
-
-  imgToUpload(event) {
-    const file = event.target.files[0];
-    const uploadData = new FormData();
-    uploadData.append('File', file);
-    this.uploadService.uploadImg(uploadData).subscribe((res: User) => {
-      this.authService.user.fotoUrl = res.fotoUrl;
-      this.imagenTemp = res.fotoUrl;
-      localStorage.setItem('user', JSON.stringify(this.authService.user));
-    }, error => {
-      console.log(error);
     });
 
   }

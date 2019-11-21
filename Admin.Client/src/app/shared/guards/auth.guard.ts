@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { AuthService } from '../../core/_services/auth.service';
-import { SweetalertService } from '../_services/sweetalert.service';
+import { SweetalertService } from '../services/sweetalert.service';
 
 @Injectable({
   providedIn: 'root'

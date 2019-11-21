@@ -4,7 +4,7 @@ import { User } from '../user.model';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { SweetalertService } from '../../../shared/_services/sweetalert.service';
+import { SweetalertService } from '../../../shared/services/sweetalert.service';
 import Swal from 'sweetalert2';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { UserRolesComponent } from '../user-roles/user-roles.component';
@@ -79,7 +79,7 @@ export class UserListComponent implements OnInit {
           this.RenderDataTable();
         }, error => {
           console.log(error);
-          this.alertify.error('Error usuario logeado actualmente ' + error );
+          this.alertify.error('Error. -' + error );
         });
       }
     }).catch(

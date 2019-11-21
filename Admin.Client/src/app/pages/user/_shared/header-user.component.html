@@ -1,0 +1,45 @@
+<div class="profile">
+    <div class="profile-header">
+        <!-- BEGIN profile-header-cover -->
+        <div class="profile-header-cover"></div>
+        <!-- END profile-header-cover -->
+        <!-- BEGIN profile-header-content --> 
+        <div class="profile-header-content">
+            <!-- BEGIN profile-header-img -->
+            <div class="profile-header-img">
+                <img *ngIf="!imagenTemp" src="{{ user.fotoUrl || '../../../assets/img/user/user.png'}}" alt="">
+                <img *ngIf="imagenTemp" src="{{ imagenTemp || '../../../assets/img/user/user.png'}}" alt="">
+
+            </div>
+
+            <!-- END profile-header-img -->
+            <!-- BEGIN profile-header-info -->
+            <div class="profile-header-info">
+                <h4 class="m-t-10 m-b-5">{{ user.username | titlecase }}</h4>
+                <label [ngClass]="{'btn btn-xs btn-yellow': actualizarImg}" class="image-upload-container ">
+
+                    <ng-container *ngIf="actualizarImg">
+                        <input *ngIf="actualizarImg" #imagetoUpload type="file" accept="image/*"
+                            (change)="imgToUpload($event)" accept=".jpeg,.png,.jpg" class="d-none">
+
+                        <span> Actualizar Img</span>
+                    </ng-container>
+                </label>
+
+            </div>
+            <!-- END profile-header-info -->
+        </div>
+        <!-- END profile-header-content -->
+        <!-- BEGIN profile-header-tab -->
+        <ul class="profile-header-tab nav nav-tabs">
+            <li class="nav-item"><a href="javascript:;" (click)="tabChange('editPerfil')"
+                    [ngClass]="{ 'active': tabs.editPerfil }" class="nav-link">Editar Perfil</a></li>
+            <li class="nav-item"><a href="javascript:;" (click)="tabChange('equipo')"
+                    [ngClass]="{ 'active': tabs.equipo }" class="nav-link">Equipo </a></li>
+            <li class="nav-item"><a href="javascript:;" (click)="tabChange('perfiles')"
+                    [ngClass]="{ 'active': tabs.perfiles }" class="nav-link">Perfiles</a></li>
+
+        </ul>
+        <!-- END profile-header-tab -->
+    </div>
+</div>

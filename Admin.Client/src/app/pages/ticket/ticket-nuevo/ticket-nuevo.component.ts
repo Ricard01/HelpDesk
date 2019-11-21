@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 import { AuthService } from 'src/app/core/_services/auth.service';
 import { environment } from 'src/environments/environment';
-import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
+import { SweetalertService } from 'src/app/shared/services/sweetalert.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ticket } from '../ticket.model';
 import { TicketService } from '../ticket.service';

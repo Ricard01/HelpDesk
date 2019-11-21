@@ -54,7 +54,6 @@ namespace Admin.API.Controllers
         [HttpGet("GetTicketCreadoById/{TicketId}")]
         public async Task<IActionResult> GetTicketsCreadosById(int TicketId)
         {
-           
 
             var ticket = await _repot.GetTicketCreadoById(TicketId);
 
@@ -110,7 +109,6 @@ namespace Admin.API.Controllers
             return Ok(ticketsReturn);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetTickets([FromQuery]UserParams userParams)
         {
@@ -132,7 +130,6 @@ namespace Admin.API.Controllers
             return Ok(ticketsReturn);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> CreateTicket(TicketNewDto ticketDto)
         {
@@ -146,14 +143,10 @@ namespace Admin.API.Controllers
             throw new Exception("Ocurrio un error al crear el ticket");
         }
 
-
         [HttpPost("Adjuntar/{ticketId}")]
         public async Task<IActionResult> AdjuntosTicket(int ticketId, [FromForm]AdjuntosTicketDto fileUploadDto)
         {
-            // //valida que la peticion sea del usuario logeado
-            // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //     return Unauthorized();
-
+           
             var file = fileUploadDto.File;
 
             var uploadResult = new RawUploadResult();
@@ -221,9 +214,6 @@ namespace Admin.API.Controllers
         [HttpPost("AdjuntosRspuesta/{respuestaId}")]
         public async Task<IActionResult> AdjuntosRspuesta(int respuestaId, [FromForm]AdjuntosRespuestaDto fileUploadDto)
         {
-            // //valida que la peticion sea del usuario logeado
-            // if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
-            //     return Unauthorized();
 
             var file = fileUploadDto.File;
 

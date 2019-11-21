@@ -38,10 +38,7 @@ namespace Admin.API.Data
 
         public async Task<User> Register(User user, string password)
         {
-            // byte[] passwordHash, passwordSalt;
-            // CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
-
+           
             await _context.Users.AddAsync(user);
 
             await _context.SaveChangesAsync();
@@ -56,5 +53,6 @@ namespace Admin.API.Data
 
             return false;
         }
+        
     }
 }

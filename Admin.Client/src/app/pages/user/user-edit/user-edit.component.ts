@@ -3,7 +3,7 @@ import pageSettings from '../../../config/page-settings';
 import { User } from '../user.model';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
-import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
+import { SweetalertService } from 'src/app/shared/services/sweetalert.service';
 import { FormGroup,  Validators, FormBuilder } from '@angular/forms';
 
 
@@ -13,6 +13,9 @@ import { FormGroup,  Validators, FormBuilder } from '@angular/forms';
   styles: []
 })
 export class UserEditComponent implements OnInit, OnDestroy {
+
+  actImg = false;
+
   constructor(
     route: ActivatedRoute,
     private userService: UserService,
@@ -24,20 +27,14 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
       const id = params['id'];
       this.getUser(id);
-      // if ( id !== 'nuevo' ) {
-      // }
 
     });
   }
 
-  // selectedFile: File;
   pageSettings = pageSettings;
   id: number;
   user: User;
 
-  // lat = 40.7143528;
-  // lng = -74.0059731;
-  imagenTemp: string;
   updatePassword: false;
   formCambiarPassword: FormGroup;
 
@@ -58,7 +55,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  createRegisterForm() {
+  createFormPassword() {
     this.formCambiarPassword = this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]],
 
@@ -66,7 +63,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.createRegisterForm();
+    this.createFormPassword();
   }
 
   updateUser(id: number) {
@@ -86,6 +83,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     this.userService.getUser(id)
       .subscribe(user => {
         this.user = user;
+        console.log(user);
       });
   }
 

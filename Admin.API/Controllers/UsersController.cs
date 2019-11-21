@@ -23,6 +23,7 @@ namespace Admin.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
+        #region ctor
         private readonly IAdminRepository _repo;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
@@ -47,7 +48,7 @@ namespace Admin.API.Controllers
             _cloudinary = new Cloudinary(acc);
         }
 
-        // [AcceptVerbs("Get", "Post")]
+        #endregion
 
         [HttpGet("userexist/{username}")]
         public async Task<IActionResult> UserNameInUse(string username)
@@ -104,7 +105,7 @@ namespace Admin.API.Controllers
 
             var isCurrentUser = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) == id;
 
-            var user = await _repo.GetUser(id, isCurrentUser);
+            var user = await _repo.GetUser(id);
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(user);
 
@@ -119,7 +120,7 @@ namespace Admin.API.Controllers
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(id, true);
+            var userFromRepo = await _repo.GetUser(id);
 
             _mapper.Map(userForUpdateDto, userFromRepo);
 
@@ -133,12 +134,21 @@ namespace Admin.API.Controllers
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPut("update/{idUser}")]
-        public async Task<IActionResult> UpdateUser(int idUser, UserForUpdateDto userUpdateProfileDto)
+        public async Task<IActionResult> UpdateUser(int idUser, UserForUpdateDto userUpdateDto)
         {
 
-            var userFromRepo = await _repo.GetUser(idUser, true);
 
-            _mapper.Map(userUpdateProfileDto, userFromRepo);
+            if (idUser == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) && ( userUpdateDto.Activo == false) )
+            {
+               
+                throw new Exception($"No se puede dejar inactivo al usuario logeado actualmente ");
+            }
+
+
+            var userFromRepo = await _repo.GetUser(idUser);
+
+
+            _mapper.Map(userUpdateDto, userFromRepo);
 
             _repo.Update(userFromRepo);
 
@@ -180,7 +190,14 @@ namespace Admin.API.Controllers
             var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             if (id == currentUserId)
-                throw new Exception($"Eliminando usuario  fallo");
+                throw new Exception($"No se puede eliminar el usuario actualmente logeado");
+
+            var userHasTicket = await _repo.UserHasTicket(id);
+
+            if (userHasTicket)
+                throw new Exception($"No se puede eliminar el usuario tiene tickets relacionados.");
+
+
 
             var userFromRepo = await _repo.GetUser(id);
 
@@ -207,9 +224,6 @@ namespace Admin.API.Controllers
         }
         [Authorize(Policy = "RequireAdminRole")]
 
-// TODO no se puede eliminar el usuario si tiene tickets asociados o equipo asignado.
-// TODO indicar usuarios como inactivos y que no salgan en la lista para asignar tickets.
-// TODO que no se pueda asignar un equipo inactivo.
         public void DeletePhotoProfile(string publicId)
         {
             if (publicId != null)

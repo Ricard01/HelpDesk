@@ -16,7 +16,7 @@ namespace Admin.API.Helpers
             var userId = int.Parse(resultContext.HttpContext.User
                 .FindFirst(ClaimTypes.NameIdentifier).Value);
             var repo = resultContext.HttpContext.RequestServices.GetService<IAdminRepository>();
-            var user = await repo.GetUser(userId, true);
+            var user = await repo.GetUser(userId);
             user.FechaAlta = DateTime.Now;
             await repo.SaveAll();
         }

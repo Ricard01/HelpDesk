@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup } from '@angular/forms';
 import { OnDestroy } from '@angular/core';
 import pageSettings from 'src/app/config/page-settings';
 import { User } from '../user.model';
 import { UserService } from '../user.service';
+import { SweetalertService } from '../../../shared/services/sweetalert.service';
 
 
 @Component({
@@ -15,19 +15,17 @@ import { UserService } from '../user.service';
 export class UserComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private sweetAlert: SweetalertService
   ) {
 
   }
-
+  actImg = false;
   pageSettings = pageSettings;
   id: number;
   user: User;
 
   imagenTemp: string;
-  formRead = true;
-  updatePassword: false;
-  formCambiarPassword: FormGroup;
 
 
   tabs = {
@@ -52,9 +50,7 @@ export class UserComponent implements OnInit, OnDestroy {
       this.getUser(idUser);
     });
 
-
   }
-
 
 
   ngOnDestroy() {
@@ -65,6 +61,8 @@ export class UserComponent implements OnInit, OnDestroy {
     this.userService.getUser(id)
       .subscribe(user => {
         this.user = user;
+      }, error => {
+      this.sweetAlert.error(error);
       });
   }
 

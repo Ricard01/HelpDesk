@@ -16,6 +16,7 @@ namespace Admin.API.Controllers
     public class UploadController : ControllerBase
     {
 
+        #region ctor
         private readonly IAdminRepository _repo;
         private readonly IMapper _mapper;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
@@ -37,6 +38,8 @@ namespace Admin.API.Controllers
             _cloudinary = new Cloudinary(acc);
         }
 
+        #endregion
+
         [HttpGet("{id}", Name = "GetPhoto")]
         public async Task<IActionResult> GetPhoto(int id)
         {
@@ -54,7 +57,7 @@ namespace Admin.API.Controllers
             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
-            var userFromRepo = await _repo.GetUser(userId, true);
+            var userFromRepo = await _repo.GetUser(userId);
 
             if (userFromRepo.PublicId != null)
             {
@@ -95,8 +98,8 @@ namespace Admin.API.Controllers
 
             return BadRequest("No se pudo agregar la foto");
         }
-      
-        // TODO log si no logro eliminar la foto .
+
+
         [HttpGet("{publicId}", Name = "DeleteFile")]
         public void DeleteFile(string publicId)
         {

@@ -2,8 +2,9 @@ import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '
 import { User } from '../user.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from '../user.service';
-import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
-import { userNameValidator } from '../../../shared/_helpers/unique-username-validator';
+import { SweetalertService } from 'src/app/shared/services/sweetalert.service';
+import { userNameValidator } from 'src/app/shared/helpers/unique-username-validator';
+
 
 @Component({
   selector: 'app-user-nuevo',

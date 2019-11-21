@@ -18,6 +18,8 @@ namespace Admin.API.Controllers
     [Route("api/[controller]")]
     public class AdminController : ControllerBase
     {
+
+        #region Ctor
         private readonly AdminContext _context;
         private readonly UserManager<User> _userManager;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
@@ -40,6 +42,8 @@ namespace Admin.API.Controllers
 
             _cloudinary = new Cloudinary(acc);
         }
+
+        #endregion
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("GetRoles/{id}")]

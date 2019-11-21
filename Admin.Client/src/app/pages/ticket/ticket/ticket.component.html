@@ -195,6 +195,12 @@
 </div>
 
 <!-- R E S P U E S T A  N E W-->
+<div class="col-3">
+    <button *ngIf="this.creados" class="btn btn-grey btn-block btn-circle" type="button btn btn-defaul" (click)="reabrirTicket()">
+        ReAbrir Ticket +
+    </button>
+</div>
+
 <div class="tab-content mt-2" *ngIf="respuestaNew">
     <form [formGroup]="formRespuesta" (ngSubmit)="guardarRespuesta()">
         <div class="row mb-2">
@@ -244,10 +250,17 @@
                 <label for="estatus">Ticket Estatus &nbsp;</label>
                 <select class="form-control" formControlName="estatus">
                     <option value=''>Seleccionar </option>
+                    <option value='2' *ngIf="reabrir">ReAbrir </option>
                     <option value="3"> En Proceso </option>
                     <option value="4"> Cerrar </option>
                 </select>
             </div>
+            <!-- <div *ngIf="respuestaNew" class="form-group form-inline col-md-3">
+                    <label for="estatus">Ticket Estatus &nbsp;</label>
+                    <select class="form-control" formControlName="estatus" disabled>
+                        <option value='2' selected=>ReAbrir </option>                     
+                    </select>
+                </div> -->
 
             <div class="form-group form-inline col-md-2">
                 <button [disabled]="!formRespuesta.valid" class="align-items-end btn btn-primary btn-block btn-circle"

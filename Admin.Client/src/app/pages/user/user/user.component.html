@@ -1,125 +1,72 @@
-<!-- begin profile -->
-<div *ngIf="user">
-  <div class="profile">
-      <div class="profile-header">
-          <!-- BEGIN profile-header-cover -->
-          <div class="profile-header-cover"></div>
-          <!-- END profile-header-cover -->
-          <!-- BEGIN profile-header-content -->
-          <div class="profile-header-content">
-              <!-- BEGIN profile-header-img -->
-              <div class="profile-header-img">
-                  <img *ngIf="!imagenTemp" src="{{ user.fotoUrl || '../../../assets/img/user/user.png'}}" alt="">
-                  <img *ngIf="imagenTemp" src="{{ imagenTemp || '../../../assets/img/user/user.png'}}" alt="">
-              </div>
-
-              <!-- END profile-header-img -->
-              <!-- BEGIN profile-header-info -->
-              <div class="profile-header-info">
-                  <h4 class="m-t-10 m-b-5">{{ user.username | titlecase }}</h4>
-                  <label class="image-upload-container btn btn-xs btn-grey">
-                      <span> Actualizar Img</span>
-                      <input type="file" disabled class="d-none">
-                  </label>
-
-              </div>
-              <!-- END profile-header-info -->
-          </div>
-          <!-- END profile-header-content -->
-          <!-- BEGIN profile-header-tab -->
-          <ul class="profile-header-tab nav nav-tabs">
-              <li class="nav-item"><a href="javascript:;" (click)="showTab('editPerfil')" [ngClass]="{ 'active': tabs.editPerfil }" class="nav-link">Editar Perfil</a></li>
-              <li class="nav-item"><a href="javascript:;" (click)="showTab('equipo')" [ngClass]="{ 'active': tabs.equipo }" class="nav-link">Equipo </a></li>
-              <li class="nav-item"><a href="javascript:;" (click)="showTab('perfiles')" [ngClass]="{ 'active': tabs.perfiles }" class="nav-link">Perfiles</a></li>
-
-          </ul>
-          <!-- END profile-header-tab -->
-      </div>
-  </div>
-  <!-- end profile -->
-  <!-- begin profile-content -->
-  <div class="profile-content">
-      <!-- begin tab-content -->
-      <div class="tab-content p-0">
-
-          <!-- begin #perfil -->
-          <div class="tab-pane fade" [ngClass]="{ 'active show': tabs.editPerfil }">
-              <!-- begin table -->
-              <form #formUpdate="ngForm">
-                  <div class="table-responsive">
-                      <table class="table table-profile">
-                          <thead>
-                              <tr>
-                                  <th></th>
-                                  <th>
 
 
-                                      <form class="form-inline col-md-8 ">
-                                          <h4 class="mr-2 ">
-                                              {{ user.username | titlecase}}<small>{{ user.puesto | titlecase}}</small>
-                                          </h4>
-                                         
-
-                                          <a class="ml-2 btn btn-warning  btn-circle" (click)="updatePassword = !updatePassword" disabled="formRead">
-                                              <i class="fa fa-unlock-alt pull-left m-r-10 text-black"></i> <small *ngIf="formRead">Cambiar contraseña</small>
-                                          </a>
+    <app-header-user [user]="user" (tabname)="showTab($event)" [actualizarImg]="actImg"> </app-header-user>
 
 
-                                      </form>
-
-                                  </th>
-                                  <th>
-
-                                  </th>
-
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr class="highlight">
-                                  <td class="field">Email</td>
-                                  <td> <input [disabled]="formRead" type="email" class="col-md-4 form-control-plaintext form-control-sm" name="email" [(ngModel)]="user.email"> </td>
-                                  <td></td>
-                              </tr>
-                              <tr class="divider">
-                                  <td colspan="2"></td>
-                                  <td></td>
-                              </tr>
-                              <tr>
-                                  <td class="field">Cel</td>
-                                  <td><input [disabled]="formRead" type="text" class="col-md-4 form-control-plaintext form-control-sm" name="phoneNumber" [(ngModel)]="user.phoneNumber"></td>
-                                  <td></td>
-                              </tr>
-                              <tr class="highlight">
-                                  <td class="field">Puesto</td>
-                                  <td><input [disabled]="formRead" type="text" class="col-md-4 form-control-plaintext form-control-sm" name="puesto" [(ngModel)]="user.puesto"></td>
-                                  <td></td>
-                              </tr>
+    <!-- begin profile-content -->
+    <div class="profile-content">
+        <!-- begin tab-content -->
+        <div class="tab-content p-0">
 
 
-                              <tr class="divider">
-                                  <td colspan="3"></td>
-                              </tr>
-                              <tr class="highlight" *ngIf="!formRead">
-                                  <td class="field">&nbsp;</td>
-                                  <td class="p-t-10 p-b-10" colspan="2">
-                                      <button type="submit" [disabled]="!formUpdate.dirty" class=" col-md-2 col-sm-3 btn btn-primary width-150">Actualizar</button>
-                                      <a class="col-md-2 col-sm-3 btn btn-white btn-white-without-border width-150 m-l-5" routerLink="/usuarios">Cancelar</a>
-                                  </td>
+            <div class="tab-pane fade" [ngClass]="{ 'active show': tabs.editPerfil }">
+                <!-- begin table -->
+               
+                    <div class="table-responsive">
+                        <table class="table table-profile" *ngIf="user">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        <h4 class="mr-2 ">
+                                            {{ user.username | titlecase}}<small>{{ user.puesto | titlecase}}</small>
+                                        </h4>
 
-                              </tr>
-                          </tbody>
-                      </table>
-                  </div>
-              </form>
+                                    </th>
+                                    <th>
 
-              <!-- end table -->
-          </div>
-          <!-- end #perfil -->
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="highlight">
+                                    <td class="field">Email</td>
+                                    <td> {{ user.email }} </td>
+                                    <td></td>
+                                </tr>
+
+                                <tr>
+                                    <td class="field">Cel</td>
+                                    <td>{{ user.phoneNumber }}</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td class="field">Puesto</td>
+                                    <td> {{ user.puesto }}</td>
+                                    <td></td>
+                                </tr>
 
 
-      </div>
-      <!-- end tab-content -->
-  </div>
-  <!-- end profile-content -->
 
-</div>
+                            </tbody>
+                        </table>
+                    </div>
+             
+
+                <!-- end table -->
+            </div>
+ 
+
+            <div class="tab-pane fade" [ngClass]="{ 'active show': tabs.equipo }">
+
+                <app-equipo-user [UserId]="user.id"></app-equipo-user>
+
+            </div>
+
+
+        </div>
+        <!-- end tab-content -->
+    </div>
+    <!-- end profile-content -->
+

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Ticket } from '../ticket.model';
-import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
+import { SweetalertService } from 'src/app/shared/services/sweetalert.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TicketService } from '../ticket.service';

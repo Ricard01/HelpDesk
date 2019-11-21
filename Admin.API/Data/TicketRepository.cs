@@ -6,12 +6,12 @@ using Admin.API.Helpers;
 using Admin.API.Models;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using Admin.API.Dtos;
 
 namespace Admin.API.Data
 {
     public class TicketRepository : ITicketRepository
     {
+        #region ctor
         private readonly AdminContext _context;
         private readonly IMapper _mapper;
 
@@ -22,47 +22,8 @@ namespace Admin.API.Data
 
         }
 
-        public async Task<Ticket> GetTicket(int id)
-        {
-            var ticket = await _context.Tickets.FirstOrDefaultAsync(t => t.Id == id);
+        #endregion
 
-            return ticket;
-        }
-
-        public async Task<List<Ticket>> GetTicketsCreados(int idUser)
-        {
-
-            var tickets = await _context.Tickets
-            .Include(ticketAsignado => ticketAsignado.TicketsAsignados)
-            .ThenInclude(user => user.User)
-         .Where(ticket => ticket.UserId == idUser).ToListAsync();
-
-            #region 2Forma
-            // TODO Filtrar solo username 
-            // var tickets = await (from ticket in _context.Tickets.TagWith("GetTicketsCreados")
-            //                      join ticketAsig in _context.TicketsAsignados on ticket.Id equals ticketAsig.TicketId
-            //                      into ticketsAsignados
-
-            //                     //  join us in _context.Users on ta.UserId equals us.Id
-
-            //                      where ticket.UserId == idUser
-            //                      select new Ticket
-            //                      {
-
-            //                          Id = ticket.Id,
-            //                          FechaAlta = ticket.FechaAlta,
-            //                          Mensaje = ticket.Mensaje,
-            //                          Prioridad = ticket.Prioridad,
-            //                          TicketsAsignados = ticketsAsignados.ToList()
-
-
-            //                      }
-            //                     ).ToListAsync();
-            #endregion
-
-
-            return tickets;
-        }
 
         public async Task<object> GetTicketCreadoById(int ticketId)
         {
@@ -87,13 +48,24 @@ namespace Admin.API.Data
                                     TicketRespuestas = from resp in _context.TicketsRespuestas
                                                        where resp.TicketId == ticketId
                                                        orderby resp.Id
-                                                       select new { resp.Id, resp.Respuesta, resp.Fecha, resp.Estatus, resp.User.UserName, resp.User.FotoUrl, resp.AdjuntosRespuesta }
-                                                       //    adjResp = (from adjr in _context.AdjuntosRespuestas where adjr.TicketRespuestaId == resp.Id select adjr )},
-
+                                                       select new { resp.Id, resp.Respuesta, resp.Fecha, resp.Estatus, resp.User.UserName, resp.User.FotoUrl, resp.AdjuntosRespuesta }                                                      
                                 }).FirstOrDefaultAsync();
 
             return ticket;
         }
+       
+        public async Task<List<Ticket>> GetTicketsCreados(int idUser)
+        {
+
+            var tickets = await _context.Tickets
+            .Include(ticketAsignado => ticketAsignado.TicketsAsignados)
+            .ThenInclude(user => user.User)
+         .Where(ticket => ticket.UserId == idUser).ToListAsync();
+
+
+            return tickets;
+        }
+
         public async Task<object> GetTicketAsignadoById(int ticketId)
         {
 
@@ -116,7 +88,6 @@ namespace Admin.API.Data
                                                        where resp.TicketId == ticketId
                                                        orderby resp.Id
                                                        select new { resp.Id, resp.Respuesta, resp.Fecha, resp.Estatus, resp.User.UserName, resp.User.FotoUrl, resp.AdjuntosRespuesta }
-                                                       //    adjResp = (from adjr in _context.AdjuntosRespuestas where adjr.TicketRespuestaId == resp.Id select adjr )},
 
                                 }).FirstOrDefaultAsync();
 
@@ -139,19 +110,19 @@ namespace Admin.API.Data
         {
             var tickets = _context.Tickets.Include(u => u.User).OrderBy(u => u.Id).AsQueryable();
 
-            // tickets = tickets.Where(u => u.UserId == userParams.UserId);
+            tickets = tickets.Where(u => u.UserId == userParams.UserId);
 
-            // if (userParams.Estatus > 0)
-            // {
-            //     tickets = tickets.Where(t => t.Status == userParams.Estatus);
-            // }
+            if (userParams.Estatus > 0)
+            {
+                tickets = tickets.Where(t => t.Estatus == userParams.Estatus);
+            }
 
-            // if (userParams.FechaIni != null && userParams.FechaFin != null)
-            // {
+            if (userParams.FechaIni != null && userParams.FechaFin != null)
+            {
 
 
-            //     tickets = tickets.Where(t => t.FechaAlta >= userParams.FechaIni && t.FechaAlta <= userParams.FechaFin);
-            // }
+                tickets = tickets.Where(t => t.FechaAlta >= userParams.FechaIni && t.FechaAlta <= userParams.FechaFin);
+            }
 
             if (!string.IsNullOrEmpty(userParams.OrderBy))
             {

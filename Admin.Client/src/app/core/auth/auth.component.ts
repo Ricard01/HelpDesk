@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import pageSettings from '../../config/page-settings';
-import { AuthService } from '../_services/auth.service';
-import { SweetalertService } from '../../shared/_services/sweetalert.service';
 import { NgForm } from '@angular/forms';
+import { SweetalertService } from '../../shared/services/sweetalert.service';
+import { AuthService } from '../_services/auth.service';
 
 @Component({
   selector: 'app-auth',

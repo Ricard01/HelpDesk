@@ -13,6 +13,7 @@ namespace Admin.API.Controllers
     [ApiController]
     public class EquiposController : ControllerBase
     {
+        #region ctor
         private readonly IEquipoRepository _repo;
         private readonly IMapper _mapper;
 
@@ -24,12 +25,13 @@ namespace Admin.API.Controllers
             _repo = repo;
         }
 
+        #endregion
+
 
         [HttpGet("{idEquipo}")]
         public async Task<IActionResult> GetEquipo(int idEquipo)
         {
-            var equipo = await _repo.GetEquipo(idEquipo);
-            // var equipoReturn = _mapper.Map<EquipoUpdDto>(equipo);
+            var equipo = await _repo.GetEquipo(idEquipo);        
 
             return Ok(equipo);
         }
@@ -39,8 +41,7 @@ namespace Admin.API.Controllers
         public async Task<IActionResult> GetAllEquipos()
         {
             var equipos = await _repo.GetAllEquipos();
-            // var equiposToReturn = _mapper.Map<IEnumerable<EquipoListDto>>(equipos);
-            // var equiposToReturn = equipos;
+
             return Ok(equipos);
         }
 
@@ -71,15 +72,14 @@ namespace Admin.API.Controllers
 
             return Ok(equiposDisponibles);
 
-
         }
 
 
         [HttpGet("default/{idUser}")]
         public async Task<IActionResult> GetEquipoDefault(int idUser)
         {
-
             var equipo = await _repo.GetEquipoDefault(idUser);
+
             return Ok(equipo);
         }
 
@@ -88,13 +88,12 @@ namespace Admin.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEquipo(Equipo equipo)
         {
-            // var message = _mapper.Map<Message>(messageForCreationDto);
+    
             equipo.Activo = true;
             _repo.Add(equipo);
 
             if (await _repo.SaveAll())
             {
-
                 return Ok();
             }
 
@@ -152,9 +151,7 @@ namespace Admin.API.Controllers
                 throw new Exception($"Ocurrio un error al actualizar");
             }
 
-
             return NoContent();
-
 
         }
 
@@ -165,16 +162,24 @@ namespace Admin.API.Controllers
         {
             var equipoRepo = await _repo.GetEquipo(EquipoId);
 
-            _mapper.Map(equipo, equipoRepo);
+            if (equipoRepo.UserId == null)
+            {
 
-            _repo.Update(equipoRepo);
+                _mapper.Map(equipo, equipoRepo);
 
-            if (await _repo.SaveAll())
-                return NoContent();
+                _repo.Update(equipoRepo);
 
-               throw new Exception($"Ocurrio un error al actualizar");
+                if (await _repo.SaveAll())
+                    return NoContent();
+
+                throw new Exception($"Ocurrio un error al actualizar");
+
+            } 
+            
+             throw new Exception("El equipo esta asignado a un usuario no se puede dejar inactivo");
 
         }
+
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("delete/{id}")]
         public async Task<IActionResult> DeleteEquipo(int id)
@@ -194,7 +199,6 @@ namespace Admin.API.Controllers
             throw new Exception("No se encontro el equipo a eliminar");
 
         }
-
 
     }
 }

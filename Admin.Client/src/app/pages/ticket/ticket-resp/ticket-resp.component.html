@@ -25,7 +25,7 @@
 
         <ul class="attached-document clearfix">
             <ng-container *ngFor="let adjunto of item.adjuntosRespuesta">
-                <!-- TODO avoid logic in template https://www.freecodecamp.org/news/best-practices-for-a-clean-and-performant-angular-application-288e7b39eb6f/ -->
+                <!-- TODO ADJUNTOS SWITCH avoid logic in template https://www.freecodecamp.org/news/best-practices-for-a-clean-and-performant-angular-application-288e7b39eb6f/ -->
                 <ng-container [ngSwitch]="adjunto.nombre | filetype">
 
                     <li class="fa-file" *ngSwitchCase="'docx'">

@@ -1,0 +1,25 @@
+<div class="table-responsive">
+        <table class="table table-profile" *ngIf="equipo">
+           
+            <tbody>
+                <tr class="highlight">
+                    <td width="30%" class="field">Equipo</td>
+                    <td width="70%"> {{ equipo.nombreEquipo }}  </td>
+                 
+                </tr>
+               
+                <tr class="highlight" >
+                    <td class="field">Ip</td>
+                    <td> {{ equipo.ip }}</td>
+                  
+                </tr>
+                <tr class="highlight"  >
+                    <td class="field">Caracteristicas</td>
+                    <td  > {{ equipo.caracteristicas }}</td>
+                    
+                </tr>
+           
+
+            </tbody>
+        </table>
+    </div>

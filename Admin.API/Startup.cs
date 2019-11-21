@@ -125,8 +125,7 @@ namespace Admin.API
             }
             else
             {
-                // logger.LogInformation("RICARDO In Development environment RICARDO");
-                // TODO Manejo de errores middleware
+                // logger.LogInformation("RICARDO In Development environment RICARDO");          
                 app.UseExceptionHandler(builder =>
                 {
                     builder.Run(async context =>

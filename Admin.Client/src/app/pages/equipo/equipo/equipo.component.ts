@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { EquipoService } from '../equipo.service';
 import { Equipo } from '../equipo.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SweetalertService } from '../../../shared/_services/sweetalert.service';
+import { SweetalertService } from '../../../shared/services/sweetalert.service';
+
 
 @Component({
   selector: 'app-equipo',

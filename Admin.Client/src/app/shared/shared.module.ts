@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { ImagenPipe } from './_pipes/imagen.pipe';
+import { ImagenPipe } from './pipes/imagen.pipe';
 import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 import { CommonModule } from '@angular/common';
-import { AdjuntarComponent } from './_components/adjuntar/adjuntar.component';
-import { GalleryComponent } from './components/gallery/gallery.component';
-import { FileTypePipe } from './_pipes/filetype.pipe';
+import { FileTypePipe } from './pipes/filetype.pipe';
+import { MatPaginatorIntl } from '@angular/material';
+import { getSpanishPaginatorIntl } from './components/spanish-paginator/spanish-paginator.component';
 
 
 
@@ -12,10 +12,9 @@ import { FileTypePipe } from './_pipes/filetype.pipe';
   declarations: [
     FileTypePipe,
     ImagenPipe,
-    AdjuntarComponent,
-    GalleryComponent,
   ],
   providers: [
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }
   ],
   imports: [
     CommonModule,
@@ -27,7 +26,6 @@ import { FileTypePipe } from './_pipes/filetype.pipe';
     PaginationModule,
     ImagenPipe,
     FileTypePipe,
-    AdjuntarComponent
   ]
 })
 export class SharedModule { }

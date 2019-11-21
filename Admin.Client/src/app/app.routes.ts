@@ -3,7 +3,7 @@ import { AuthComponent } from './core/auth/auth.component';
 
 import { PagenotfoundComponent } from './core/pagenotfound/pagenotfound.component';
 import { PagesComponent } from './pages/pages.component';
-import { AuthGuard } from './shared/_guards/auth.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const appRoutes: Routes = [
   { path: 'login', component: AuthComponent },

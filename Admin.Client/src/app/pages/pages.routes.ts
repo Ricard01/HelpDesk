@@ -27,8 +27,6 @@ const pagesRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'ticket/creados/:id', component: TicketComponent, data: { tipo: 'creados' } },
   { path: 'ticket/asignados/:id', component: TicketComponent, data: { tipo: 'asignados' } },
-  // TODO usar esta ruta para responder a los tickets creados y asgignados
-  // { path: 'ticket/:id', component: TicketComponent},
   { path: 'ticket-nuevo', component: TicketNuevoComponent, resolve: { users: TicketNuevoResolver } },
   { path: 'tickets/creados', component: TicketCreadoComponent },
   { path: 'tickets/asignados', component: TicketAsignadoComponent },

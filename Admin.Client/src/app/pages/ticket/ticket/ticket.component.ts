@@ -4,7 +4,7 @@ import { User } from '../../user/user.model';
 import { FileUploader, FileLikeObject } from 'ng2-file-upload';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/_services/auth.service';
-import { SweetalertService } from 'src/app/shared/_services/sweetalert.service';
+import { SweetalertService } from 'src/app/shared/services/sweetalert.service';
 import { TicketService } from '../ticket.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TicketRespuesta } from '../ticket-resp/ticket-resp.model';
@@ -25,6 +25,7 @@ export class TicketComponent implements OnInit {
   fecha = new Date();
   respuesta: TicketRespuesta;
   creados: boolean;
+  reabrir: boolean;
 
   @Input() adjuntos: any[];
   selectedItems = [];
@@ -95,6 +96,13 @@ export class TicketComponent implements OnInit {
     this.crearFormRespuesta();
     this.initializeUploader();
   }
+  reabrirTicket() {
+    this.reabrir = true;
+    this.inicializarRespuesta();
+    // this.formRespuesta.controls['estatus'].setValue('ReAbrir', {onlySelf: true});
+    this.formRespuesta.controls.estatus.setValue('2',  {onlySelf: true});
+    this.formRespuesta.controls.estatus.disable();
+  }
 
   crearFormRespuesta() {
     this.formRespuesta = this.fb.group({
@@ -163,6 +171,7 @@ export class TicketComponent implements OnInit {
         if (this.uploader.queue.length > 0) {
           this.uploader.setOptions({ url: this.baseUrl + respuestaId });
           this.uploader.uploadAll();
+          this._alertify.success('Respuesta enviada.. cargando adjuntos');
         } else {
           this._alertify.success('Respuesta enviada');
         }

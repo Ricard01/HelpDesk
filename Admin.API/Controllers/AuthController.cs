@@ -22,6 +22,7 @@ namespace Admin.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        #region ctor
         private readonly IConfiguration _config;
         private readonly IMapper _mapper;
 
@@ -43,7 +44,8 @@ namespace Admin.API.Controllers
             _config = config;
             _repo = repo;
         }
-        
+        #endregion
+
         [Authorize(Policy = "RequireAdminRole")]
         [HttpPost("registrar")]
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
@@ -57,14 +59,11 @@ namespace Admin.API.Controllers
             if (result.Succeeded)
             {
                 var user = _userManager.FindByNameAsync(userToReturn.Username).Result;
-                    // _userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" }).Wait();
-                     _userManager.AddToRolesAsync(user, new[] { "User" }).Wait();
-                // return CreatedAtRoute("GetUser",
-                //     new { controller = "Users", id = userToCreate.Id }, userToReturn);
+                _userManager.AddToRolesAsync(user, new[] { "User" }).Wait();
 
                 return Ok();
             }
-            
+
 
             return BadRequest(result.Errors);
         }
@@ -85,8 +84,7 @@ namespace Admin.API.Controllers
             {
                 var appUser = await _userManager.Users
                     .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.Username.ToUpper());
-
-                // Se cambio para que solo traiga los valores especificos.
+              
                 var userToReturn = _mapper.Map<UserForReturnDto>(appUser);
 
                 return Ok(new
@@ -133,7 +131,6 @@ namespace Admin.API.Controllers
             return tokenHandler.WriteToken(token);
         }
 
-      
 
     }
 }
