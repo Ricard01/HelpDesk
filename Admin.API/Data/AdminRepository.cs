@@ -5,6 +5,7 @@ using Admin.API.Persistence;
 using Admin.API.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using Admin.API.Helpers;
 
 namespace Admin.API.Data
 {
@@ -62,13 +63,13 @@ namespace Admin.API.Data
 
         }
 
-        // public async Task<PagedList<User>> GetUsers(UserParams userParams)
-        // {
-        //     // 
-        //     var users = _context.Users.AsQueryable();
+         public async Task<PagedList<User>> GetUsers(UserParams userParams)
+        {
+            // 
+            var users = _context.Users.AsQueryable();
 
-        //     return await PagedList<User>.CreateAsync(users, userParams.NumPagina, userParams.ItemsxPagina);
-        // }
+            return await PagedList<User>.CreateAsync(users, userParams.NumPagina, userParams.ItemsxPagina);
+        }
 
         public async Task<User> GetPhoto(int id)
         {

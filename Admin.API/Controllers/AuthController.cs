@@ -76,6 +76,7 @@ namespace Admin.API.Controllers
             if (user == null || user.Activo == false)
             {
                 return Unauthorized();
+              
             }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
@@ -84,7 +85,7 @@ namespace Admin.API.Controllers
             {
                 var appUser = await _userManager.Users
                     .FirstOrDefaultAsync(u => u.NormalizedUserName == userForLoginDto.Username.ToUpper());
-              
+
                 var userToReturn = _mapper.Map<UserForReturnDto>(appUser);
 
                 return Ok(new

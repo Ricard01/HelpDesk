@@ -9,13 +9,12 @@ export class TicketRespComponent implements OnInit {
 
   @Input() respuestas: any[];
 
-  constructor( ) {
+  constructor() {
 
   }
 
   ngOnInit() {
-    console.log('Respuestas');
-    console.log(this.respuestas);
+
   }
 
 }

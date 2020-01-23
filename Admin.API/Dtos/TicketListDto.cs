@@ -4,7 +4,9 @@ using System.Collections.Generic;
 namespace Admin.API.Dtos
 {
     public class TicketListDto
+    
     {
+        
         public int Id { get; set; }
 
         public UserDto User { get; set; }

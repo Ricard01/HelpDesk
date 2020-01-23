@@ -1,73 +1,68 @@
 <div class="row mb-2">
 
-    <div class="col-2 bd-highlight">
-      <h1 class="page-header"> <i class="fas fa-check-square"></i> Tickets</h1>
-    </div>
-  
-    <div class="col-2  ml-auto p-1 bd-highlight">
-      <a [routerLink]="['/ticket-nuevo']" class="btn btn-block btn-primary  btn-circle">
-        Nuevo &nbsp; <i class="fa fa-plus"></i>
-      </a>
-    </div>
-  
+  <div class="col-2 bd-highlight">
+    <h1 class="page-header"> <i class="fas fa-check-square"></i> Tickets</h1>
   </div>
-  
-  <div class="tab-content">
-  
-    <form class="form-inline" [formGroup]="filtroForm" (ngSubmit)="getTickets()" #formDirective="ngForm" novalidate>
-  
-      <div class="form-group px-2">
-        <div class="input-group">
-          <mat-form-field>
-            <!-- style display-inline sino queda en el mismo renglon -->
-            <input matInput [matDatepicker]="picker" placeholder="Fecha Inicial" style="width: 100px"
-              formControlName="fechaIni">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-  
-        </div>
+
+
+</div>
+
+<div class="tab-content">
+
+  <form class="form-inline" [formGroup]="filtroForm" (ngSubmit)="getTickets()" #formDirective="ngForm" novalidate>
+
+    <div class="form-group px-2">
+      <div class="input-group">
+        <mat-form-field>
+          <!-- style display-inline sino queda en el mismo renglon -->
+          <input matInput [matDatepicker]="picker" placeholder="Fecha Inicial" style="width: 100px"
+            formControlName="fechaIni">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
       </div>
-  
-      <div class="form-group px-2">
-        <div class="input-group">
-  
-          <mat-form-field>
-            <!-- style display-inline sino queda en el mismo renglon -->
-            <input matInput [matDatepicker]="fechaFin" placeholder="Fecha Final" style="width: 100px"
-              formControlName="fechaFin" [errorStateMatcher]="matcher">
-            <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
-            <mat-datepicker #fechaFin></mat-datepicker>
-            <mat-error *ngIf="filtroForm.hasError('fechaIncorrecta')">La Fecha Final no puede ser menor a la Fecha Inicial
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-  
-  
-      <div class="form-group px-2">
-        <label for="estatus">Estatus: </label>
-        <select class="form-control ml-1" style="width: 130px" id="status" formControlName="estatus">
-          <option *ngFor="let estatus of estatusList" [value]="estatus.value"> {{ estatus.display }} </option>
-        </select>
-      </div>
-  
-      <button class="btn btn-primary " [disabled]="!filtroForm.valid" type="submit">Aplicar</button>
-      <button (click)="borrarFiltros(formDirective)" type="button" class="btn btn-info" [disabled]="!filtroForm.valid"
-        style="margin-left:10px">Borrar Filtros</button>
-  
-    </form>
-  
-    <div class="row form-group m-b-10">
-  
-      <div class="col-md-2">
-        <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="Buscar por # Ticket" />
-      </div>
-  
     </div>
-  
-  
-    <!-- <div class="form-group">
+
+    <div class="form-group px-2">
+      <div class="input-group">
+
+        <mat-form-field>
+          <!-- style display-inline sino queda en el mismo renglon -->
+          <input matInput [matDatepicker]="fechaFin" placeholder="Fecha Final" style="width: 100px"
+            formControlName="fechaFin" [errorStateMatcher]="matcher">
+          <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+          <mat-datepicker #fechaFin></mat-datepicker>
+          <mat-error *ngIf="filtroForm.hasError('fechaIncorrecta')">La Fecha Final no puede ser menor a la Fecha Inicial
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="form-group px-2">
+      <label for="estatus">Estatus: </label>
+      <select class="form-control ml-1" style="width: 130px" id="status" formControlName="estatus">
+        <option *ngFor="let estatus of estatusList" [value]="estatus.value"> {{ estatus.display }} </option>
+      </select>
+    </div>
+
+    <button class="btn btn-primary " [disabled]="!filtroForm.valid" type="submit">Aplicar</button>
+    <button (click)="borrarFiltros(formDirective)" type="button" class="btn btn-info" [disabled]="!filtroForm.valid"
+      style="margin-left:10px">Borrar Filtros</button>
+
+  </form>
+
+  <div class="row form-group m-b-10">
+
+    <div class="col-md-2">
+      <input type="text" [(ngModel)]="searchTerm" class="form-control" placeholder="Buscar por # Ticket" />
+    </div>
+
+  </div>
+
+
+  <!-- <div class="form-group">
         <label for="inputEmail3" class="col-form-label">Ordenar Por:</label>
         <div class="col-auto">
           <select class="form-control form-control-sm" (change)="onOrderBySelected($event.target.value)">
@@ -75,69 +70,69 @@
           </select>
         </div>
       </div> -->
-  
-  
-    <div class="table-responsive">
-      <table appSortable class="table table-hover m-b-0 ">
-        <thead>
-          <tr>
-            <th id="Id" (click)="onClick($event, isDesc = !isDesc, link1)">
-              # Ticket <i #link1 class="selector"></i>
-            </th>
-            <th id="Fecha" (click)="onClick($event, isDesc = !isDesc, link2)">
-              Fecha <i #link2 class="selector"></i>
-            </th>
-            <th id="Usuario" (click)="onClick($event, isDesc = !isDesc, link3)">
-              Asignó<i #link3 class="selector"></i>
-            </th>
-            <th>Titulo</th>
-            <th id="Prioridad" (click)="onClick($event, isDesc = !isDesc, link4)">
-              Prioridad
-              <i #link4 class="selector"></i>
-            </th>
-            <th id="Estatus" (click)="onClick($event, isDesc = !isDesc, link5)">
-              Estatus
-              <i #link5 class="selector"></i>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let ticket of tickets  ">
-            <th> {{ ticket.id }}</th>
-            <td> {{ ticket.fechaAlta  | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ ticket.user.username}}</td>
-            <td>{{ ticket.titulo }}</td>
-            <td>
-              <span [ngSwitch]=" ticket.prioridad ">
-                <span *ngSwitchCase="1"> Baja </span>
-                <span *ngSwitchCase="2"> Normal </span>
-                <span *ngSwitchCase="3"> <i class="fas fa-exclamation-triangle text-danger"></i> Urgente </span>
-  
-              </span></td>
-  
-            <td>
-              <span [ngSwitch]=" ticket.estatus ">
-                <span class="label label-primary" *ngSwitchCase=1> Abierto </span>
-                <span class="label label-info" *ngSwitchCase=2> + Abierto </span>
-                <span class="label label-warning" *ngSwitchCase=3> En proceso </span>
-                <span class="label label-success" *ngSwitchCase=4>Cerrado </span>
-                <span *ngSwitchDefault> No se </span>
-              </span></td>
-          </tr>
-  
-        </tbody>
-      </table>
-    </div>
-  
-    <div class="row pt-4">
-      <div class="col-auto mr-auto"><label>Total Tickets: {{paginacion.totalItems }}</label></div>
-      <div class="col-auto">
-        <pagination *ngIf="!paginator" [boundaryLinks]="true" [totalItems]="paginacion.totalItems"
-          [itemsPerPage]="paginacion.itemsxPagina" [(ngModel)]="paginacion.paginaActual"
-          (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
-          lastText="&raquo;">
-        </pagination>
-      </div>
-    </div>
-  
+
+
+  <div class="table-responsive">
+    <table appSortable class="table table-hover m-b-0 ">
+      <thead>
+        <tr>
+          <th id="Id" (click)="onClick($event, isDesc = !isDesc, link1)">
+            # Ticket <i #link1 class="selector"></i>
+          </th>
+          <th id="Fecha" (click)="onClick($event, isDesc = !isDesc, link2)">
+            Fecha <i #link2 class="selector"></i>
+          </th>
+          <th id="Usuario" (click)="onClick($event, isDesc = !isDesc, link3)">
+            Asignó<i #link3 class="selector"></i>
+          </th>
+          <th>Titulo</th>
+          <th id="Prioridad" (click)="onClick($event, isDesc = !isDesc, link4)">
+            Prioridad
+            <i #link4 class="selector"></i>
+          </th>
+          <th id="Estatus" (click)="onClick($event, isDesc = !isDesc, link5)">
+            Estatus
+            <i #link5 class="selector"></i>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ticket of tickets  ">
+          <th> {{ ticket.id }}</th>
+          <td> {{ ticket.fechaAlta  | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ ticket.user.username}}</td>
+          <td>{{ ticket.titulo }}</td>
+          <td>
+            <span [ngSwitch]=" ticket.prioridad ">
+              <span *ngSwitchCase="1"> Baja </span>
+              <span *ngSwitchCase="2"> Normal </span>
+              <span *ngSwitchCase="3"> <i class="fas fa-exclamation-triangle text-danger"></i> Urgente </span>
+
+            </span></td>
+
+          <td>
+            <span [ngSwitch]=" ticket.estatus ">
+              <span class="label label-primary" *ngSwitchCase=1> Abierto </span>
+              <span class="label label-info" *ngSwitchCase=2> + Abierto </span>
+              <span class="label label-warning" *ngSwitchCase=3> En proceso </span>
+              <span class="label label-success" *ngSwitchCase=4>Cerrado </span>
+              <span *ngSwitchDefault> No se </span>
+            </span></td>
+        </tr>
+
+      </tbody>
+    </table>
   </div>
+
+  <div class="row pt-4">
+    <div class="col-auto mr-auto"><label>Total Tickets: {{paginacion.totalItems }}</label></div>
+    <div class="col-auto">
+      <pagination *ngIf="!paginator" [boundaryLinks]="true" [totalItems]="paginacion.totalItems"
+        [itemsPerPage]="paginacion.itemsxPagina" [(ngModel)]="paginacion.paginaActual"
+        (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;">
+      </pagination>
+    </div>
+  </div>
+
+</div>

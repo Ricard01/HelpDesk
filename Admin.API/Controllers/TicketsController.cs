@@ -60,19 +60,32 @@ namespace Admin.API.Controllers
             return Ok(ticket);
         }
 
+
+        [HttpGet("TicketCreadoById/{TicketId}")]
+        public async Task<IActionResult> TicketsCreadosById(int TicketId)
+        {
+
+            var ticket = await _repot.TicketCreadoById(TicketId);
+
+            return Ok(ticket);
+        }
+
         [HttpGet("GetTicketsCreados")]
         public async Task<IActionResult> GetTicketsCreados()
-        {
+         {
+        //     var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+        //     var userFromRepo = await _repo.GetUser(currentUserID);
+
+        //     if (userFromRepo == null)
+        //     {
+        //         return NoContent();
+        //     }
+
+
             var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-            var userFromRepo = await _repo.GetUser(currentUserID);
-
-            if (userFromRepo == null)
-            {
-                return NoContent();
-            }
-
-            var tickets = await _repot.GetTicketsCreados(userFromRepo.Id);
+            var tickets = await _repot.GetTicketsCreados(currentUserID);
 
             var ticketsReturn = _mapper.Map<IEnumerable<TicketListDto>>(tickets);
 
@@ -86,6 +99,15 @@ namespace Admin.API.Controllers
             return Ok(ticket);
         }
 
+        
+
+
+        [HttpGet("GetUltimaRespuestaInsertada/{respuestaId}")]
+        public async Task<IActionResult> GetUltimaRespuestaInsertada(int respuestaId)
+        {
+            var ultRespuesta = await _repot.GetUltimaRespuestaInsertada(respuestaId);
+            return Ok(ultRespuesta);
+        }
 
         /// <summary>Lista de tickets asignados al usuario.
         /// <para>TicketsAsignados.</para>
@@ -117,7 +139,10 @@ namespace Admin.API.Controllers
 
             var userFromRepo = await _repo.GetUser(currentUserID);
 
-            userParams.UserId = userFromRepo.Id;
+            if (userFromRepo == null)
+            {
+                return NoContent();
+            }
 
 
             var tickets = await _repot.GetTickets(userParams);
@@ -146,7 +171,7 @@ namespace Admin.API.Controllers
         [HttpPost("Adjuntar/{ticketId}")]
         public async Task<IActionResult> AdjuntosTicket(int ticketId, [FromForm]AdjuntosTicketDto fileUploadDto)
         {
-           
+
             var file = fileUploadDto.File;
 
             var uploadResult = new RawUploadResult();
@@ -211,8 +236,8 @@ namespace Admin.API.Controllers
             throw new Exception("Ocurrio un error al crear el ticket");
         }
 
-        [HttpPost("AdjuntosRspuesta/{respuestaId}")]
-        public async Task<IActionResult> AdjuntosRspuesta(int respuestaId, [FromForm]AdjuntosRespuestaDto fileUploadDto)
+        [HttpPost("AdjuntosRespuesta/{respuestaId}")]
+        public async Task<IActionResult> AdjuntosRespuesta(int respuestaId, [FromForm]AdjuntosRespuestaDto fileUploadDto)
         {
 
             var file = fileUploadDto.File;

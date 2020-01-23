@@ -19,7 +19,7 @@ namespace Admin.API.Data
 
         Task<List<User>> GetUsersForTicket(int userId);
 
-        // Task<PagedList<User>> GetUsers(UserParams userParams);
+        Task<PagedList<User>> GetUsers(UserParams userParams);
   
         Task<User> GetUser(int id);
 

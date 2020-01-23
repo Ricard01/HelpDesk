@@ -22,7 +22,7 @@ export class TicketCreadoComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   routerCreado = true;
-  constructor(private _ticketService: TicketService, private _route: Router) { }
+  constructor(private _ticketService: TicketService) { }
 
   ngOnInit() {
     this.getTicketsCreados();
@@ -30,14 +30,13 @@ export class TicketCreadoComponent implements OnInit {
 
   getTicketsCreados() {
     this._ticketService.getTicketsCreados().subscribe(res => {
-      console.log(res);
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = res;
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     },
       error => {
-        console.log('Se produjo un error mientras intentaba recuperar Usuarios!' + error);
+        console.log('Error!' + error);
       });
   }
 
@@ -45,12 +44,6 @@ export class TicketCreadoComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
-  }
-
-  goTicket(ticketId: number) {
-    this._route.navigate(['ticket/', ticketId]);
-    // const ticketCreado: NavigationExtras = {state: {example: 'This is an example'}};
-    // this._route.navigate(['/ticket/', ticketId], ticketCreado);
   }
 
 }

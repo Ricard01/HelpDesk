@@ -11,7 +11,7 @@
                 <img class="rounded-circle width-50" [src]="this.ticket.userFotoUrl">
                 <label class="ml-2 label label-indigo" style="margin-right: 100px;"> {{ this.ticket.userName }} </label>
 
-                <ng-container *ngIf="this.creados">
+                <ng-container *ngIf="this.mostrarUserAsignado">
 
                     <span class=" userasignado  label label-default f-s-10 " style="font-weight: bold;">Usuario
                         Asignado:</span>
@@ -196,12 +196,12 @@
 
 <!-- R E S P U E S T A  N E W-->
 <div class="col-3">
-    <button *ngIf="this.creados" class="btn btn-grey btn-block btn-circle" type="button btn btn-defaul" (click)="reabrirTicket()">
+    <button *ngIf="mostrarReabrir" class="btn btn-grey btn-block btn-circle" type="button btn btn-defaul" (click)="reabrirTicket()">
         ReAbrir Ticket +
     </button>
 </div>
 
-<div class="tab-content mt-2" *ngIf="respuestaNew">
+<div class="tab-content mt-2" *ngIf="mostrarResponder">
     <form [formGroup]="formRespuesta" (ngSubmit)="guardarRespuesta()">
         <div class="row mb-2">
 
@@ -250,7 +250,7 @@
                 <label for="estatus">Ticket Estatus &nbsp;</label>
                 <select class="form-control" formControlName="estatus">
                     <option value=''>Seleccionar </option>
-                    <option value='2' *ngIf="reabrir">ReAbrir </option>
+                    <option value='2' *ngIf="mostrarReabrir">ReAbrir </option>
                     <option value="3"> En Proceso </option>
                     <option value="4"> Cerrar </option>
                 </select>

@@ -12,6 +12,7 @@ namespace Admin.API.Helpers
             // Source, 
             // Origen , Destino 
             CreateMap<User, UserDto>();
+            
             CreateMap<User, UserForDetailedDto>();
             CreateMap<User, UserDetDto>();
             CreateMap<User, UserForReturnDto>();

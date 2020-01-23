@@ -55,7 +55,6 @@ namespace Admin.API.Controllers
             
         }
 
-
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("userWithRoles/{id}")]
         public async Task<IActionResult> GetUsersWithRoles(int id)

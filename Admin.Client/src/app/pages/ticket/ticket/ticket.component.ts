@@ -17,32 +17,32 @@ import { TicketRespuesta } from '../ticket-resp/ticket-resp.model';
 })
 export class TicketComponent implements OnInit {
 
+  baseUrl = environment.apiUrl + 'tickets/AdjuntosRespuesta/';
 
-  tipo: string;
+  request: string;
   ticketId: number;
   ticket: any;
   user: User;
   fecha = new Date();
   respuesta: TicketRespuesta;
-  creados: boolean;
-  reabrir: boolean;
+
+  mostrarUserAsignado: boolean;
+  mostrarReabrir: boolean;
+  mostrarResponder: boolean;
 
   @Input() adjuntos: any[];
   selectedItems = [];
   uploader: FileUploader;
 
-  cargarRespuestas = false;
-  respuestaNew: boolean;
-
   formRespuesta: FormGroup;
-  baseUrl = environment.apiUrl + 'tickets/AdjuntosRspuesta/';
+
 
   constructor(private _route: ActivatedRoute, private _authService: AuthService,
     private _alertify: SweetalertService, private _ticketService: TicketService,
     private fb: FormBuilder) {
 
     this._route.data.subscribe(data => {
-      this.tipo = data.tipo;
+      this.request = data.tipo;
     });
 
     this._route.params.subscribe(params => {
@@ -58,20 +58,26 @@ export class TicketComponent implements OnInit {
 
   cargarTicket() {
 
-    if (this.tipo === 'creados') {
+    if (this.request === 'creados') {
 
-      this._ticketService.getTicketCreadoById(this.ticketId).subscribe(
-        (resp: any) => {
+      this._ticketService.getTicketCreadoById(this.ticketId).subscribe((resp: any) => {
 
-          this.ticket = resp;
-          this.creados = true;
-          console.log(this.ticket);
+        this.ticket = resp;
+        console.log('Ticket Creado');
+        console.log(resp);
 
-          if (this.ticket.estatus !== 4) {
-            this.inicializarRespuesta();
-          }
+        // Ticket Abierto debe mostrarResponder=True y mostrarReabrir=False
+        this.mostrarUserAsignado = true;
 
-        });
+        if (this.ticket.estatus !== 4) {
+          this.mostrarResponder = true;
+          this.inicializarRespuesta();
+        } else {
+          // Ticket Cerreado debe mostrarresponder=False y mostrarReabrir=True
+          this.mostrarReabrir = true;
+        }
+
+      });
 
     } else {
 
@@ -81,7 +87,10 @@ export class TicketComponent implements OnInit {
           this.ticket = resp;
 
           if (this.ticket.estatus !== 4) {
+            this.mostrarResponder = true;
             this.inicializarRespuesta();
+          } else {
+            this.mostrarReabrir = true;
           }
 
         });
@@ -90,17 +99,19 @@ export class TicketComponent implements OnInit {
 
   }
 
+
   inicializarRespuesta() {
-    console.log('Cargar Respuesta New');
-    this.respuestaNew = true;
+
     this.crearFormRespuesta();
     this.initializeUploader();
+
   }
+
   reabrirTicket() {
-    this.reabrir = true;
+    this.mostrarResponder = true;
     this.inicializarRespuesta();
     // this.formRespuesta.controls['estatus'].setValue('ReAbrir', {onlySelf: true});
-    this.formRespuesta.controls.estatus.setValue('2',  {onlySelf: true});
+    this.formRespuesta.controls.estatus.setValue('2', { onlySelf: true });
     this.formRespuesta.controls.estatus.disable();
   }
 
@@ -160,20 +171,32 @@ export class TicketComponent implements OnInit {
 
   guardarRespuesta() {
     if (this.formRespuesta.valid) {
+
       this.respuesta = Object.assign({}, this.formRespuesta.value);
       this.respuesta.fecha = this.fecha;
       this.respuesta.userId = this._authService.user.id;
       this.respuesta.ticketId = this.ticket.id;
       this._ticketService.createTicketRespuesta(this.respuesta).subscribe((res: any) => {
 
-        console.log(res);
         const respuestaId = res;
         if (this.uploader.queue.length > 0) {
+
           this.uploader.setOptions({ url: this.baseUrl + respuestaId });
           this.uploader.uploadAll();
           this._alertify.success('Respuesta enviada.. cargando adjuntos');
+          this.getUltimaRespuestaInsertada(respuestaId);
+          // this.ticket.ticketRespuestas.push(this.respuesta);
+
         } else {
+
           this._alertify.success('Respuesta enviada');
+          this.getUltimaRespuestaInsertada(respuestaId);
+          // this.ticket.ticketRespuestas.push(this.respuesta);
+
+        }
+        if (this.respuesta.estatus === 4) {
+          this.mostrarResponder = false;
+          this.mostrarReabrir = true;
         }
         this.formRespuesta.reset();
       }, error => {
@@ -183,6 +206,17 @@ export class TicketComponent implements OnInit {
 
 
     }
+
+  }
+
+  getUltimaRespuestaInsertada(respuestaId: number) {
+    console.log('RespuestaId' + respuestaId + '\n');
+    this._ticketService.getUltimaRespuestaInsertada(respuestaId).subscribe((resp: any) => {
+      const ultrespuesta = resp;
+      this.ticket.ticketRespuestas.push(ultrespuesta);
+      console.log('Ultima Respuesta');
+      console.log(ultrespuesta);
+    });
 
   }
 

@@ -5,23 +5,28 @@ using System.ComponentModel.DataAnnotations;
 namespace Admin.API.Models
 {
     public class Ticket
-
-
     {
 
         public Ticket()
         {
+            TicketsAsignados = new HashSet<TicketsAsignados>();
             AdjuntosTicket = new HashSet<AdjuntosTicket>();
-            // TicketsAsignados = new HashSet<TicketsAsignados>();
+            TicketRespuesta = new HashSet<TicketRespuesta>();
         }
+      
         public int Id { get; set; }
+      
         public int UserId { get; set; }
+      
         public DateTime FechaAlta { get; set; }
+      
         public string Titulo { get; set; }
+      
         public string Mensaje { get; set; }
+      
         public byte Prioridad { get; set; }
+      
         public byte Estatus { get; set; }
-
 
         public User User { get; set; }
 

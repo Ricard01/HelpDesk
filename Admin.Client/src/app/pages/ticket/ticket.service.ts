@@ -17,8 +17,18 @@ export class TicketService {
 
   constructor(public http: HttpClient) { }
 
-  getTicket(id: number): Observable<Ticket> {
-    return this.http.get<Ticket>(this.baseUrl + id);
+  // getTicket(id: number): Observable<Ticket> {
+  //   return this.http.get<Ticket>(this.baseUrl + id);
+  // } se dio de baja el 5/12/19
+
+  getTicket(Creado: boolean, ticketId) {
+
+    if (Creado) {
+      return this.http.get<Ticket>(this.baseUrl + 'GetTicketCreadoById/' + ticketId);
+    } else {
+      return this.http.get<Ticket>(this.baseUrl + 'TicketAsignadoById/' + ticketId);
+    }
+
   }
 
   getTicketCreadoById(ticketid: number) {
@@ -26,7 +36,7 @@ export class TicketService {
   }
 
   getTicketsCreados() {
-    return this.http.get<Ticket[]>( this.baseUrl + 'GetTicketsCreados');
+    return this.http.get<Ticket[]>(this.baseUrl + 'GetTicketsCreados');
   }
   getTicketAsignadoById(ticketid: number) {
     return this.http.get<Ticket>(this.baseUrl + 'TicketAsignadoById/' + ticketid);
@@ -69,7 +79,11 @@ export class TicketService {
   }
 
   createTicketRespuesta(respuesta: TicketRespuesta) {
-    return this.http.post(this.baseUrl + 'TicketRespuesta' , respuesta);
+    return this.http.post(this.baseUrl + 'TicketRespuesta', respuesta);
+  }
+
+  getUltimaRespuestaInsertada(respuestaId: number) {
+    return this.http.get(this.baseUrl + 'GetUltimaRespuestaInsertada/' + respuestaId);
   }
 
 }

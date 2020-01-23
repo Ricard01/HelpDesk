@@ -23,10 +23,10 @@ export class TicketAsignadoComponent implements OnInit {
   constructor(private _ticketService: TicketService) { }
 
   ngOnInit() {
-    this.getMyTickets();
+    this.getTicketsAsignados();
   }
 
-  getMyTickets() {
+  getTicketsAsignados() {
     this._ticketService.getTicketsAsignados().subscribe(res => {
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = res;

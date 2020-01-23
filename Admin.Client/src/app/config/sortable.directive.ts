@@ -12,6 +12,7 @@ export interface SortEvent {
   // tslint:disable-next-line:directive-selector
   selector: 'th[sortable]',
   // tslint:disable-next-line:use-host-property-decorator
+  // tslint:disable-next-line:no-host-metadata-property
   host: {
     '[class.asc]': 'direction === "asc"',
     '[class.desc]': 'direction === "desc"',

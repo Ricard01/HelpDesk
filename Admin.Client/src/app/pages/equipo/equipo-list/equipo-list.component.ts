@@ -67,7 +67,7 @@ export class EquipoListComponent implements OnInit {
           this.RenderDataTable();
         }, error => {
           console.log(error);
-          this.alertify.error('Error usuario logeado actualmente ' + error );
+          this.alertify.error( error );
         });
       }
     }).catch(

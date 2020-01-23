@@ -31,7 +31,7 @@ namespace Admin.API.Controllers
         [HttpGet("{idEquipo}")]
         public async Task<IActionResult> GetEquipo(int idEquipo)
         {
-            var equipo = await _repo.GetEquipo(idEquipo);        
+            var equipo = await _repo.GetEquipo(idEquipo);
 
             return Ok(equipo);
         }
@@ -88,7 +88,7 @@ namespace Admin.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEquipo(Equipo equipo)
         {
-    
+
             equipo.Activo = true;
             _repo.Add(equipo);
 
@@ -174,9 +174,9 @@ namespace Admin.API.Controllers
 
                 throw new Exception($"Ocurrio un error al actualizar");
 
-            } 
-            
-             throw new Exception("El equipo esta asignado a un usuario no se puede dejar inactivo");
+            }
+
+            throw new Exception("El equipo esta asignado a un usuario no se puede dejar inactivo");
 
         }
 
@@ -186,14 +186,22 @@ namespace Admin.API.Controllers
         {
             var equipoFromRepo = await _repo.GetEquipo(id);
 
+
             if (equipoFromRepo != null)
             {
-                _repo.Delete(equipoFromRepo);
+                if (equipoFromRepo.UserId == null)
+                {
 
-                if (await _repo.SaveAll())
-                    return NoContent();
+                    _repo.Delete(equipoFromRepo);
 
-                throw new Exception("Error eliminado equipo");
+                    if (await _repo.SaveAll())
+                        return NoContent();
+
+                    throw new Exception("Error eliminado equipo");
+
+                }
+                throw new Exception("El equipo esta asignado a un usuario no se puede eliminar");
+
             }
 
             throw new Exception("No se encontro el equipo a eliminar");
