@@ -13,21 +13,21 @@ namespace Admin.API.Persistence
         IdentityRoleClaim<int>, IdentityUserToken<int>>
 
     {
-        private ILoggerFactory GetLoggerFactory()
-        {
-            IServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddLogging(builder =>
-                   builder.AddConsole()
-                          .AddFilter(DbLoggerCategory.Database.Command.Name,
-                                     LogLevel.Information));
-            return serviceCollection.BuildServiceProvider()
-                    .GetService<ILoggerFactory>();
-        }
+        // private ILoggerFactory GetLoggerFactory()
+        // {
+        //     IServiceCollection serviceCollection = new ServiceCollection();
+        //     serviceCollection.AddLogging(builder =>
+        //            builder.AddConsole()
+        //                   .AddFilter(DbLoggerCategory.Database.Command.Name,
+        //                              LogLevel.Information));
+        //     return serviceCollection.BuildServiceProvider()
+        //             .GetService<ILoggerFactory>();
+        // }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLoggerFactory(GetLoggerFactory());
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseLoggerFactory(GetLoggerFactory());
+        // }
         
         public AdminContext(DbContextOptions<AdminContext> options) : base(options) { }
         // Apartir de esta informacion se crea una migracion con ef datamigration
@@ -87,25 +87,6 @@ namespace Admin.API.Persistence
             {
                 entity.HasIndex(e => e.NombreEquipo).IsUnique();
             });
-
-            // builder.Entity<Equipo>(equipo =>
-            // {
-            //     // Llave primaria 
-            //     equipo.HasKey(e => e.Id);
-
-            //     //Relacion uno a uno 
-            //     equipo.HasOne(d => d.User)
-            //     .WithOne(p => p.Equipo)
-            //     .HasForeignKey<Equipo>(d => d.Id);
-
-            // });
-
-            // builder.Entity<Equipo> ( equipo => 
-            // { 
-            //     equipo.HasOne( eq => eq.User)
-            //     .HasForeignKey( eq => eq.UserId )
-            // });
-
 
 
         }

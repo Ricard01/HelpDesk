@@ -11,6 +11,7 @@ namespace Admin.API.Data
     {
         
         private readonly AdminContext _context;
+        
         public EquipoRepository(AdminContext context)
         {
             _context = context;
@@ -73,6 +74,6 @@ namespace Admin.API.Data
             return equipo;
         }
 
-
     }
+
 }

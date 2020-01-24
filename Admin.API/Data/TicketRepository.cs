@@ -84,24 +84,13 @@ namespace Admin.API.Data
         {
             var tickets = await (from t in _context.Tickets
                                  join ta in _context.TicketsAsignados on t.Id equals ta.TicketId
-                                 join us in _context.Users on ta.UserId equals us.Id
-                                 where t.UserId == userId
+                                 join us in _context.Users on t.UserId equals us.Id
+                                 where ta.UserId == userId
                                  select new Ticket() { Id = t.Id, User = us, FechaAlta = t.FechaAlta }).ToListAsync();
 
 
             return tickets;
         }
-
-        // public async Task<List<Ticket>> GetTicketsAsignados(int userId)
-        // {
-        //     var tickets = await _context.Tickets
-        //       .Include(ticketAsignado => ticketAsignado.TicketsAsignados)
-        //       .ThenInclude(user => user.User)
-        //    .Where(ticket => ticket.UserId == userId).ToListAsync();
-
-
-        //     return tickets;
-        // }
 
         public async Task<PagedList<Ticket>> GetTickets(UserParams userParams)
         {
@@ -195,34 +184,7 @@ namespace Admin.API.Data
             return respuesta;
 
         }
-
-        // Para reportes 
-        // public async Task<List<Ticket>> GetTicketsAsignados(int idUser)
-        // {
-        //     // Este quedo "perfecto"
-        //     var tickets = from t in _context.Tickets.Include(u => u.User)
-        //                   join ta in _context.TicketsAsignados on t.Id equals ta.TicketId
-        //                   where
-        //                     ta.UserId == idUser
-        //                   select t;
-
-        //     return await tickets.ToListAsync();
-        // }
-
-        // public async Task<List<Ticket>> GetTicketsCreados(int idUser)
-        // {
-
-        //     var tickets = await _context.Tickets
-        //     .Include(ticketAsignado => ticketAsignado.TicketsAsignados)
-        //     .ThenInclude(user => user.User)
-        //  .Where(ticket => ticket.UserId == idUser).ToListAsync();
-
-
-        //     return tickets;
-        // }
-
-
-
+    
         public async Task<object> GetTicketCreadoById(int ticketId)
         {
 
@@ -251,7 +213,6 @@ namespace Admin.API.Data
 
             return ticket;
         }
-
 
         public async Task<object> GetTicketAsignadoById(int ticketId)
         {

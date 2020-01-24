@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using Admin.API.Models;
 using Admin.API.Persistence;
@@ -9,10 +8,12 @@ namespace Admin.API.Data
     public class AuthRepository : IAuthRepository
     {
         private readonly AdminContext _context;
+      
         public AuthRepository(AdminContext context)
         {
             _context = context;
         }
+        
         public async Task<User> Login(string username, string password)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);

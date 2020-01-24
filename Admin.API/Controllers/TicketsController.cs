@@ -73,17 +73,14 @@ namespace Admin.API.Controllers
         [HttpGet("GetTicketsCreados")]
         public async Task<IActionResult> GetTicketsCreados()
          {
-        //     var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-
-        //     var userFromRepo = await _repo.GetUser(currentUserID);
-
-        //     if (userFromRepo == null)
-        //     {
-        //         return NoContent();
-        //     }
-
-
             var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var userFromRepo = await _repo.GetUser(currentUserID);
+
+            if (userFromRepo == null)
+            {
+                return NoContent();
+            }
 
             var tickets = await _repot.GetTicketsCreados(currentUserID);
 
@@ -91,15 +88,14 @@ namespace Admin.API.Controllers
 
             return Ok(ticketsReturn);
         }
-        [HttpGet("TicketAsignadoById/{ticketId}")]
+        
+        [HttpGet("TicketAsignadoById/{ticketId}")] 
         public async Task<IActionResult> GetTicketAsignadoById(int ticketId)
         {
             var ticket = await _repot.GetTicketAsignadoById(ticketId);
 
             return Ok(ticket);
         }
-
-        
 
 
         [HttpGet("GetUltimaRespuestaInsertada/{respuestaId}")]
