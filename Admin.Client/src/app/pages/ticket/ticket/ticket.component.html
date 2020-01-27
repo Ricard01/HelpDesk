@@ -8,7 +8,7 @@
             <div class="form-group col-8 ">
 
 
-                <img class="rounded-circle width-50" [src]="this.ticket.userFotoUrl">
+                <img class="rounded-circle width-50" [src]="this.ticket.userFotoUrl|| '../../../assets/img/user/user.png' ">
                 <label class="ml-2 label label-indigo" style="margin-right: 100px;"> {{ this.ticket.userName }} </label>
 
                 <ng-container *ngIf="this.mostrarUserAsignado">
@@ -206,7 +206,7 @@
         <div class="row mb-2">
 
             <div class="ml-2">
-                <img class="rounded-circle width-50" [src]="user.fotoUrl">
+                <img class="rounded-circle width-50" [src]="user.fotoUrl || '../../../assets/img/user/user.png'"   >
                 <label class="ml-2 label label-indigo">{{ user.username }} </label>
             </div>
 

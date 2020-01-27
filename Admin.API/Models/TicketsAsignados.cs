@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Admin.API.Models
@@ -7,5 +8,6 @@ namespace Admin.API.Models
         public int TicketId { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
+        public Boolean MostrarNotificacion { get; set; }
     }
 }

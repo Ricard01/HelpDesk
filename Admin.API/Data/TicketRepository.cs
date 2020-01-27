@@ -42,6 +42,7 @@ namespace Admin.API.Data
                               FechaAlta = t.FechaAlta,
                               Prioridad = t.Prioridad,
                               Estatus = t.Estatus,
+                              UserId = t.UserId,
                               //   TicketsAsignados = from ta in _context.TicketsAsignados where ta.TicketId == ticketId select new TicketsAsignados  { ta.User.UserName, ta.User.FotoUrl, ta.User.Id },
                               User = new User { UserName = us.UserName, FotoUrl = us.FotoUrl },
                           }).FirstOrDefaultAsync();
@@ -50,32 +51,32 @@ namespace Admin.API.Data
         }
         public async Task<List<Ticket>> GetTicketsCreados(int userId)
         {
-            var ticketCreados =  _context.Tickets.TagWith("GetTicketsCreados")
-            .Include( ta => ta.TicketsAsignados).ThenInclude( u => u.User)
-            .Where(                t => t.UserId == userId);
-            
+            var ticketCreados = _context.Tickets.TagWith("GetTicketsCreados")
+            .Include(ta => ta.TicketsAsignados).ThenInclude(u => u.User)
+            .Where(t => t.UserId == userId);
+
             //  join ticketAsignado in _context.TicketsAsignados.Include( u => u.User) on ticket.Id equals ticketAsignado.TicketId into tickets 
             //  from ta in tickets.DefaultIfEmpty()
             // join ua in _context.Users on ta.UserId equals ua.Id into userAsignados
             // from user in userAsignados.DefaultIfEmpty()
-        
 
-                                // where ticket.UserId == userId
 
-                                // select new Ticket
-                                // {
-                                //     Id = ticket.Id,
-                                //     Titulo = ticket.Titulo,
-                                //     Mensaje = ticket.Mensaje,
-                                //     FechaAlta = ticket.FechaAlta,
-                                //     Prioridad = ticket.Prioridad,
-                                //     Estatus = ticket.Estatus,
-                                //     TicketsAsignados = tickets.ToList()
-                                //     // TicketsAsignados = (from t in tickets select new TicketsAsignados{
-                                //     //     TicketId = t.TicketId,
-                                //     //     User = ( from u in userAsignados select new User { Id= u.Id , UserName = u.UserName, FotoUrl = u.FotoUrl }).FirstOrDefault()
-                                //     //  }).ToList()
-                                // };
+            // where ticket.UserId == userId
+
+            // select new Ticket
+            // {
+            //     Id = ticket.Id,
+            //     Titulo = ticket.Titulo,
+            //     Mensaje = ticket.Mensaje,
+            //     FechaAlta = ticket.FechaAlta,
+            //     Prioridad = ticket.Prioridad,
+            //     Estatus = ticket.Estatus,
+            //     TicketsAsignados = tickets.ToList()
+            //     // TicketsAsignados = (from t in tickets select new TicketsAsignados{
+            //     //     TicketId = t.TicketId,
+            //     //     User = ( from u in userAsignados select new User { Id= u.Id , UserName = u.UserName, FotoUrl = u.FotoUrl }).FirstOrDefault()
+            //     //  }).ToList()
+            // };
 
             return await ticketCreados.ToListAsync();
         }
@@ -86,7 +87,16 @@ namespace Admin.API.Data
                                  join ta in _context.TicketsAsignados on t.Id equals ta.TicketId
                                  join us in _context.Users on t.UserId equals us.Id
                                  where ta.UserId == userId
-                                 select new Ticket() { Id = t.Id, User = us, FechaAlta = t.FechaAlta }).ToListAsync();
+                                 select new Ticket()
+                                 {
+                                     Id = t.Id,
+                                     FechaAlta = t.FechaAlta,
+                                     Titulo = t.Titulo,
+                                     Mensaje = t.Mensaje,
+                                     Prioridad = t.Prioridad,
+                                     Estatus = t.Estatus,
+                                     User = us,
+                                 }).ToListAsync();
 
 
             return tickets;
@@ -184,7 +194,7 @@ namespace Admin.API.Data
             return respuesta;
 
         }
-    
+
         public async Task<object> GetTicketCreadoById(int ticketId)
         {
 
@@ -200,6 +210,7 @@ namespace Admin.API.Data
                                     FechaAlta = t.FechaAlta,
                                     Prioridad = t.Prioridad,
                                     Estatus = t.Estatus,
+                                    UserId = t.UserId,
                                     UserAsignados = from ticketsAsignados in _context.TicketsAsignados where ticketsAsignados.TicketId == ticketId select new { ticketsAsignados.User.UserName, ticketsAsignados.User.FotoUrl, ticketsAsignados.User.Id },
                                     UserName = t.User.UserName,
                                     UserFotoUrl = t.User.FotoUrl,

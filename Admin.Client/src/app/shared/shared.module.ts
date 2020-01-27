@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FileTypePipe } from './pipes/filetype.pipe';
 import { MatPaginatorIntl } from '@angular/material';
 import { getSpanishPaginatorIntl } from './components/spanish-paginator/spanish-paginator.component';
+import { TicketPipe } from './pipes/ticket.pipe';
 
 
 
@@ -12,6 +13,7 @@ import { getSpanishPaginatorIntl } from './components/spanish-paginator/spanish-
   declarations: [
     FileTypePipe,
     ImagenPipe,
+    TicketPipe
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }

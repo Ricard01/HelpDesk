@@ -57,7 +57,6 @@ export class TicketNuevoComponent implements OnInit {
 
   }
 
-
   initializeUploader() {
     this.uploader = new FileUploader({
       // url: this.baseUrl,
@@ -91,16 +90,6 @@ export class TicketNuevoComponent implements OnInit {
     };
   }
 
-
-  createFormTicketNuevo() {
-    this.formTicketNuevo = this.fb.group({
-      titulo: [null, [Validators.required, Validators.maxLength(60)]],
-      mensaje: [null, Validators.required],
-      prioridad: ['1', Validators.required],
-      ticketsasignados: [null, Validators.required]
-    });
-  }
-
   onWhenAddingFileFailed(item: FileLikeObject, filter: any, options: any) {
     switch (filter.name) {
       case 'fileSize':
@@ -118,9 +107,21 @@ export class TicketNuevoComponent implements OnInit {
   onItemSelect(item: any) {
     console.log(item.username);
   }
+
   onCompleteAll() {
     this._alertify.success('Ticket ' + this.ticketId + ' se creo con exito');
   }
+
+
+  createFormTicketNuevo() {
+    this.formTicketNuevo = this.fb.group({
+      titulo: [null, [Validators.required, Validators.maxLength(60)]],
+      mensaje: [null, Validators.required],
+      prioridad: ['1', Validators.required],
+      ticketsasignados: [null, Validators.required]
+    });
+  }
+
   createTicket() {
     if (this.formTicketNuevo.valid) {
       this.ticket = Object.assign({}, this.formTicketNuevo.value);

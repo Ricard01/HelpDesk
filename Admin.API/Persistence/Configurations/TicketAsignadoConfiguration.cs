@@ -11,7 +11,13 @@ namespace Admin.API.Persistence.Configurations
 
             builder.HasKey(t => new { t.TicketId, t.UserId });
 
+            builder.Property( m => m.MostrarNotificacion)
+            .HasDefaultValue(0);
+
         }
+
+
+        
 
         //     builder.Property( t => t.UserId)
         //     .HasColumnName("UserIdAsignado");
