@@ -8,6 +8,6 @@ namespace Admin.API.Models
         public int TicketId { get; set; }
         public int UserId { get; set; }
         public User User { get; set; }
-        public Boolean MostrarNotificacion { get; set; }
+        public byte MostrarNotificacion { get; set; }
     }
 }

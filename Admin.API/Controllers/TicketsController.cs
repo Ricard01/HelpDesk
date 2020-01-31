@@ -72,7 +72,7 @@ namespace Admin.API.Controllers
 
         [HttpGet("GetTicketsCreados")]
         public async Task<IActionResult> GetTicketsCreados()
-         {
+        {
             var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             var userFromRepo = await _repo.GetUser(currentUserID);
@@ -88,8 +88,8 @@ namespace Admin.API.Controllers
 
             return Ok(ticketsReturn);
         }
-        
-        [HttpGet("TicketAsignadoById/{ticketId}")] 
+
+        [HttpGet("TicketAsignadoById/{ticketId}")]
         public async Task<IActionResult> GetTicketAsignadoById(int ticketId)
         {
             var ticket = await _repot.GetTicketAsignadoById(ticketId);
@@ -279,6 +279,47 @@ namespace Admin.API.Controllers
                 return Ok();
             }
             throw new Exception("Ocurrio un error al crear el ticket");
+        }
+
+
+        [HttpGet("MostrarNotificaciones")]
+        public async Task<IActionResult> MostrarNotificaciones()
+        {
+            var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var userFromRepo = await _repo.GetUser(currentUserID);
+
+            if (userFromRepo == null)
+            {
+                return NoContent();
+            }
+
+            var notificaciones = await _repot.MostrarNotificaciones(userFromRepo.Id);
+
+            return Ok(notificaciones);
+
+        }
+
+
+        [HttpPut("OcultarNotificacion/{ticketId}")]
+        public async Task<IActionResult> OcultarNotificacion(int ticketId)
+        {
+
+            var currentUserID = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var ta = new TicketsAsignados { TicketId = ticketId, UserId = currentUserID };
+
+            ta.MostrarNotificacion = 0;
+
+            _context.Entry(ta).Property("MostrarNotificacion").IsModified = true;
+
+
+            if (await _context.SaveChangesAsync() > 0)
+            {
+                return Ok();
+            }
+            throw new Exception("Ocurrio un error al crear el ticket");
+
         }
 
     }

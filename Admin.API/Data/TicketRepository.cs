@@ -10,7 +10,7 @@ using AutoMapper;
 namespace Admin.API.Data
 {
     public class TicketRepository : ITicketRepository
-    {
+    {    
         #region ctor
         private readonly AdminContext _context;
         private readonly IMapper _mapper;
@@ -23,6 +23,7 @@ namespace Admin.API.Data
         }
 
         #endregion
+
 
         public async Task<Ticket> TicketCreadoById(int ticketId)
         {
@@ -170,6 +171,8 @@ namespace Admin.API.Data
             return await PagedList<Ticket>.CreateAsync(tickets, userParams.NumPagina, userParams.ItemsxPagina);
         }
 
+
+        // Left join
         public async Task<object> GetUltimaRespuestaInsertada(int respuestaId)
         {
 
@@ -251,6 +254,33 @@ namespace Admin.API.Data
                                 }).FirstOrDefaultAsync();
 
             return ticket;
+        }
+
+        public async Task<object> MostrarNotificaciones(int userId)
+        {
+
+            var notificacion = await (
+                from t in _context.Tickets.TagWith("Notificaciones")
+                join u in _context.Users on t.UserId equals u.Id
+                join ta in _context.TicketsAsignados on t.Id equals ta.TicketId into ticket
+                from ta in ticket.DefaultIfEmpty()
+                    //  join adj in _context.AdjuntosRespuestas on resp.Id equals adj.TicketRespuestaId into adjuntos
+                    //                        //    from adj in adjuntos.DefaultIfEmpty()
+                where ta.UserId == userId && ta.MostrarNotificacion == 1 && t.Estatus != 4 
+                select new
+                {
+                    Id = t.Id,
+                    Fecha = t.FechaAlta,
+                    Username = u.UserName,
+                    FotoUrl = u.FotoUrl,
+                    Titulo = t.Titulo,
+                    Prioridad = t.Prioridad,
+                    MostrarNotificacion = ta.MostrarNotificacion
+                }).ToListAsync();
+
+
+            return notificacion;
+
         }
 
 

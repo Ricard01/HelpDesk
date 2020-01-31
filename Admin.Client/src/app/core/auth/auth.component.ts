@@ -4,6 +4,7 @@ import pageSettings from '../../config/page-settings';
 import { NgForm } from '@angular/forms';
 import { SweetalertService } from '../../shared/services/sweetalert.service';
 import { AuthService } from '../_services/auth.service';
+import { NotificacionServicie } from '../_services/notificacion.service';
 
 @Component({
   selector: 'app-auth',
@@ -16,11 +17,14 @@ export class AuthComponent implements OnInit, OnDestroy {
   recordar = false;
   model: any = {};
 
+  notificaciones: any[];
+
   constructor(
     private router: Router,
     private renderer: Renderer2,
     public authService: AuthService,
-    private alert: SweetalertService
+    private alert: SweetalertService,
+    private _notService: NotificacionServicie
   ) {
     this.pageSettings.pageEmpty = true;
     this.renderer.addClass(document.body, 'bg-white');
@@ -43,6 +47,9 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
     this.authService.login(this.model, loginForm.value.recordar).subscribe(
       next => {
+        this._notService.getNotificaciones().subscribe(res => {
+          this.notificaciones = res;
+        });
         this.router.navigate(['/dashboard']);
       },
       error => {

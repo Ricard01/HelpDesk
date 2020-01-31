@@ -19,6 +19,10 @@ namespace Admin.API.Data
         Task<PagedList<Ticket>> GetTickets(UserParams userParams);
 
         Task<object> GetUltimaRespuestaInsertada(int respuestaId);
+
         Task<Ticket> TicketCreadoById(int ticketId);
+
+        Task<object> MostrarNotificaciones(int userId);
+
     }
 }

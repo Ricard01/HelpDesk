@@ -3,12 +3,13 @@
     <!-- begin navbar-header -->
     <div class="navbar-header">
 
-        <a href="/" class="navbar-brand"> <img src="../../../assets/img/logos/Ebsa.png" class="mr-2"> <!-- <span class="navbar-logo"></span>--> <b>ANY</b> Tickets</a>
+        <a href="/" class="navbar-brand"> <img src="../../../assets/img/logos/Ebsa.png" class="mr-2">
+            <!-- <span class="navbar-logo"></span>--> <b>ANY</b> Tickets</a>
         <button type="button" class="navbar-toggle" (click)="mobileSidebarToggle()">
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
 
     </div>
     <!-- end navbar-header -->
@@ -16,29 +17,51 @@
 
     <!-- begin header-nav -->
     <ul class="navbar-nav navbar-right">
-        <li>
+        <!-- <li>
             <form class="navbar-form">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Enter keyword" />
                     <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
                 </div>
             </form>
-        </li>
+        </li> -->
         <li class="dropdown" ngbDropdown>
             <a href="javascript:;" ngbDropdownToggle class="dropdown-toggle f-s-14">
                 <i class="fa fa-bell"></i>
-                <span class="label">0</span>
+                <span class="label"> {{ totalNotificaciones}} </span>
             </a>
-            <ul class="dropdown-menu media-list dropdown-menu-right" ngbDropdownMenu>
-                <li class="dropdown-header">NOTIFICATIONS (0)</li>
-                <li class="text-center width-300 p-b-10">
-                    No notification found
+            <ul ng-click="isOpen = false" class="dropdown-menu media-list dropdown-menu-right" ngbDropdownMenu>
+                <li class="dropdown-header">Tickets ( {{ totalNotificaciones}} )</li>
+                <!-- <li  class="text-center width-300 p-b-10">
+                    <b>Ticket Id:{{ item.id }} </b> 
+
+                  
+                </li> -->
+                <li class="media" *ngFor="let item of notificaciones">
+                    <a href="javascript:;" (click)="mostrarTicket( item.id )">
+                        <div class="media-left">
+                            <img [src]=" item.fotoUrl || '../../../assets/img/user/user.png'"
+                                class="media-object bg-silver-darker">
+                        </div>
+                        <div class="media-body">
+                            <h6 class="media-heading"> {{ item.titulo }}
+                                <ng-container [ngSwitch]=" item.prioridad ">
+                                    <i *ngSwitchCase="1" class="fas fa-exclamation text-yellow-darker"> </i>
+                                    <i *ngSwitchCase="2" class="fas fa-exclamation-circle text-danger"> </i>
+                                    <i *ngSwitchCase="3" class="fas fa-exclamation-circle text-danger"> </i>
+
+                                </ng-container>
+                            </h6>
+                            <div class="text-grey-darker f-s-11"><b> {{ item.username }} </b>-
+                                {{ item.fecha  | date: 'dd/MM/yyyy'}} </div>
+                        </div>
+                    </a>
                 </li>
             </ul>
         </li>
         <li class="dropdown navbar-user" ngbDropdown>
             <a href="javascript:;" class="dropdown-toggle" ngbDropdownToggle>
-                <div class="image image-icon text-grey-darker">                       
+                <div class="image image-icon text-grey-darker">
                     <img [src]="authService.user.fotoUrl || '../../../assets/img/user/user.png'" alt="">
                 </div>
                 <span class="d-none d-md-inline">{{ user.username | titlecase}} </span> <b class="caret"></b>

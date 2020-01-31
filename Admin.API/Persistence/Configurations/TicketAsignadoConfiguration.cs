@@ -12,7 +12,7 @@ namespace Admin.API.Persistence.Configurations
             builder.HasKey(t => new { t.TicketId, t.UserId });
 
             builder.Property( m => m.MostrarNotificacion)
-            .HasDefaultValue(0);
+            .HasDefaultValue(1);
 
         }
 
