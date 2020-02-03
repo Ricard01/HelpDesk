@@ -13,21 +13,21 @@ namespace Admin.API.Persistence
         IdentityRoleClaim<int>, IdentityUserToken<int>>
 
     {
-        private ILoggerFactory GetLoggerFactory()
-        {
-            IServiceCollection serviceCollection = new ServiceCollection();
-            serviceCollection.AddLogging(builder =>
-                   builder.AddConsole()
-                          .AddFilter(DbLoggerCategory.Database.Command.Name,
-                                     LogLevel.Information));
-            return serviceCollection.BuildServiceProvider()
-                    .GetService<ILoggerFactory>();
-        }
+        // private ILoggerFactory GetLoggerFactory()
+        // {
+        //     IServiceCollection serviceCollection = new ServiceCollection();
+        //     serviceCollection.AddLogging(builder =>
+        //            builder.AddConsole()
+        //                   .AddFilter(DbLoggerCategory.Database.Command.Name,
+        //                              LogLevel.Information));
+        //     return serviceCollection.BuildServiceProvider()
+        //             .GetService<ILoggerFactory>();
+        // }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseLoggerFactory(GetLoggerFactory());
-        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseLoggerFactory(GetLoggerFactory());
+        // }
         
         public AdminContext(DbContextOptions<AdminContext> options) : base(options) { }
         // Apartir de esta informacion se crea una migracion con ef datamigration
