@@ -12,7 +12,8 @@ import { MatTableDataSource } from '@angular/material/table';
 export class TicketAsignadoComponent implements OnInit {
 
   displayedColumns = ['id', 'fechaAlta', 'usuario', 'titulo', 'prioridad', 'estatus', 'acciones'];
-  dataSource;
+  // dataSource;
+  dataSource: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   length = 100;
@@ -28,8 +29,11 @@ export class TicketAsignadoComponent implements OnInit {
 
   getTicketsAsignados() {
     this._ticketService.getTicketsAsignados().subscribe(res => {
-      this.dataSource = new MatTableDataSource();
-      this.dataSource.data = res;
+      this.dataSource = new MatTableDataSource(res);
+     this.dataSource.data = res;
+     console.log(res);
+     console.log('2');
+     console.log(this.dataSource.data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     },
@@ -40,9 +44,10 @@ export class TicketAsignadoComponent implements OnInit {
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 

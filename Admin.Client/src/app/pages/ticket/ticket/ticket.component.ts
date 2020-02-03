@@ -183,7 +183,7 @@ export class TicketComponent implements OnInit {
   }
 
   onCompleteAll() {
-    this._alertify.success('Ticket DESPUES REPS ');
+    this._alertify.success('Respuesta Enviada');
     this.getUltimaRespuestaInsertada(this.newRespuestaId);
   }
   guardarRespuesta() {
@@ -219,7 +219,7 @@ export class TicketComponent implements OnInit {
         //   this.mostrarResponder = false;
         //   this.mostrarReabrir = true;
         // }
-        // this.formRespuesta.reset();
+        this.formRespuesta.reset();
       }, error => {
         console.log('Error ' + error);
         this._alertify.error(error);
