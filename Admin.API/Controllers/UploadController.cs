@@ -93,7 +93,7 @@ namespace Admin.API.Controllers
             if (await _repo.SaveAll())
             {
                 var photoToReturn = _mapper.Map<UserForDetailedDto>(userFromRepo);
-                return CreatedAtRoute("GetPhoto", new { id = userId }, photoToReturn);
+                return CreatedAtRoute("GetPhoto", new { userId, id = userId }, photoToReturn);
             }
 
             return BadRequest("No se pudo agregar la foto");

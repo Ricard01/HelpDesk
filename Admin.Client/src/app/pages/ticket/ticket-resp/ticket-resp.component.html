@@ -1,10 +1,10 @@
-<div class="tab-content" *ngFor="let item of respuestas">
+<div class="tab-content" *ngFor="let item of respuestas; trackBy: trackByFn;">
     <form>
         <div class="row mb-2">
 
             <div class="ml-2">
                 <img   class="rounded-circle width-50"  [src]="item.fotoUrl || '../../../assets/img/user/user.png'"  >
-                <label class="ml-2 label label-indigo"> {{ item?.userName }}  </label>
+                <label class="ml-2 label label-indigo">  {{item}} {{ item?.userName }}  </label>
             </div>
 
             <div class="row fecha ml-auto mb-4 mr-2 ">

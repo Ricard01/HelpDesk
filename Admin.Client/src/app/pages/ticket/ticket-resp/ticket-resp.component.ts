@@ -16,5 +16,8 @@ export class TicketRespComponent implements OnInit {
   ngOnInit() {
 
   }
+  trackByFn(index, item) {
+    return item.id;
+  }
 
 }
